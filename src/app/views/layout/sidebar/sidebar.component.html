@@ -1,0 +1,57 @@
+<nav class="sidebar">
+  <div class="sidebar-header">
+
+    <!--- Logo -->
+     <a class="sidebar-brand nobleui-logo" routerLink="/" *ngIf="!this.ImagePath">Pay<span>Fi</span>
+    </a> 
+     <a *ngIf="this.ImagePath" class="sidebar-brand nobleui-logo">
+      <img [src]="this.ImagePath" style="max-width: 100%; height: 50px; width: 100px;">
+    </a> 
+
+    <!--- Toggler -->
+    <div #sidebarToggler (click)="toggleSidebar($event)" class="sidebar-toggler not-active">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+  </div>
+  <div (mouseenter)="operSidebarFolded()" (mouseleave)="closeSidebarFolded()" [perfectScrollbar] class="sidebar-body">
+
+    <!--- Sidemenu start -->
+
+    <ul #sidebarMenu class="sidebar-nav metismenu" id="sidebar-menu">
+      <ng-container #menuListItem *ngFor="let item of menuItems">
+        <li *ngIf="item.isTitle" class="nav-item nav-category"   [ngClass]="{'disabled': merchantDetails[0].status !== 'Active' && item?.label !== 'Merchant'}">{{ item.label }}</li>
+<!-- {{menuItems|json}} &&item.Service_type==this.mode
+&&subitem.Service_type==this.mode-->
+        <!-- <li *ngIf="!item.isTitle" class="nav-item">
+
+          <a *ngIf="hasItems(item)" class="nav-link" href="javascript:void(0);" [ngClass]="{'disabled': merchantDetails[0].status !== 'Active' && item?.label !== 'Merchant Setup'}">
+            <i *ngIf="item.icon" [attr.data-feather]="item.icon" appFeatherIcon class="link-icon"></i>
+            <span class="link-title"> {{ item.label }}</span>
+            <span appFeatherIcon class="link-arrow" data-feather="chevron-down"></span>
+          </a>
+ 
+          <ul *ngIf="hasItems(item)" aria-expanded="false" class="sidebar-nav sub-menu nav-second-level"> -->
+            <!-- <hr style="color: white;" *ngIf="!item.isTitle"> -->
+            <li *ngFor="let subitem of item.subItems" [ngClass]="{'side-nav-item': hasItems(subitem)}" class="nav-item">
+
+              <a *ngIf="(!hasItems(subitem) || (hasItems(subitem) && levelExclude.includes(subitem.label)))&&item.isTitle" [attr.data-parent]="subitem.parentId" [routerLink]="subitem.link"
+                 class="nav-link nav-link-ref" [ngClass]="{'disabled': subitem.disabled}">
+                 <i *ngIf="subitem.icon" [attr.data-feather]="subitem.icon" appFeatherIcon class="link-icon text-primary"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ subitem.label }}
+              
+              
+              </a>
+ 
+            </li>
+            
+          <!-- </ul>
+        </li> -->
+      </ng-container>
+    </ul>
+
+    <!--- Sidemenu end -->
+
+  </div>
+</nav>

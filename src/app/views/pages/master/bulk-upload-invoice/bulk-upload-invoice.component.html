@@ -1,0 +1,112 @@
+<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Bulk Upload Invoice</h6>
+
+        <form [formGroup]="Bulkuploadform">
+          <div class="main__title col s12 mb-3">
+            <i aria-hidden="true" class="fa fa-file" style="color:grey"></i> <a
+            href="assets/BulkUploadFile.xlsx"> Click
+            Here To Download Sample File For Your Reference <i class="feather text-primary icon-rotate-ccw"></i></a>
+          </div>
+          <div>
+            <h5>Notes</h5>
+            <p>Step 1: Download the sample file from above link </p>
+            <p>Step 2: Fill in the details as per your requirement</p>
+            <p>Step 3: Please ensure the data is correctly entered before uploading the final sheet.</p>
+          </div>
+
+          <!-- <div class="mb-3 mt-2">
+
+              <input  class="form-control" type="file" id="formFile" formControlName="file" (change)='onFileSelect($event)' [ngClass]="{'is-invalid': isForm1Submitted && form1.file.errors}">
+
+                   <div *ngIf="isForm1Submitted && form1.file.errors?.required" class="invalid-feedback">
+                    Please select Document
+                  </div>
+          </div> -->
+
+          <div class="mb-3 mt-2">
+
+            <input (change)='onFileSelect($event)' [ngClass]="{'is-invalid': isForm1Submitted && form1.file.errors}" class="form-control" formControlName="file" id="formFile"
+                   type="file">
+            <!-- <label class="form-label" for="formFile">Please select
+                Document</label> -->
+            <div *ngIf="isForm1Submitted && form1.file.errors?.required" class="invalid-feedback">
+              Please select Document
+            </div>
+
+          </div>
+
+
+          <div class="">
+            <button [disabled]="this.loading" (click)="onsubmit(Bulkuploadform.value)"  class="btn btn-primary"
+            type="submit">
+
+      <span aria-hidden="true" id="loading" role="status"></span>
+     Upload
+
+    </button>
+          </div>
+          <!-- <div class="col-md-1"> <button class="btn btn-secondary" (click)="onVerify()" type="button">Verify</button>
+    </div> -->
+
+          <br>
+
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div [style.display]="rowData ? 'block' : 'none'" class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">BulK Upload Invoice</h6>
+        <div class="table-responsive">
+          <!-- <button type="button" (click)="exportexcel()" class="btn btn-light">Export CSV<i  class="feather icon-download"></i></button> -->
+          <table class="table" id="dataTableExample">
+            <thead>
+            <tr>
+              <th>srNo</th>
+              <th>invoiceNumber</th>
+              <th>uploadStatus</th>
+              <th>remarks</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- <tr>
+              <td>Tiger Nixon</td>
+              <td>System Architect</td>
+              <td>Edinburgh</td>
+              <td>61</td>
+              <td>2011/04/25</td>
+              <td>$320,800</td>
+            </tr> -->
+            <!-- <tr *ngFor="let row of rowData">
+              <td>{{row.sr_no}}</td>
+              <td>{{row.merchantId}}</td>
+              <td>{{row.merchant_name}}</td>
+              <td>{{row.reseller_id}}</td>
+              <td>{{row.uploadStatus}}</td>
+              <td style="word-wrap: break-word;min-width: 16px;max-width: 160px;">{{row.remarks}}</td>
+            </tr> -->
+            </tbody>
+            <tfoot>
+            <tr>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

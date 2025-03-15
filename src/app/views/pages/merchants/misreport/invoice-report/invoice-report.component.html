@@ -1,0 +1,214 @@
+<div class="card">
+  <div class="card-header">
+    <h4>Invoice Report</h4>
+  </div>
+
+  <div class="card-body m-0">
+    <form
+      #f="ngForm"
+      name="form"
+      novalidate>
+      <div class="row" style="min-height: 100px">
+
+
+        <div class="row">
+
+          <div class="col-sm-4">
+            <div class="mb-3">
+              <label class="form-label">From Date</label>
+              <input required [max]="getToday()"  max="{{newDate|date:'yyyy-MM-dd'}}" min="{{pastDate|date:'yyyy-MM-dd'}}" [(ngModel)]="searchFromDate" name="searchFromDate" class="form-control"
+                     id="searchFromDate" type="date"
+                     [ngClass]="{'is-invalid': f?.form?.controls?.searchFromDate?.errors && f.submitted}"
+                     placeholder="dd-mm-yyyy"
+                     (change)="changeDate($event,f)"/>
+
+              <div
+                *ngIf=" f?.form?.controls?.searchFromDate?.errors && f.submitted"
+                class="invalid-feedback"
+                role="alert">
+                Please Select From Date
+              </div>
+
+            </div>
+          </div>
+          <!-- <div class="col-sm-4">
+            <div class="mb-3">
+              <label class="form-label">From Date</label>
+              <input   [max]="getToday()"  [(ngModel)]="searchFromDate"  id="searchFromDate"
+     [ngClass]="{'is-invalid': f?.form?.controls?.searchFromDate?.errors && f.submitted}"
+
+                         name="searchFromDate"
+                         [max]="getToday()" placeholder="dd-mm-yyyy" (change)="changeDate($event,f)"
+                         type="date"/>
+    <div
+                    *ngIf=" f?.form?.controls?.searchFromDate?.errors && f.submitted"
+                    class="invalid-feedback"
+                    role="alert">
+                    Please Select From Date
+                  </div>
+            </div>
+          </div>  -->
+
+
+          <div class="col-sm-4">
+            <div class="mb-3">
+              <label class="form-label">To Date</label>
+              <input required [max]="getToday()"   max="{{newDate|date:'yyyy-MM-dd'}}" min="{{pastDate|date:'yyyy-MM-dd'}}" [(ngModel)]="searchToDate" name="searchToDate" class="form-control"
+                     id="searchToDate" type="date"
+                     [ngClass]="{'is-invalid': f?.form?.controls?.searchToDate?.errors && f.submitted}"
+                     placeholder="dd-mm-yyyy" (change)="changeDate($event,f)"/>
+              <div
+                *ngIf=" f?.form?.controls?.searchToDate?.errors && f.submitted"
+                class="invalid-feedback"
+                role="alert">
+                Please Select To Date
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-sm-4">
+            <div class="mb-3">
+              <label class="form-label">Amount</label>
+              <input [(ngModel)]="SearchAmount" name="SearchAmount" id="SearchAmount" autocomplete="new-password" class="form-control" maxlength="10"
+                     #filSearchAmount placeholder="Amount" 
+                     type="text" (keypress)="OnlyNumbersAllowed($event)">
+
+
+              <!-- <div *ngIf="isForm1Submitted && form1.remark.errors?.required"
+          class="invalid-feedback">
+          Please fill this field
+      </div>  -->
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
+
+          <div class="col-sm-4">
+            <div class="mb-3">
+              <label class="form-label">Invoice Status</label>
+              <ng-select [(ngModel)]="invoiceStatus" aria-label="Default select example"
+                         #filinvoiceStatus
+                          name="invoiceStatus"
+                         placeholder="Invoice Status">
+
+
+                <ng-option value="0">
+                  Created
+                </ng-option>
+                <ng-option value="1">
+                  Paid
+                </ng-option>
+                <ng-option value="4">
+                  Expired
+                </ng-option>
+                <ng-option value="Y">
+                  Cancelled
+                </ng-option>
+
+
+              </ng-select>
+            </div>
+          </div>
+
+          <div class="mb-3 col-md-2 " style="margin-top: 2.4%;">
+            <!-- <label class="form-label" for="searchMID">hi</label> -->
+            <!-- <button  class="btn btn-primary btn-icon-text" type="button"><i
+              class="feather icon-search"></i> Search
+            </button> -->
+          </div>
+          <!-- <div class="col-md-2">
+            <div class="mb-3">
+
+              <label class="col-form-label" for="searchMID">Search</label>
+
+              <div class="col-md-6">
+                <button (click)="onSearchBtnClick($event)" class="btn form-control btn-primary"
+                        type="button"><i class="feather text-primary icon-search"></i>
+                </button>
+              </div>
+            </div>
+          </div> -->
+
+
+        </div>
+        <div class="row">
+          <div class="col-md-8"></div>
+          <div class="col-md-2">
+            <button (click)="resetform($event)" class="form-control btn btn-danger pull-right" type="button">Reset
+            </button>
+          </div>
+          <div class="col-md-2">
+            <!-- *ngIf="fieldData && !permissions.includes('RISK_APPROVE')" -->
+            <button (click)="onSearchBtnClick($event,f)"
+                    class="form-control btn btn-primary pull-right" type="submit" [disabled]="this.loading">
+              <span aria-hidden="true" id="loading" role="status"></span>
+              Search
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </form>
+    <div *ngIf="this.grid">
+      <div class="row">
+        <div class="col-xl-10 main-content">
+          <!--<button type="button" class="btn btn-primary " (click)="onBtnC($event)">Add Rows</button>-->
+
+          <button (click)="onExportCSV()" title="Export Excel" class="btn btn-light" type="button"> <i
+            class="feather icon-download"></i>
+          </button>
+          <!-- <button (click)="quickFilterShowAction($event)" class="btn btn-light" type="button">Quick Filters<i
+            class="feather icon-filter"></i></button> -->
+
+        </div>
+        <div class="col-xl-2">
+          <!-- <input id="typeahead-basic" type="text" autocomplete="new-password" placeholder="Search" class="form-control" (selectItem)="searchQuickFilter($event)" [(ngModel)]="globalSearch" [ngbTypeahead]="search"/> -->
+        </div>
+      </div>
+
+      <div class="row" style="min-height:500px">
+        <div class="col-12 col-xl-12 grid-margin stretch-card ag-theme-alpine" style="margin-bottom: 0px">
+
+          <ag-grid-angular  [columnDefs]="tableSelectedColumn"
+                            [enableCellTextSelection]=true
+                           [paginationPageSize]="pageSize"
+                           [pagination]="true" [rowData]="rowData" [rowModelType]="" [rowSelection]="'single'"
+                           [suppressPaginationPanel]="true" style="width: 100%; height: auto;">
+          </ag-grid-angular>
+
+
+        </div>
+      </div>
+      <div class="row bg-white p-2 mt-0">
+        <div class="col-md-4">
+
+
+          <select (change)="onPageSizeChanges($event)" [(ngModel)]="pageSize"
+                  class="form-select d-flex justify-content-end col-4" name="pageSize" style="width: auto">
+
+            <option *ngFor="let pageNum of pageSizeArr" [ngValue]="pageNum">{{pageNum}}</option>
+
+          </select>
+
+        </div>
+
+        <div class="col-md-8">
+
+
+          <ngb-pagination (pageChange)="onPaginationChange($event)" [(page)]="currentPage" [boundaryLinks]="true"
+                          [collectionSize]="collectionSize" [maxSize]="5" [pageSize]="pageSize" [rotate]="true"
+                          class="d-flex justify-content-end col-8 align-right">
+          </ngb-pagination>
+
+        </div>
+
+      </div>
+    </div>
+
+
+  </div>
+
+
+</div>

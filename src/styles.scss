@@ -1,0 +1,108 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+// Global icon font
+@import "./assets/fonts/feather/style.css";
+
+
+// // 3rd party plugins
+@import "~@mdi/font/css/materialdesignicons.min.css";
+@import '~perfect-scrollbar/css/perfect-scrollbar.css';
+@import "~highlight.js/styles/googlecode.css";
+@import '~ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css';
+@import '~ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.min.css';
+@import '~animate.css/animate.min.css';
+@import '~@fullcalendar/common/main.min.css';
+@import '~@fullcalendar/daygrid/main.min.css';
+@import '~@fullcalendar/timegrid/main.min.css';
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import '~simplemde/dist/simplemde.min.css';
+// @import "~metismenujs/scss/metismenujs";
+// @import "~metismenujs/scss/metismenujs";
+
+@import '~dropzone/dist/min/dropzone.min.css';
+@import '~quill/dist/quill.snow.css';
+@import '~angular-archwizard/styles/archwizard.css';
+@import '~simple-datatables/dist/style.css';
+@import '~@swimlane/ngx-datatable/index.css';
+@import '~@swimlane/ngx-datatable/themes/bootstrap.css';
+@import '~@swimlane/ngx-datatable/assets/icons.css';
+
+
+
+// NobleUI styles for LTR
+//@import "~ag-grid-community/styles";
+@import "ag-grid-community/dist/styles/ag-grid.css";
+//@import "ag-grid-community/dist/styles/ag-theme-balham.css";
+@import "ag-grid-community/dist/styles/ag-theme-alpine.css";
+@import "ag-grid-community/dist/styles/ag-theme-alpine-dark.css";
+
+
+// NobleUI styles for LTR
+@import "./assets/scss/style";
+
+ 
+// NobleUI styles For RTL
+// @import "./assets/scss/style.rtl.css";
+textarea:focus,
+input[type="text"]:focus,
+input[type="section"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+ input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus,
+select:focus,
+.ng-select-container:focus,
+ng-select:focus  {
+border-color: rgba(140, 223, 236, 0.8);
+box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(115, 215, 240, 0.6);
+  outline: 0 none;
+}
+.hey{
+  border-color: rgba(140, 223, 236, 0.8)!important;
+box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(115, 215, 240, 0.6)!important;
+outline: 0 none!important;
+}
+// .select:focus {
+//   border-color: rgba(140, 223, 236, 0.8);
+//   box-shadow: 0 0 3px 2px #719ECE;
+//     width: 450px;
+//      padding: 15px;
+
+// }
+
+select:focus {
+  border-color:black;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(115, 215, 240, 0.6);
+  outline: 0 none;
+}
+
+
+select .ng-input{
+  cursor: pointer;
+}
+
+.form-select{
+  cursor: pointer;
+}
+
+
+.ng-invalid.hello .ng-select-container{
+  border-color: #ff3366;
+}
+
+
+.tooltip-inner {
+  background-color: #515acc;
+  max-width: none!important;
+}

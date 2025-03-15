@@ -1,0 +1,107 @@
+<div class="card">
+  <div class="card-header">
+    <h4>Recon Progress Report</h4>
+  </div>
+  <div class="card-body m-0">
+    <form [formGroup]="ReconProgressReportform">
+      <div class="row">
+        <div class="col-sm-5">
+          <div class="mb-3">
+            <label class="form-label">Service Provider</label>
+            <select aria-label="Default select example" class="form-select" formControlName="Sp">
+              <option class="drop" disabled value="">Select Service Provider</option>
+              <option *ngFor="let service of Resdata" [value]="service.FieldValue">
+                {{service.FieldText}}
+              </option>
+            </select>
+            <!-- <div class="invalid-feedback">
+                Required
+            </div> -->
+
+          </div>
+        </div>
+        <div class="col-sm-5">
+          <div class="mb-3">
+            <label class="form-label">Recon Date</label>
+
+            <div class="input-group">
+              <input [max]="getToday()" [ngClass]="{'is-invalid': isForm1Submitted && form1.reconDate.errors}" class="form-control"
+                     formControlName="reconDate" placeholder="dd-mm-yyyy"
+                     type="date">
+              <div *ngIf="isForm1Submitted && form1.reconDate.errors?.required"
+                   class="invalid-feedback">
+                Required
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="col-sm-2">
+            <button class="btn  form-control btn-primary" type="button"><i
+                class="feather icon-search"></i>
+            </button>
+          </div> -->
+
+        <div class="col-sm mb-2">
+
+          <div>
+
+            <button (click)="search(ReconProgressReportform.value)" class="btn btn-primary pull-right mt-4"
+                    type="submit">
+              <i class="feather text-primary icon-search"></i>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </form>
+
+
+    <div *ngIf="this.reconProgressResponse" class="row mb-0" style="min-height: 470px">
+      <div class="col-12 col-xl-12 grid-margin stretch-card ag-theme-alpine" style="margin-bottom: 0px">
+        <ag-grid-angular (gridReady)="onGridReady($event)" (rowClicked)="onRowClicked($event)"
+                         (rowDoubleClicked)="onRowDoubleClicked($event)"
+                         [columnDefs]="tableSelectedColumn" [defaultColDef]="defaultColDef"
+                         [enableCellTextSelection]=true [rowData]="rowData" style="width: 100%; height: auto;">
+        </ag-grid-angular>
+      </div>
+    </div>
+    <div *ngIf="this.reconProgressResponse" class="row mt-0">
+      <!-- <div class="col-4 col-xs-4">
+    <select (change)="onPageSizeChanges($event)" [(ngModel)]="pageSize"
+            class="form-select d-flex justify-content-end col-4" name="pageSize" style="width: auto">
+
+      <option>{{pageNum}}</option>
+
+    </select>
+  </div> -->
+
+      <!-- <div class="col-8 col-xs-8">
+    <ngb-pagination (pageChange)="onPaginationChange($event)" [(page)]="currentPage" [boundaryLinks]="true"
+      [collectionSize]="collectionSize" [maxSize]="maxSize" [pageSize]="pageSize" [rotate]="true"
+      [ellipses]="ellipses" size="sm" class="d-flex justify-content-end align-right">
+    </ngb-pagination>
+  </div> -->
+
+
+      <div class="col-md-4">
+        <select (change)="onPageSizeChanges($event)" [(ngModel)]="pageSize"
+                class="form-select d-flex justify-content-end col-4" name="pageSize" style="width: auto">
+          <option [ngValue]="10">10</option>
+          <option [ngValue]="20">20</option>
+          <option [ngValue]="30">30</option>
+        </select>
+      </div>
+
+      <div class="col-md-8">
+        <ngb-pagination (pageChange)="onPaginationChange($event)" [(page)]="currentPage" [boundaryLinks]="true"
+                        [collectionSize]="collectionSize" [maxSize]="5" [pageSize]="pageSize" [rotate]="true"
+                        class="d-flex justify-content-end align-right">
+        </ngb-pagination>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,175 @@
+<div class="row">
+  <div class="card">
+    <div class="card-header">
+      <h4>Upload Chargeback Docs</h4>
+    </div>
+    <div class="card-body bg-white">
+      <form (ngSubmit)="onSubmit(chargeBackForm.value)" [formGroup]="chargeBackForm">
+
+        <div class="row">
+
+
+          <div class="col-sm-4">
+              <div class="mb-3">
+                <label class="form-label">Transaction ID</label>
+                <input
+                       autocomplete="new-password"
+                       class="form-control"  id="payid" placeholder="Transaction ID"
+                       type="text" formControlName="transactionid" (keypress)="OnlyNumbersAllowed($event)" maxlength="45">
+
+              </div>
+            </div>
+
+          <div class="col-sm-4">
+            <div class="mb-3">
+              <label class="form-label">From Date</label>
+              <input
+                     class="form-control" class="form-control"
+
+                     id="searchFromDate"
+
+                     placeholder="Account Number" formControlName="formdate" type="date"  [max]="getToday()"/>
+              <!-- <div *ngIf="isForm1Submitted && refundListFilter.get('searchFromDate')?.errors?.required"
+                   class="invalid-feedback">
+                Required
+              </div> -->
+            </div>
+
+
+          </div>
+
+          <div class="col-sm-4">
+            <div class="mb-3">
+              <label class="form-label">To Date</label>
+              <input
+                     class="form-control" class="form-control"
+
+                     id="searchToDate"
+                     placeholder="To Date"formControlName="todate" type="date"  [max]="getToday()"/>
+              <!-- <div *ngIf="isForm1Submitted && refundListFilter.get('searchToDate')?.errors?.required"
+                   class="invalid-feedback">
+                Required
+              </div> -->
+            </div>
+
+
+          </div>
+
+
+
+
+        </div>
+
+        <!-- <div class="row mb-2">
+          <div class="col-xs-12">
+            <div class="text-end">
+              <button class="btn btn-primary " type="submit">
+                Search
+              </button>
+            </div>
+          </div>
+        </div> -->
+
+        <div class="row">
+          <div class="col-md-8"></div>
+          <div class="col-md-2">
+            <button (click)="reset()" class="form-control btn btn-danger pull-right" type="button">Reset
+            </button>
+          </div>
+          <div class="col-md-2">
+            <!-- *ngIf="fieldData && !permissions.includes('RISK_APPROVE')" -->
+            <button
+            class="btn btn-primary form-control pull-right" type="submit" [disabled]="this.loading">
+              <span aria-hidden="true" id="loading" role="status"></span>
+              <span  id="loading" role="status" aria-hidden="true"></span>
+              Search
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div  [style.visibility]="this.display ? 'visible' : 'hidden'">
+  <div class="row mb-md-2 mt-2">
+      <div class="col-xl-10 main-content">
+        <!-- <button (click)="onExportCSV()" class="btn btn-light" type="button">Export Excel<i class="feather icon-download"></i>
+        </button> -->
+        <div class="btn-group" ngbDropdown role="group">
+          <button class="btn btn-primary" ngbDropdownToggle>Columns</button>
+          <div class="ng-dropdown-panel-items p-1" ngbDropdownMenu
+               style="height: 250px;width: 250px; overflow: scroll; scroll-behavior: smooth">
+            <div class="form-group">
+              <!--            <label for="columns" class="form-label"> All Columns</label>-->
+              <div *ngIf="columnDefs" class="list-group ng-option">
+                      <span *ngFor="let column of columnDefsCopy; let i = index" class="checkbox">
+                        <label class="list-group-item p-2">
+                          <input class="form-check-input me-1" type="checkbox" value="{{i}}" name="{{column.headerName}}"
+                                 (change)="updateSelectedColumn($event)"
+                                 [checked]="(tableSelectedColumn && (-1 !==tableSelectedColumn.indexOf(column)) ? 'checked': '')"/>
+                          {{(column?.headerName?.replace('_', '') || column?.field?.replace('_', '')) }}
+                        </label>
+                      </span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+    <div class="row" style="min-height: 500px" >
+      <div class="col-12 col-xl-12 stretch-card ag-theme-alpine">
+        <ag-grid-angular
+          (firstDataRendered)="dataRendered($event)"
+          (gridReady)="onGridReady($event)"
+          [columnDefs]="tableSelectedColumn"
+          [defaultColDef]="defaultColDef"
+          [enableCellTextSelection]=true
+          [paginationPageSize]="pageSize"
+          [pagination]="true"
+          [rowData]="rowData"
+          [rowSelection]="'single'"
+          [suppressPaginationPanel]="true"
+          (rowDoubleClicked)="onRowDoubleClicked($event)"
+          class="ag-theme-alpine"
+          style="width: 100%; height: auto;"
+        >
+        </ag-grid-angular>
+      </div>
+    </div>
+    <div  class="row bg-white p-2 mt-0">
+      <div class="col-md-4">
+        <select (change)="onPageSizeChanges($event)" [(ngModel)]="pageSize"
+                class="form-select d-flex justify-content-end col-4" name="pageSize" style="width: auto">
+          <option *ngFor="let pageNum of pageSizeArr" [ngValue]="pageNum">{{pageNum}}</option>
+
+        </select>
+      </div>
+
+      <div class="col-md-8">
+        <ngb-pagination
+          (pageChange)="onPaginationChange($event)"
+          [(page)]="currentPage"
+          [boundaryLinks]="true"
+          [collectionSize]="collectionSize"
+          [maxSize]="5"
+          [pageSize]="pageSize"
+          [rotate]="true"
+          class="d-flex justify-content-end align-right">
+        </ngb-pagination>
+      </div>
+
+    </div>
+</div>
+
+<app-modal #modalbloked [modalConfig]="modalConfigBlocked">
+  <!--  body of the modal (closeModal)="closeModalBlocked($event)" [merchantStatusConfig]="tableInfo"
+     -->
+  <app-charge-back (closeModal)="closeModalBlocked($event)"
+      [onMerchantMId]="BlockedmerchantSelectEvent"></app-charge-back>
+  <!-- <div>Delete </div> -->
+</app-modal>

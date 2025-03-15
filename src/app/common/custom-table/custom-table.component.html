@@ -1,0 +1,150 @@
+<div class="card">
+  <div class="card-body m-0">
+    <div class="row mb-2 mt-2">
+      <div class="col-xl-10">
+        <!--<button type="button" class="btn btn-primary " (click)="onBtnC($event)">Add Rows</button>-->
+        <button type="button" class="btn btn-light" *ngIf="permissions.includes('Add New')" (click)="onAddNew($event)">Add
+          New<i class="feather text-primary icon-plus"></i></button>
+        <button type="button" class="btn btn-light" *ngIf="permissions.includes('Export CSV')" (click)="onExportCSV()">
+          Export CSV<i class="feather text-primary icon-download"></i></button>
+        <button type="button" class="btn btn-light" *ngIf="permissions.includes('Search')"
+                (click)="quickFilterShowAction($event)">Quick Filters<i class="feather text-primary icon-filter"></i></button>
+        <div class="btn-group mb-1 mb-md-0">
+          <!--      <button type="button" class="btn btn-primary">Columns</button>-->
+          <div class="btn-group" ngbDropdown role="group">
+            <button class="btn btn-primary" ngbDropdownToggle>Columns</button>
+            <div ngbDropdownMenu class="ng-dropdown-panel-items p-1" style="height: 250px;width: 250px; overflow: scroll; scroll-behavior: smooth">
+              <div class="form-group">
+                <!--            <label for="columns" class="form-label"> All Columns</label>-->
+                <div *ngIf="columnDefs" class="list-group ng-option">
+              <span *ngFor="let column of columnDefs; let i = index" class="checkbox">
+                <label class="list-group-item p-2">
+                  <input class="form-check-input me-1" type="checkbox" value="{{i}}" name="{{column.headerName}}"
+                         (change) ="updateSelectedTimeslots($event)"
+                         [checked]="(tableSelectedColumn && (-1 !==tableSelectedColumn.indexOf(column)) ? 'checked': '')">
+                  {{column.field | uppercase }}
+                </label>
+              </span>
+                </div>
+
+              </div>
+              <!--          <ng-select-->
+              <!--            [(ngModel)]="tableSelectedColumn"-->
+              <!--            [closeOnSelect]="false"-->
+              <!--            [items]="columnDefs"-->
+              <!--            [multiple]=true-->
+              <!--            bindLabel="field">-->
+              <!--            <ng-template let-index="index" let-item="item" let-item$="item$" ng-option-tmp>-->
+              <!--              <input [ngModel]="item$.selected" id="item-{{index}}" type="checkbox"/> {{item.field.toUpperCase()}}-->
+              <!--            </ng-template>-->
+              <!--          </ng-select>-->
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-2" *ngIf="permissions.includes('Search')">
+        <input id="typeahead-basic" type="text" autocomplete="new-password" placeholder="Search" class="form-control"
+               (selectItem)="searchQuickFilter($event)" [(ngModel)]="globalSearch"
+               (ngModelChange)="onGlobalSearchChange($event)" [ngbTypeahead]="search"/>
+      </div>
+    </div>
+    <div *ngIf="quickFilterShow" class="row" style="min-height: 100px">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-3">
+              <!-- <div class="row"> -->
+              <label class="col-form-label" for="searchMerName">Search by Merchant Name</label>
+              <!-- <div class="col-md-8"> -->
+              <input [(ngModel)]="searchMerName" class="form-control" id="searchMerName" type="text" autocomplete="new-password"/>
+              <!-- </div> -->
+
+              <!-- </div> -->
+            </div>
+            <div class="col-md-3">
+              <!-- <div class="row"> -->
+              <label class="col-form-label" for="searchMID">Search by Merchant ID</label>
+              <!-- <div class="col-md-8"> -->
+              <input [(ngModel)]="searchMID" class="form-control" id="searchMID" type="text" autocomplete="new-password"/>
+              <!-- </div> -->
+              <!-- </div> -->
+            </div>
+            <div class="col-md-3">
+              <div class="row">
+                <label class="col-form-label" for="searchMID">Search by Date Range</label>
+                <div class="col-md-6">
+                  <input [(ngModel)]="searchFromDate" class="form-control" id="searchFromDate" type="date"/>
+                </div>
+                <div class="col-md-6">
+                  <input [(ngModel)]="searchToDate" class="form-control" id="searchToDate" type="date"/>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="row">
+                <!-- <div class="col-md-12"> -->
+                <label class="col-form-label" for="searchMID">Search</label>
+                <!-- </div>            -->
+                <div class="col-md-6">
+                  <button (click)="onSearchBtnClick($event)" class="btn form-control btn-primary" type="button"><i
+                    class="feather icon-search"></i></button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+    <div class="row mb-0" style="min-height: 470px">
+      <div class="col-12 col-xl-12 grid-margin stretch-card ag-theme-alpine" style="margin-bottom: 0px">
+        <ag-grid-angular [enableCellTextSelection]=true
+          (filterChanged)="onFilterChange($event)"
+          (filterModified)="onFilterModified($event)"
+          (filterOpened)="onFilterOpened($event)"
+          (gridReady)="onGridReady($event)"
+          (rowClicked)="onRowClicked($event)"
+          (rowDoubleClicked)="onRowDoubleClicked($event)"
+          (search)="globalSearch"
+          [columnDefs]="tableSelectedColumn"
+          [defaultColDef]="defaultColDef"
+          [paginationPageSize]="pageSize"
+          [pagination]="true"
+          [rowData]="rowData"
+          [rowModelType]=""
+          [rowSelection]="'single'"
+          [suppressPaginationPanel]="true"
+          style="width: 100%; height: auto;"
+        ></ag-grid-angular>
+      </div>
+    </div>
+    <div class="row mt-0">
+      <div class="col-md-4">
+        <select (change)="onPageSizeChanges($event)" [(ngModel)]="pageSize"
+                class="form-select d-flex justify-content-end col-4"
+                name="pageSize" style="width: auto">
+          <option *ngFor="let pageSize of pageSizeArr" [value]="pageSize">
+            {{pageSize}}
+          </option>
+        </select>
+      </div>
+
+      <div class="col-md-8">
+        <ngb-pagination
+          (pageChange)="onPaginationChange($event)"
+          [(page)]="currentPage"
+          [boundaryLinks]="true"
+          [collectionSize]="collectionSize"
+          [maxSize]="5"
+          [pageSize]="pageSize"
+          [rotate]="true"
+          class="d-flex justify-content-end align-right">
+        </ngb-pagination>
+      </div>
+
+    </div>
+  </div>
+</div>

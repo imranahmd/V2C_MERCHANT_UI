@@ -1,0 +1,155 @@
+<!-- <p>charge-back works!</p> -->
+<!-- <p>{{this.data | json}}</p> -->
+
+<div style="overflow:auto;">
+    <table class="table table-bordered text-wrap">
+        <thead>
+            <tr>
+                <th> ChargeBack Id</th>
+                <th>Txn Id</th>
+                <th>Remarks</th> 
+                <th>Amount</th>
+    
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">{{this.data?.CBID}}</th>
+                <td>{{this.data?.TxnId}}</td>
+                
+                
+                <td class="text-wrap">{{this.data?.Remarks}}</td>
+    
+                <td>{{this.data?.Amount}}</td>
+    
+            </tr>
+    
+    
+        </tbody>
+    </table>
+    
+</div>
+
+<div class="row">
+    <div class="card">
+
+        <div class="tab-content mt-3" id="lineTabContent">
+            <div class="tab-pane fade show active" #home id="home" role="tabpanel" aria-labelledby="home-line-tab">
+                <div class="card-header row">
+                    <div class="col">
+                        <!-- <h4>Transaction Details</h4>  -->
+                    </div>
+                    <!-- <div class="col text-end">
+                <button class="btn btn-warning" type="button" (click)="bulkUpload()" >
+                  Bulk Upload
+                </button>
+              </div> -->
+                </div>
+
+                <div class="card-body bg-white">
+                    <form [formGroup]="chargeBackRaiseForm">
+
+                        <div class="row">
+
+
+
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">CRN / Ref No <span aria-hidden="true"
+                                            class="symbol required" style="color:red;">*</span></label>
+                                    <input class="form-control" formControlName="RefNo" placeholder="CRN / Ref No"
+                                        type="text" autocomplete="new-password" id="bankId"
+                                        [ngClass]="{'is-invalid': isForm1Submitted && chargeBackRaiseForm.get('RefNo')?.errors}"
+                                        (keypress)="OnlyCharacterNumberAllowed($event)" maxlength="45">
+                                    <div *ngIf="isForm1Submitted && chargeBackRaiseForm.get('RefNo')?.errors?.required"
+                                        class="invalid-feedback">
+                                        Please Enter CRN / Ref No
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Comments <span aria-hidden="true" class="symbol required"
+                                            style="color:red;">*</span></label>
+                                    <input class="form-control" formControlName="Remarks"
+                                        placeholder="Comments" type="text" autocomplete="new-password"
+                                        id="bankId"
+                                        [ngClass]="{'is-invalid': isForm1Submitted && chargeBackRaiseForm.get('Remarks')?.errors}" maxlength="500">
+
+                                    <div *ngIf="isForm1Submitted && chargeBackRaiseForm.get('Remarks')?.errors?.required"
+                                        class="invalid-feedback">
+                                        Please Enter Comments
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+
+
+
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Upload File <span aria-hidden="true"
+                                            class="symbol required" style="color:red;">*</span></label>
+                                    <input class="form-control" id="MerchantCutOffDate" type="file" multiple
+                                        class="form-control" formControlName="file" placeholder="Merchant Cut-Off Date"
+                                        (change)='onFileSelect($event)'
+                                        [ngClass]="{'is-invalid': isForm1Submitted && chargeBackRaiseForm.get('file')?.errors}" />
+
+
+                                    <div *ngIf="isForm1Submitted && chargeBackRaiseForm.get('file')?.errors?.required"
+                                        class="invalid-feedback">
+                                        Please Select File
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+
+
+
+
+
+
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-8"></div>
+                            <div class="col-md-2">
+                                <button type="button" class="form-control btn btn-danger pull-right"
+                                    (click)="resetform()">Reset
+                                </button>
+                            </div>
+                            <div class="col-md-2">
+
+                                <button class="form-control btn btn-primary pull-right" type="submit"
+                                    (click)="onSubmit(chargeBackRaiseForm.value)">
+                                    <span id="loading" role="status" aria-hidden="true"></span>
+                                    Update
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+
+    </div>
+</div>

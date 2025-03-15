@@ -1,0 +1,202 @@
+<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-5">
+            <h4 class="card-title">Risk Transaction List</h4>
+          </div>
+          <div *ngIf="status" class="col-md-3 ">
+            <button class="form-label btn text-muted" for="exampleInputUsername1">
+              Current Status : <b>{{status}}</b></button>
+          </div>
+          <div *ngIf="status" class="col-md-3 justify-content-md-center row">
+
+            <div *ngIf="this.statusButton!='Active'" class="col" style="text-align: center;">
+              <button (click)="MerchantStatus($event,'Active')" class="btn btn-primary"><i
+                class="feather arrow-left"></i>Active
+              </button>
+            </div>
+            <div *ngIf="this.statusButton!='Suspended'" class="col" style="text-align: center;">
+              <button (click)="MerchantStatus($event,'Suspended')" class="btn btn-warning"><i
+                class="feather arrow-left"></i>Suspend
+              </button>
+            </div>
+            <div *ngIf="this.statusButton!='Hold'" class="col" style="text-align: center;">
+              <button (click)="MerchantStatus($event,'Hold')" class="btn btn-danger"><i
+                class="feather arrow-left"></i>Hold
+              </button>
+              <!-- <input id="typeahead-basic" type="text" autocomplete="new-password" placeholder="Search" class="form-control" (selectItem)="searchQuickFilter($event)" [(ngModel)]="globalSearch" [ngbTypeahead]="search"/> -->
+            </div>
+
+          </div>
+        </div>
+        <form [formGroup]="RiskChartForm" novalidate>
+
+          <!-- <p class=“text-muted”>Merchant wise risk analysis</p> -->
+          <div class="mb-3 col-md-12">
+            <label class="form-label text-muted" for="exampleInputUsername1"> Merchant ID </label>
+            <ng-select (click)="merchantlistdata($event)" [(ngModel)]="categoryDefaultValue" formControlName="Mid"
+                       id="mid" name="mid" placeholder="Merchant ID">
+              <ng-option *ngFor="let merchant of Resultdata" [value]="merchant.MerchantId" id="selectedOption">
+                {{merchant.Merchant_Id}}
+                <!-- ({{merchant.Merchant_Id}}) (click)="onSubmit(RiskChartForm.controls['Mid'].value)" -->
+              </ng-option>
+            </ng-select>
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="row main-content">
+    <!--<button type="button" class="btn btn-primary " (click)="onBtnC($event)">Add Rows</button>-->
+    <div class="col-10">
+      <button (click)="onExportCSV()" class="btn btn-light" type="button">Export CSV<i
+        class="feather icon-download"></i>
+      </button>
+      <!-- <button (click)="quickFilterShowAction($event)" class="btn btn-light" type="button">Quick Filters<i
+      class="feather icon-filter"></i></button> -->
+    </div>
+    <!-- <div class="col">
+
+    </div> -->
+    <div class="col-2">
+      <button (click)="previousStep($event)" class="btn btn-secondary pull-right"><i class="feather text-primary arrow-left"></i>Back
+      </button>
+    </div>
+  </div>
+
+</div>
+<!-- <div *ngIf="quickFilterShow" class="row" style="min-height: 100px">
+  <div class="card">
+    <div class="card-body">
+
+
+      <div class="row">
+
+        <div class="col-sm-4">
+          <div class="mb-3">
+            <label class="form-label">Form Date</label>
+            <input [(ngModel)]="searchFromDate" class="form-control" id="searchFromDate" type="date"/>
+          </div>
+        </div>
+
+
+        <div class="col-sm-4">
+          <div class="mb-3">
+            <label class="form-label">To Date</label>
+            <input [(ngModel)]="searchToDate" class="form-control" id="searchToDate" type="date"/>
+
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="mb-3">
+            <label class="form-label">MID</label>
+            <input [(ngModel)]="searchMID" class="form-control" id="searchMID" type="text" autocomplete="new-password"/>
+
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+
+        <div class="col-sm-4">
+          <div class="mb-3">
+            <label class="form-label">Risk Code</label>
+            <select [(ngModel)]="searchRiskCode" aria-label="Default select example" class="form-select"
+                    placeholder="Risk Code">
+              <option *ngFor="let riskcodevalue of Resdata" [ngValue]="riskcodevalue.FieldValue">
+                {{riskcodevalue.FieldText}}</option>
+
+
+            </select>
+          </div>
+        </div>
+
+
+        <div class="col-sm-4">
+          <div class="mb-3">
+            <label class="form-label">Risk Level</label>
+            <select [(ngModel)]="searchRiskStage" aria-label="Default select example" class="form-select"
+                    placeholder="Risk Code">
+              <option *ngFor="let RiskStagevalue of Riskdatadata" [ngValue]="RiskStagevalue.FieldValue">
+                {{RiskStagevalue.FieldText}}</option>
+
+
+            </select>
+
+
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="mb-3">
+            <label class="form-label">Risk Flag</label>
+            <select [(ngModel)]="searchRiskFlag" aria-label="Default select example" class="form-select"
+                    placeholder="Risk Code">
+              <option *ngFor="let RiskFlagvalue of RiskFlagdatadata" [ngValue]="RiskFlagvalue.FieldValue">
+                {{RiskFlagvalue.FieldText}}</option>
+
+
+            </select>
+
+
+          </div>
+        </div>
+
+      </div>
+      <div class="row ">
+        <div class="col-md-4">
+          <button (click)="onSearchBtnClick($event)" class="btn btn-sm" type="button">Search<i
+            class="feather icon-search"></i></button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div> -->
+<div class="row" style="min-height: 470px">
+  <div class="col-12 col-xl-12 grid-margin stretch-card ag-theme-alpine" style="margin-bottom: 0px">
+    <ag-grid-angular (gridReady)="onGridReady($event)" [columnDefs]="tableSelectedColumn" [defaultColDef]="defaultColDef"
+                     [enableCellTextSelection]=true
+                     [paginationPageSize]="pageSize" [pagination]="true" [rowData]="rowData"
+                     [suppressPaginationPanel]="true"
+                     class="ag-theme-alpine"
+                     style="width: 100%; height: auto;">
+    </ag-grid-angular>
+  </div>
+</div>
+<div class="row bg-white p-2 mt-0">
+  <div class="col-md-4">
+    <select (change)="onPageSizeChanges($event)" [(ngModel)]="pageSize"
+            class="form-select d-flex justify-content-end col-4" name="pageSize" style="width: auto">
+      <option [ngValue]="10">10</option>
+      <option [ngValue]="20">20</option>
+      <option [ngValue]="30">30</option>
+    </select>
+  </div>
+
+  <div class="col-md-8">
+    <ngb-pagination (pageChange)="onPaginationChange($event)" [(page)]="currentPage" [boundaryLinks]="true"
+                    [collectionSize]="collectionSize" [maxSize]="5" [pageSize]="pageSize" [rotate]="true"
+                    class="d-flex justify-content-end align-right">
+    </ngb-pagination>
+  </div>
+
+</div>
+
+
+<!--
+ <app-modal #modalRisk [modalConfig]="merchantList">
+    <app-transaction-risk-chart (closeModal)="closeModalRisk($event)" [onMerchantRisk]="RiskSelectEvent"></app-transaction-risk-chart>
+  </app-modal> -->
+
+<app-modal #modalRisk [modalConfig]="merchantList">
+  <app-merchantstatus (closeModal)="closeModalRisk($event)" [onMerchantMId]="RiskSelectEvent"></app-merchantstatus>
+</app-modal>

@@ -1,0 +1,409 @@
+<!-- <div class="row">
+  <div *ngIf="status==1 && permissions.includes('OPERATION_APPROVE')" class="text-lg-center">
+    <ngb-alert [dismissible]="false" [type]="'success'"><i class="feather text-primary icon-thumbs-up"></i>{{"Operation is approved"
+      | uppercase}}</ngb-alert>
+  </div>
+  <div *ngIf="status==2 && permissions.includes('OPERATION_APPROVE')" class="text-lg-center">
+    <ngb-alert [dismissible]="false" [type]="'danger'"><i class="feather text-primary icon-thumbs-down"></i> {{"Operation is
+      rejected" | uppercase}}</ngb-alert>
+  </div>
+</div> -->
+<form (ngSubmit)="resellerSubmit()" [formGroup]="resellerBasic">
+
+  <!--  <div class="row">-->
+  <!--    <div class="col-lg-12 grid-margin stretch-card">-->
+  <!--      <div class="card">-->
+
+  <!--        <div class="card-body row">-->
+  <!--          <div class="row">-->
+  <!--            <div class="mb-3 col-md-12">-->
+  <!--              &lt;!&ndash; <div class="mb-3"> &ndash;&gt;-->
+
+  <!--              &lt;!&ndash; <label class="form-label">Reseller ID</label> &ndash;&gt;-->
+  <!--              <label for="ResellerID" class="form-label">Reseller ID</label>-->
+  <!--              <ng-select formControlName="ResellerID" (click)="midSubmit()" (keyup.enter)="midSubmit()"-->
+  <!--                         placeholder="resellerId">-->
+  <!--                <ng-option id="selectedOption" *ngFor="let reseller of Resultdata"-->
+  <!--                           [value]="reseller.ResellerId">{{reseller.reseller_name}} ({{reseller.ResellerId}})-->
+  <!--                </ng-option>-->
+  <!--              </ng-select>-->
+  <!--              &lt;!&ndash; </div> &ndash;&gt;-->
+  <!--            </div>-->
+  <!--          </div>-->
+
+  <!--        </div>-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--  </div>-->
+
+
+  <div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+      <div class="card">
+
+        <div class="card-body row">
+          <div class="row">
+            <div class="mb-3 col-md-6">
+              <!-- <div class="mb-3"> -->
+
+              <!-- <label class="form-label">Reseller ID</label> -->
+              <label class="form-label" for="ResellerID">Reseller ID <span aria-hidden="true" class="symbol required"
+                                                                           style="color:red;">*</span></label>
+              <ng-select (click)="midSubmit()" (keyup.enter)="midSubmit()" formControlName="ResellerID"
+                         placeholder="Reseller ID">
+                <ng-option *ngFor="let reseller of Resultdata" [value]="reseller.ResellerId" id="selectedOption">
+                  {{reseller.reseller_name}} ({{reseller.ResellerId}})
+                </ng-option>
+              </ng-select>
+              <!-- </div> -->
+            </div>
+          </div>
+          <div class="mb-3 col-md-4">
+            <label class="form-label" for="resellerReturnUrl">Reseller Return Url <span aria-hidden="true"
+                                                                                        class="symbol required"
+                                                                                        style="color:red;">*</span></label>
+
+            <input [ngClass]="{'is-invalid': isForm6Submitted && form6.resellerReturnUrl.errors}" class="form-control" formControlName="resellerReturnUrl"
+                   id="resellerReturnUrl" maxlength="500"
+                   placeholder="https://abc.com/return-url"
+                   type="resellerReturnUrl">
+            <div *ngIf="form6.resellerReturnUrl.errors?.twoSpaces" class="invalid-feedback">
+              More than two consecutive spaces are not allowed
+            </div>
+          </div>
+          <!--          <div class="mb-3 col-md-4">-->
+          <!--            <label for="autoRefund" class="col-form-label">Auto Refund</label>-->
+          <!--            <select class="form-select" id="autoRefund" formControlName="autoRefund"-->
+          <!--                    [ngClass]="{'is-invalid': isForm6Submitted && form6.autoRefund.errors}"-->
+          <!--                    (click)="resetAutorefund(resellerBasic.controls['autoRefund'].value)">-->
+          <!--              <option ngValue="1">Yes</option>-->
+          <!--              <option ngValue="0">No</option>-->
+          <!--            </select>-->
+          <!--          </div>-->
+
+          <!--          <div class="mb-3 col-md-4">-->
+          <!--            <label for="autoRefundHours" class="col-form-label">Hours</label>-->
+          <!--            <select class="form-select" id="autoRefundHours" formControlName="autoRefundHours"-->
+          <!--                    [ngClass]="{'is-invalid': isForm6Submitted && form6.autoRefundHours.errors}">-->
+          <!--              &lt;!&ndash; [selected]="resellerBasic.controls['autoRefund'].value==0" &ndash;&gt;-->
+          <!--              &lt;!&ndash; [disabled]="refundval" &ndash;&gt;-->
+          <!--              <option>00</option>-->
+          <!--              <option>01</option>-->
+          <!--              <option>02</option>-->
+          <!--              <option>03</option>-->
+          <!--              <option>04</option>-->
+          <!--              <option>05</option>-->
+          <!--              <option>06</option>-->
+          <!--              <option>07</option>-->
+          <!--              <option>08</option>-->
+          <!--              <option>09</option>-->
+          <!--              <option>10</option>-->
+          <!--              <option>11</option>-->
+          <!--              <option>12</option>-->
+          <!--              <option>13</option>-->
+          <!--              <option>14</option>-->
+          <!--              <option>15</option>-->
+          <!--              <option>16</option>-->
+          <!--              <option>17</option>-->
+          <!--              <option>18</option>-->
+          <!--              <option>19</option>-->
+          <!--              <option>20</option>-->
+          <!--              <option>21</option>-->
+          <!--            </select>-->
+          <!--            &lt;!&ndash; <p class="text-danger mt-1" *ngIf="requried?.errors?.required">required error</p> &ndash;&gt;-->
+          <!--          </div>-->
+          <!--          <div class="mb-3 col-md-4">-->
+          <!--            <label for="autoRefundMin" class="col-form-label">Minutes</label>-->
+          <!--            <select [disabled]="!(resellerBasic.controls['autoRefund'].value)" class="form-select" id="autoRefundMin"-->
+          <!--                    formControlName="autoRefundMin"-->
+          <!--                    [ngClass]="{'is-invalid': isForm6Submitted && form6.autoRefundMin.errors}">-->
+          <!--              <option>00</option>-->
+          <!--              <option>05-->
+          <!--              </option>-->
+          <!--              <option>10</option>-->
+          <!--              <option>15-->
+          <!--              </option>-->
+          <!--              <option>20</option>-->
+          <!--              <option>25-->
+          <!--              </option>-->
+          <!--              <option>30</option>-->
+          <!--              <option>35-->
+          <!--              </option>-->
+          <!--              <option>40</option>-->
+          <!--              <option>45-->
+          <!--              </option>-->
+          <!--              <option>50</option>-->
+          <!--              <option>55</option>-->
+
+          <!--            </select>-->
+          <!--            &lt;!&ndash; <p class="text-danger mt-1" *ngIf="requried?.errors?.required">required error</p> &ndash;&gt;-->
+          <!--          </div>-->
+          <!--          <div class="mb-3 col-md-4">-->
+          <!--            <label for="pushUrl" class="form-label">Push URL</label>-->
+          <!--            <select class="form-select" id="pushUrl" formControlName="pushUrl"-->
+          <!--                    [ngClass]="{'is-invalid': isForm6Submitted && form6.pushUrl.errors}" (change)="pushData()">-->
+          <!--              <option value="1">Yes</option>-->
+          <!--              <option value="0">No</option>-->
+
+          <!--            </select>-->
+          <!--            &lt;!&ndash; <p class="text-danger mt-1" *ngIf="requried?.errors?.required">required error</p> &ndash;&gt;-->
+          <!--          </div>-->
+          <!--          <div class="mb-3 col-md-4">-->
+          <!--            <label for="enterpushUrl" class="form-label">Enter Push URL</label>-->
+          <!--            <input class="form-control" [readonly]="pushURLvalue" type="text" autocomplete="new-password" formControlName="enterpushUrl"-->
+          <!--                   placeholder="Enter Push URL" id="enterpushUrl"-->
+          <!--                   [ngClass]="{'is-invalid': isForm6Submitted && form6.enterpushUrl.errors}"/>-->
+          <!--            &lt;!&ndash; <p class="text-danger mt-1" *ngIf="requried?.errors?.required">required error</p> &ndash;&gt;-->
+          <!--          </div>-->
+
+          <!--          <div class="mb-3 col-md-4">-->
+          <!--            <label for="settlementUrl" class="form-label">Settlement cycle</label>-->
+          <!--            <select class="form-select" id="settlementUrl" formControlName="settlementUrl"-->
+          <!--                    [ngClass]="{'is-invalid': isForm6Submitted && form6.settlementUrl.errors}">-->
+          <!--              <option value="T+0">T+0</option>-->
+          <!--              <option value="T+1">T+1</option>-->
+          <!--              <option value="T+2">T+2</option>-->
+          <!--              <option value="T+3">T+3</option>-->
+          <!--              <option value="T+4">T+4</option>-->
+          <!--              <option value="T+5">T+5</option>-->
+
+          <!--            </select>-->
+          <!--            &lt;!&ndash; <p class="text-danger mt-1" *ngIf="requried?.errors?.required">required error</p> &ndash;&gt;-->
+          <!--          </div>-->
+
+          <div class="mb-3 col-md-4">
+            <label class="form-label" for="exampleInputUsername1">Integration type <span aria-hidden="true"
+                                                                                         class="symbol required"
+                                                                                         style="color:red;">*</span></label>
+            <select [ngClass]="{'is-invalid': isForm6Submitted && form6.integrationType.errors}" class="form-select" formControlName="integrationType"
+                    id="integrationType">
+
+
+              <option disabled selected value="">Select Integration type</option>
+
+              <option value="0">Merchant</option>
+
+              <option value="1">Reseller</option>
+              <!-- <option value="1">Licensed Reseller</option>
+              <option value="2">Non-Licensed Reseller</option> -->
+
+            </select>
+            <!-- <p class="text-danger mt-1" *ngIf="requried?.errors?.required">required error</p> -->
+          </div>
+          <!--          <div class="mb-3 col-md-4">-->
+          <!--            <label for="exampleInputUsername1" class="form-label">Payment retry</label>-->
+          <!--            <input class="form-control" type="text" autocomplete="new-password" formControlName="paymentRetry"-->
+          <!--                   placeholder="Payment retry" name="requried" #requried="" required id="paymentRetry"-->
+          <!--                   [ngClass]="{'is-invalid': isForm6Submitted && form6.paymentRetry.errors}"/>-->
+          <!--            &lt;!&ndash; <p class="text-danger mt-1" *ngIf="requried?.errors?.required">required error</p> &ndash;&gt;-->
+          <!--          </div>/-->
+          <!--          <div class="mb-3 col-md-4">-->
+          <!--            <label for="linkPaymentEmail" class="form-label">Link based payment Email</label>-->
+          <!--            &lt;!&ndash; <input class="form-control" type="text" autocomplete="new-password"-->
+          <!--                #requried="" required /> &ndash;&gt;-->
+          <!--            <select formControlName="linkPaymentEmail" placeholder="Link based payment Email"-->
+          <!--                    id="linkPaymentEmail" name="requried" class="form-select"-->
+          <!--                    [ngClass]="{'is-invalid': isForm6Submitted && form6.linkPaymentEmail.errors}">-->
+          <!--              <option ngValue="1">Yes</option>-->
+          <!--              <option ngValue="0">No</option>-->
+          <!--            </select>-->
+          <!--            &lt;!&ndash; <p class="text-danger mt-1" *ngIf="requried?.errors?.required">required error</p> &ndash;&gt;-->
+          <!--          </div>-->
+          <!--          <div class="mb-3 col-md-4">-->
+          <!--            <label for="exampleInputUsername1" class="form-label">Link based payment SMS</label>-->
+          <!--            &lt;!&ndash; <input class="form-control" type="text" autocomplete="new-password"-->
+          <!--                #requried="" required /> &ndash;&gt;-->
+          <!--            <select formControlName="linkPaymentSms" placeholder="Link based payment SMS"-->
+          <!--                    id="linkPaymentSms" name="requried" class="form-select"-->
+          <!--                    [ngClass]="{'is-invalid': isForm6Submitted && form6.linkPaymentSms.errors}">-->
+          <!--              <option ngValue="1">Yes</option>-->
+          <!--              <option ngValue="0">No</option>-->
+          <!--            </select>-->
+          <!--            &lt;!&ndash; <p class="text-danger mt-1" *ngIf="requried?.errors?.required">required error</p> &ndash;&gt;-->
+          <!--          </div>-->
+          <!--          <div class="mb-3 col-md-4">-->
+          <!--            <label for="exampleInputUsername1" class="form-label">Invoice mail remainder?</label>-->
+          <!--            &lt;!&ndash; <input class="form-control" type="text" autocomplete="new-password"-->
+          <!--                #requried="" required /> &ndash;&gt;-->
+          <!--            <select formControlName="invoiceMainReminder" placeholder="Invoice mail remainder?"-->
+          <!--                    id="invoiceMainReminder" name="requried" class="form-select"-->
+          <!--                    [ngClass]="{'is-invalid': isForm6Submitted && form6.invoiceMainReminder.errors}">-->
+          <!--              <option ngValue="1">Yes</option>-->
+          <!--              <option ngValue="0">No</option>-->
+          <!--            </select>-->
+          <!--            &lt;!&ndash; <p class="text-danger mt-1" *ngIf="requried?.errors?.required">required error</p> &ndash;&gt;-->
+          <!--          </div>-->
+          <div class="mb-3 col-md-4">
+            <label class="form-label" for="reportingCycle">Invoicing cycle <span aria-hidden="true"
+                                                                                 class="symbol required"
+                                                                                 style="color:red;">*</span></label>
+            <select [ngClass]="{'is-invalid': isForm6Submitted && form6.reportingCycle.errors}" class="form-select" formControlName="reportingCycle" id="reportingCycle"
+                    name="requried" placeholder="Invoicing cycle">
+              <option disabled hidden selected value="">Select Invoicing cycle</option>
+              <option>Daily</option>
+              <option>Weekly</option>
+              <option>Monthly</option>
+
+            </select>
+            <!-- <p class="text-danger mt-1" *ngIf="requried?.errors?.required">required error</p> -->
+          </div>
+
+          <!--          <div class="mb-3 col-md-4">-->
+          <!--            <label for="disableRefundDashboard" class="form-label">Disable refund Dashboard-->
+          <!--            </label>-->
+          <!--            <select formControlName="disableRefundDashboard" placeholder="Disable refund Dashboard"-->
+          <!--                    id="disableRefundDashboard" name="requried" class="form-select"-->
+          <!--                    [ngClass]="{'is-invalid': isForm6Submitted && form6.disableRefundDashboard.errors}">-->
+          <!--              <option value="1">Enable</option>-->
+          <!--              <option value="0">Disable</option>-->
+
+          <!--            </select>-->
+          <!--          </div>-->
+          <!--          <div class="mb-3 col-md-4">-->
+          <!--            <label for="disableRefundApi" class="form-label">Disable refund API-->
+          <!--            </label>-->
+          <!--            <select formControlName="disableRefundApi" placeholder="Disable refund API"-->
+          <!--                    id="disableRefundApi" name="requried" class="form-select"-->
+          <!--                    [ngClass]="{'is-invalid': isForm6Submitted && form6.disableRefundApi.errors}"-->
+          <!--                    formControlName="disableRefundApi">-->
+          <!--              <option value="1">Enable</option>-->
+          <!--              <option value="0">Disable</option>-->
+
+          <!--            </select>-->
+          <!--          </div>-->
+          <!--          <div class="mb-3 col-md-4">-->
+          <!--            <label for="disableRefundDashboard" class="form-label">Disable instrument wise refund Dashboard-->
+          <!--            </label>-->
+          <!--            <div class="form-check">-->
+          <!--              <input class="form-check-input" type="checkbox"-->
+          <!--                     [ngClass]="{'is-invalid': isForm6Submitted && form6.mdDisableRefundCc.errors}"-->
+          <!--                     formControlName="mdDisableRefundCc" id="Credit">-->
+          <!--              <label class="form-check-label" for="Credit">-->
+          <!--                Credit Card-->
+          <!--              </label>-->
+          <!--            </div>-->
+          <!--            <div class="form-check">-->
+          <!--              <input class="form-check-input" type="checkbox"-->
+          <!--                     [ngClass]="{'is-invalid': isForm6Submitted && form6.mdDisableRefundDc.errors}"-->
+          <!--                     formControlName="mdDisableRefundDc" id="Debit">-->
+          <!--              <label class="form-check-label" for="Debit">-->
+          <!--                Debit Card-->
+          <!--              </label>-->
+          <!--            </div>-->
+          <!--            <div class="form-check">-->
+          <!--              <input class="form-check-input" type="checkbox"-->
+          <!--                     [ngClass]="{'is-invalid': isForm6Submitted && form6.mdDisableRefundUpi.errors}"-->
+          <!--                     formControlName="mdDisableRefundUpi" id="UPI">-->
+          <!--              <label class="form-check-label" for="UPI">-->
+          <!--                UPI-->
+          <!--              </label>-->
+          <!--            </div>-->
+          <!--            <div class="form-check">-->
+          <!--              <input class="form-check-input" type="checkbox"-->
+          <!--                     [ngClass]="{'is-invalid': isForm6Submitted && form6.mdDisableRefundNb.errors}"-->
+          <!--                     formControlName="mdDisableRefundNb" id="Net">-->
+          <!--              <label class="form-check-label" for="Net">-->
+          <!--                Net Banking-->
+          <!--              </label>-->
+          <!--            </div>-->
+          <!--            <div class="form-check">-->
+          <!--              <input class="form-check-input" type="checkbox"-->
+          <!--                     [ngClass]="{'is-invalid': isForm6Submitted && form6.mdDisableRefundWallet.errors}"-->
+          <!--                     formControlName="mdDisableRefundWallet" id="Wallet">-->
+          <!--              <label class="form-check-label" for="Wallet">-->
+          <!--                Wallet-->
+          <!--              </label>-->
+          <!--            </div>-->
+          <!--            &lt;!&ndash; <p class="text-danger mt-1" *ngIf="requried?.errors?.required">required error</p> &ndash;&gt;-->
+          <!--          </div>-->
+
+
+          <!--          <div class="mb-3 col-md-4">-->
+          <!--            <label for="disableRefundDashboard" class="form-label">Disable instrument wise refund API-->
+          <!--            </label>-->
+          <!--            <div class="form-check">-->
+          <!--              <input class="form-check-input" type="checkbox"-->
+          <!--                     [ngClass]="{'is-invalid': isForm6Submitted && form6.refundApiDisableCc.errors}"-->
+          <!--                     formControlName="refundApiDisableCc" id="CreditCard">-->
+          <!--              <label class="form-check-label" for="CreditCard">-->
+          <!--                Credit Card-->
+          <!--              </label>-->
+          <!--            </div>-->
+          <!--            <div class="form-check">-->
+          <!--              <input class="form-check-input" type="checkbox"-->
+          <!--                     [ngClass]="{'is-invalid': isForm6Submitted && form6.refundApiDisableDc.errors}"-->
+          <!--                     formControlName="refundApiDisableDc" id="DebitCard">-->
+          <!--              <label class="form-check-label" for="DebitCard">-->
+          <!--                Debit Card-->
+          <!--              </label>-->
+          <!--            </div>-->
+          <!--            <div class="form-check">-->
+          <!--              <input class="form-check-input" type="checkbox"-->
+          <!--                     [ngClass]="{'is-invalid': isForm6Submitted && form6.refundApiDisableUpi.errors}"-->
+          <!--                     formControlName="refundApiDisableUpi" id="UPIBANK">-->
+          <!--              <label class="form-check-label" for="UPIBANK">-->
+          <!--                UPI-->
+          <!--              </label>-->
+          <!--            </div>-->
+          <!--            <div class="form-check">-->
+          <!--              <input class="form-check-input" type="checkbox"-->
+          <!--                     [ngClass]="{'is-invalid': isForm6Submitted && form6.refundApiDisableNb.errors}"-->
+          <!--                     formControlName="refundApiDisableNb" id="NetBanking">-->
+          <!--              <label class="form-check-label" for="NetBanking">-->
+          <!--                Net Banking-->
+          <!--              </label>-->
+          <!--            </div>-->
+          <!--            <div class="form-check">-->
+          <!--              <input class="form-check-input" type="checkbox"-->
+          <!--                     [ngClass]="{'is-invalid': isForm6Submitted && form6.refundApiDisableWallet.errors}"-->
+          <!--                     formControlName="refundApiDisableWallet" id="WalletBank">-->
+          <!--              <label class="form-check-label" for="WalletBank">-->
+          <!--                Wallet-->
+          <!--              </label>-->
+          <!--            </div>-->
+          <!--            &lt;!&ndash; <p class="text-danger mt-1" *ngIf="requried?.errors?.required">required error</p> &ndash;&gt;-->
+          <!--          </div>-->
+          <!--        </div>-->
+          <!-- <div class="mb-3 card-body col-md-2 row" style="margin-top:auto ;margin-bottom: auto;">
+            <input class="form-control btn btn-primary" type="submit" />
+        </div> -->
+
+          <!-- <div class="row mb-2" *ngIf="permissions.includes('OPERATION_APPROVE')">
+            <div class="col-6">
+              <label class="form-label">Remarks</label>
+              <input type="text" autocomplete="new-password" placeholder="Please add remarks" [disabled]="status != 0" class="form-control"
+                     [ngClass]="{'is-invalid': errorRemarks}"
+                     formControlName="remarks" id="remarks" />
+              <div *ngIf="errorRemarks" class="invalid-feedback">
+                Remarks is required
+              </div>
+            </div>
+          </div> -->
+
+          <div *ngIf="!permissions.includes('OPERATION_APPROVE')" class="row mb-2">
+            <div class="col-md-10"></div>
+            <div class="col-md-2">
+              <button [disabled]="!(this.permissions.includes('Add New') || this.permissions.includes('Edit'))"
+                      class="form-control btn btn-primary mt-3">Submit
+              </button>
+            </div>
+          </div>
+
+          <!-- <div class="row mb-2" *ngIf="permissions.includes('OPERATION_APPROVE')">
+            <div class="col-xs-12">
+              <div class="text-center">
+                <button class="btn btn-secondary" [disabled]="status != 0" (click)="statusApproval(1, $event)"><i
+                    class="feather icon-thumbs-up"></i>Approve
+                </button>
+                <button class="btn btn-primary" [disabled]="status != 0" (click)="statusApproval(2, $event)">Reject <i
+                    class="feather icon-thumbs-down"></i></button>
+              </div>
+            </div>
+          </div> -->
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</form>

@@ -1,0 +1,272 @@
+<div class="card">
+  <div class="card-header">
+    <h4>Merchant Master</h4>
+  </div>
+  <div class="card-body m-0">
+    <div class="row mb-2">
+      <div class="col-xl-10">
+        <!--<button type="button" class="btn btn-primary " (click)="onBtnC($event)">Add Rows</button>-->
+        <button (click)="onAddNew($event)" *ngIf="permissions.includes('Add New')" class="btn btn-light" type="button">
+          Add
+          New<i class="feather text-primary icon-plus"></i></button>
+        <button (click)="onExportCSV()" title="Export Excel" class="btn btn-light" type="button">
+          <i class="feather text-primary icon-download"></i></button>
+        <button (click)="quickFilterShowAction($event)" *ngIf="permissions.includes('Search')" class="btn btn-light"
+                type="button">Quick Filters<i class="feather text-primary icon-filter"></i></button>
+        <div class="btn-group mb-1 mb-md-0">
+          <!--      <button type="button" class="btn btn-primary">Columns</button>-->
+          <div class="btn-group" ngbDropdown role="group">
+            <button class="btn btn-primary" ngbDropdownToggle>Columns</button>
+            <div class="ng-dropdown-panel-items p-1" ngbDropdownMenu
+                 style="height: 250px;width: 250px; overflow: scroll; scroll-behavior: smooth">
+              <div class="form-group">
+                <!--            <label for="columns" class="form-label"> All Columns</label>-->
+                <div *ngIf="columnDefs" class="list-group ng-option">
+                  <span *ngFor="let column of columnDefsCopy; let i = index" class="checkbox">
+                    <label class="list-group-item p-2">
+                      <input (change)="updateSelectedTimeslots($event)" [checked]="(tableSelectedColumn && (-1 !==tableSelectedColumn.indexOf(column)) ? 'checked': '')" class="form-check-input me-1" name="{{column.headerName}}"
+                             type="checkbox"
+                             value="{{i}}"/>
+                      {{(column?.headerName?.replace('_', '') || column?.field?.replace('_', '')) }}
+                    </label>
+                  </span>
+                </div>
+
+              </div>
+              <!--          <ng-select-->
+              <!--            [(ngModel)]="tableSelectedColumn"-->
+              <!--            [closeOnSelect]="false"-->
+              <!--            [items]="columnDefs"-->
+              <!--            [multiple]=true-->
+              <!--            bindLabel="field">-->
+              <!--            <ng-template let-index="index" let-item="item" let-item$="item$" ng-option-tmp>-->
+              <!--              <input [ngModel]="item$.selected" id="item-{{index}}" type="checkbox"/> {{item.field.toUpperCase()}}-->
+              <!--            </ng-template>-->
+              <!--          </ng-select>-->
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="col-xl-2" *ngIf="permissions.includes('Search')">
+        <input (paste)="false" id="typeahead-basic" type="text" autocomplete="new-password" placeholder="Search in Page" class="form-control"
+               (selectItem)="searchQuickFilter($event)" [(ngModel)]="globalSearch"
+               (ngModelChange)="onGlobalSearchChange($event)" [ngbTypeahead]="search"/>
+      </div> -->
+    </div>
+    <div *ngIf="quickFilterShow" class="row" style="min-height: 100px">
+
+      <form
+        #f="ngForm"
+        name="form"
+        novalidate>
+
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <!-- <div class="col-md-3">
+                <label class="col-form-label" for="searchMerName">Search by Merchant Name</label>
+                <input (keyup.enter)="onSearchBtnClick($event,f)" (paste)="false" [(ngModel)]="searchMerName"
+                       class="form-control" maxlength="50" id="searchMerName" (keyup)="allowAlfanumeric($event)"
+                       (keypress)="OnlyCharacterAllowed($event)" (change)="allowAlfanumeric($event)" type="text" autocomplete="new-password"/>
+
+
+
+
+                           <div class="mb-3 col-md-4" *ngSwitchCase="'text'">
+                    <label for="exampleInputUsername1" class="form-label"> {{controls.parameter_name}}
+                    </label>
+
+                    <input class="form-control" *ngSwitchCase="'text'"
+                           [formControlName]="controls.id" [id]="controls.id" [type]="controls.data_type"
+                           [placeholder]="controls.parameter_name" [name]="controls.id"
+                           [ngClass]="{'is-invalid': isForm6Submitted && form6[controls.id].errors }"/>
+
+             </div>
+              </div> -->
+
+
+              <div class="mb-3 col-md-4">
+                <label class="form-label" for="exampleInputUsername1">
+                  Search by Merchant Name </label>
+
+
+                <ng-select #filSearchMerName (change)="allowAlfanumeric($event)"
+                           (focus)="fun('searchMerName')"
+                           (focusout)="funover('searchMerName')"
+                           (keypress)="OnlyCharacterAllowed($event)" (keyup)="allowAlfanumeric($event)" (keyup.enter)="onSearchBtnClick($event,f)" [(ngModel)]="searchMerName"
+                           id="searchMerName" maxlength="50"
+                           name="searchMerName"
+                           placeholder="Search by Merchant Name" style="overflow: visible;"
+                >
+                  <ng-option *ngFor="let merchant of ResultdataName " [value]="merchant.name"
+                             style="overflow: visible;">
+                    {{merchant.field_name}}
+                  </ng-option>
+                </ng-select>
+
+              </div>
+
+              <div class="mb-3 col-md-4">
+                <label class="form-label" for="exampleInputUsername1">
+                  Search by Merchant ID </label>
+
+
+                <ng-select #filSearchMID (change)="allowAlfanumeric($event)"
+                           (focus)="fun('searchMID')"
+                           (focusout)="funover('searchMID')" (keyup)="allowAlfanumeric($event)" (keyup.enter)="onSearchBtnClick($event,f)" [(ngModel)]="searchMID"
+                           id="searchMID" maxlength="20"
+                           name="searchMID" placeholder="Search by Merchant ID"
+                >
+                  <ng-option *ngFor="let merchant of Resultdata" [value]="merchant.merchantId"
+                             style="overflow: visible;">
+                    {{merchant.field_value}}
+                  </ng-option>
+                </ng-select>
+
+              </div>
+              <div class="mb-3 col-md-4">
+
+                <label class="form-label" for="Status">Status</label>
+
+                <ng-select #filStatus (focus)="fun('Status')" (focusout)="funover('Status')"
+                           [(ngModel)]="Status"
+                           [inputAttrs]="{maxlength: '40'}" [items]="merchantStatusdata" bindLabel="FieldText"
+                           bindValue="FieldValue" id="Status"
+                           name="Status" placeholder="Select Status"
+                >
+                </ng-select>
+
+
+              </div>
+
+              <!-- <div class="col-md-5">
+                <div class="row"> -->
+              <div class="mb-3 col-md-4">
+                <label class="form-label" for="searchMID">From Date</label>
+
+                <input #filSearchFromDate (change)="changeDate($event,f)" [(ngModel)]="searchFromDate" [ngClass]="{'is-invalid': f?.form?.controls?.searchFromDate?.errors && f.submitted}"
+
+                       class="form-control"
+
+                       id="searchFromDate"
+                       max="{{dynamicDate|date:'yyyy-MM-dd'}}" name="searchFromDate" placeholder="dd-mm-yyyy"
+                       type="date"/>
+                <div
+                  *ngIf=" f?.form?.controls?.searchFromDate?.errors && f.submitted"
+                  class="invalid-feedback"
+                  role="alert">
+                  Please Select From Date
+                </div>
+              </div>
+
+              <div class="mb-3 col-md-4">
+                <label class="form-label" for="searchMID">To Date</label>
+
+                <input #filSearchToDate (change)="changeEndDate($event,f)" [(ngModel)]="searchToDate" [max]="getToday()"
+                       [ngClass]="{'is-invalid': f?.form?.controls?.searchToDate?.errors && f.submitted}"
+                       class="form-control"
+                       id="searchToDate" name="searchToDate" placeholder="dd-mm-yyyy" type="date"/>
+                <!-- min="{{searchFromDate|date:'yyyy-MM-dd'}}" -->
+                <div
+                  *ngIf=" f?.form?.controls?.searchToDate?.errors && f.submitted"
+                  class="invalid-feedback"
+                  role="alert">
+                  Please Select To Date
+                </div>
+              </div>
+              <!-- <div class="row  col-md-4"> -->
+              <!-- <div class="col-md-8"></div>
+              <div class="col-md-2"></div> -->
+              <div class="mb-3 col-md-2 " style="margin-top: 2.4%;">
+                <!-- <label class="form-label" for="searchMID">hi</label> -->
+                <button (click)="onLoggedin($event,f)" class="btn btn-primary btn-icon-text" type="submit"><i
+                  class="feather icon-search"></i> Search
+                </button>
+              </div>
+              <!-- </div> -->
+            </div>
+
+
+          </div>
+        </div>
+
+      </form>
+    </div>
+    <div class="row mb-0" style="min-height: 470px">
+      <div class="col-12 col-xl-12 grid-margin stretch-card ag-theme-alpine" style="margin-bottom: 0px">
+        <ag-grid-angular (filterChanged)="onFilterChange($event)"
+                         (filterModified)="onFilterModified($event)"
+                         (filterOpened)="onFilterOpened($event)"
+                         (gridReady)="onGridReady($event)"
+                         (rowClicked)="onRowClicked($event)"
+                         (rowDoubleClicked)="onRowDoubleClicked($event)"
+                         (search)="globalSearch"
+                         [columnDefs]="tableSelectedColumn"
+                         [defaultColDef]="defaultColDef"
+                         [enableCellTextSelection]=true
+                         [paginationPageSize]="pageSize"
+                         [pagination]="true"
+                         [rowData]="rowData"
+                         [rowModelType]=""
+                         [rowSelection]="'single'"
+                         [suppressPaginationPanel]="true"
+                         style="width: 100%; height: auto;"
+        ></ag-grid-angular>
+      </div>
+    </div>
+    <div class="row mt-0">
+      <div class="col-4 col-xs-4">
+        <select (change)="onPageSizeChanges($event)" [(ngModel)]="pageSize"
+                class="form-select d-flex justify-content-end col-4"
+                name="pageSize" style="width: auto">
+<!--          <option [ngValue]="10">10</option>-->
+<!--          <option [ngValue]="20">20</option>-->
+<!--          <option [ngValue]="30">30</option>-->
+          <option *ngFor="let pageNum of pageSizeArr" [ngValue]="pageNum">{{pageNum}}</option>
+        </select>
+      </div>
+
+      <div class="col-8 col-xs-8">
+        <ngb-pagination
+          (pageChange)="onPaginationChange($event)"
+          [(page)]="currentPage"
+          [boundaryLinks]="true"
+          [collectionSize]="collectionSize"
+          [ellipses]="ellipses"
+          [maxSize]="maxSize"
+          [pageSize]="pageSize"
+          [rotate]="true"
+          class="d-flex justify-content-end align-right"
+          size="sm">
+        </ngb-pagination>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!--<app-modal #modalAdd [modalConfig]="modalConfigAdd">-->
+<!--  &lt;!&ndash;  body of the modal  &ndash;&gt;-->
+<!--  <app-merchant-add (closeModal)="closeModalAdd($event)"></app-merchant-add>-->
+<!--</app-modal>-->
+<!--<app-modal #modalEdit [modalConfig]="modalConfigEdit">-->
+<!--  &lt;!&ndash;  body of the modal  &ndash;&gt;-->
+<!--  <app-merchant-edit [editData]="modalConfigEdit"></app-merchant-edit>-->
+<!--</app-modal>-->
+<!--<app-modal #modalMerchant [modalConfig]="modalConfigMerchant">-->
+<!--  &lt;!&ndash;  body of the modal  &ndash;&gt;-->
+<!--  <app-merchantriskconfig [merchantId]="Merchantdata" [onConfigChange]="merchantConfigEvent"></app-merchantriskconfig>-->
+<!--</app-modal>-->
+<!--<app-modal #modalMerchantBank [modalConfig]="modalConfigMerchant">-->
+<!--  &lt;!&ndash;  body of the modal  &ndash;&gt;-->
+<!-- <app-account-list [merchantId]="selectedMerchant" [onMerchantChange]="merchantSelectEvent" ></app-account-list>-->
+<!--</app-modal>-->
+
+<app-modal #modalbloked [modalConfig]="modalConfigBlocked">
+  <!--  body of the modal  -->
+  <app-merchant-blocked (closeModal)="closeModalBlocked($event)" [merchantStatusConfig]="tableInfo"
+                        [onMerchantMId]="BlockedmerchantSelectEvent"></app-merchant-blocked>
+  <!-- <div>Delete </div> -->
+</app-modal>

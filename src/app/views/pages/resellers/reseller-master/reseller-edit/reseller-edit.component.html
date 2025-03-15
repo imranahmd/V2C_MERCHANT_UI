@@ -1,0 +1,590 @@
+<div class="row">
+  <!-- col -->
+  <div class="col-md-12 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <!--        <h6 class="card-title"></h6>-->
+
+        <aw-wizard #wizardForm>
+
+          <aw-wizard-step stepTitle="Contact Details">
+            <form (ngSubmit)="form1Submit()" [formGroup]="validationForm1">
+
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="contactName">Contact Name</label>
+                  <div class="col-sm-9">
+                    <input [ngClass]="{'is-invalid': isForm1Submitted && form1.contactName.errors}" autocomplete="new-password"
+                           class="form-control" formControlName="contactName"
+                           id="contactName"
+                           placeholder="ex. Jone Day" type="text">
+                    <div *ngIf="isForm1Submitted && form1.contactName.errors?.required" class="invalid-feedback">
+                      Required
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="contactNumber">Contact Number</label>
+                  <div class="col-sm-9">
+                    <input [ngClass]="{'is-invalid': isForm1Submitted && form1.contactNumber.errors}"
+                           autocomplete="new-password" class="form-control" formControlName="contactNumber"
+                           id="contactNumber"
+                           placeholder="ex. 9988776655" type="text">
+                    <div *ngIf="isForm1Submitted && form1.contactNumber.errors?.required" class="invalid-feedback">
+                      Required
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="emailId">EmailId</label>
+                  <div class="col-sm-9">
+                    <input [ngClass]="{'is-invalid': isForm1Submitted && form1.emailId.errors}" autocomplete="new-password"
+                           class="form-control" formControlName="emailId"
+                           id="emailId"
+                           placeholder="ex. sample@Payments.com" type="email">
+                    <div *ngIf="isForm1Submitted && form1.emailId.errors?.required" class="invalid-feedback">
+                      Required
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="d-flex justify-content-center mt-2">
+                <button class="btn btn-primary" type="submit">Continue</button>
+              </div>
+            </form>
+          </aw-wizard-step>
+
+          <aw-wizard-step stepTitle="Business Details">
+            <form (ngSubmit)="form2Submit()" [formGroup]="validationForm2">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="pan">PAN</label>
+                  <div class="col-sm-9">
+                    <input [ngClass]="{'is-invalid': isForm2Submitted && form2.pan.errors}" autocomplete="new-password"
+                           class="form-control" formControlName="pan"
+                           id="pan" placeholder="ex. AABBC1234D" type="text">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="legalName">Legal Name</label>
+                  <div class="col-sm-9">
+                    <input [ngClass]="{'is-invalid': isForm2Submitted && form2.legalName.errors}" autocomplete="new-password"
+                           class="form-control" formControlName="legalName"
+                           id="legalName"
+                           placeholder="Legal Name" type="text">
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="brandName">Brand Name</label>
+                  <div class="col-sm-9">
+                    <input [ngClass]="{'is-invalid': isForm2Submitted && form2.brandName.errors}" autocomplete="new-password"
+                           class="form-control" formControlName="brandName"
+                           id="brandName"
+                           placeholder="Brand Name" type="text">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="businessType">Business Type</label>
+                  <div class="col-sm-9">
+                    <select [ngClass]="{'is-invalid': isForm2Submitted && form2.businessType.errors}"
+                            class="form-select" formControlName="businessType"
+                            id="businessType">
+                      <option *ngFor="let c of businessTypeOptions"
+                              [ngValue]="c.FieldValue">{{c.FieldText | uppercase }}</option>
+                    </select>
+                    <!--                    <input type="number" class="form-control" id="businessType" formControlName="businessType"-->
+                    <!--                           [ngClass]="{'is-invalid': isForm2Submitted && form2.businessType.errors}" placeholder="Business Type">-->
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="businessCategory">Business Category</label>
+                  <div class="col-sm-9">
+                    <!--                    <input type="text" autocomplete="new-password" class="form-control" id="businessCategory" formControlName="businessCategory"-->
+                    <!--                           [ngClass]="{'is-invalid': isForm2Submitted && form2.businessCategory.errors}" placeholder="Business Category">-->
+                    <select [ngClass]="{'is-invalid': isForm2Submitted && form2.businessCategory.errors}"
+                            class="form-select" formControlName="businessCategory"
+                            id="businessCategory">
+                      <option *ngFor="let c of resellerCategoryOptions"
+                              [ngValue]="c.FieldValue">{{c.FieldText | uppercase}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="subCategory">Sub Category</label>
+                  <div class="col-sm-9">
+                    <input [ngClass]="{'is-invalid': isForm2Submitted && form2.subCategory.errors}" autocomplete="new-password"
+                           class="form-control" formControlName="subCategory"
+                           id="subCategory"
+                           placeholder="Sub Category" type="text">
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="businessModel">Business Model</label>
+                  <div class="col-sm-9">
+                    <input [ngClass]="{'is-invalid': isForm2Submitted && form2.businessModel.errors}"
+                           autocomplete="new-password" class="form-control" formControlName="businessModel"
+                           id="businessModel"
+                           placeholder="Business Model" type="text">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="turnOverLastFinYear">Turn Over Last Financial Year</label>
+                  <div class="col-sm-9">
+                    <input [ngClass]="{'is-invalid': isForm2Submitted && form2.turnOverLastFinYear.errors}"
+                           autocomplete="new-password" class="form-control"
+                           formControlName="turnOverLastFinYear"
+                           id="turnOverLastFinYear"
+                           placeholder="ex. 120000" type="text">
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="expMonthlyTurnOver">Expected Monthly Turn Over</label>
+                  <div class="col-sm-9">
+                    <input [ngClass]="{'is-invalid': isForm2Submitted && form2.expMonthlyTurnOver.errors}"
+                           autocomplete="new-password" class="form-control" formControlName="expMonthlyTurnOver"
+                           id="expMonthlyTurnOver"
+                           placeholder="ex. 1200" type="text">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="avgAmountPerTransaction">Average Amount Per Transaction</label>
+                  <div class="col-sm-9">
+                    <input [ngClass]="{'is-invalid': isForm2Submitted && form2.avgAmountPerTransaction.errors}"
+                           autocomplete="new-password" class="form-control"
+                           formControlName="avgAmountPerTransaction"
+                           id="avgAmountPerTransaction"
+                           placeholder="ex. 1200" type="text">
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="authPersonPan">Authorise Person Pan</label>
+                  <div class="col-sm-9">
+                    <input [ngClass]="{'is-invalid': isForm2Submitted && form2.authPersonPan.errors}"
+                           autocomplete="new-password" class="form-control" formControlName="authPersonPan"
+                           id="authPersonPan"
+                           placeholder="ex. AABBC1234D" type="text">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="authPersonPanName">Authorise Person Pan Name</label>
+                  <div class="col-sm-9">
+                    <input [ngClass]="{'is-invalid': isForm2Submitted && form2.authPersonPanName.errors}"
+                           autocomplete="new-password" class="form-control" formControlName="authPersonPanName"
+                           id="authPersonPanName"
+                           placeholder="ex. Jone Day" type="text">
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="address">Address</label>
+                  <div class="col-sm-9">
+                    <input [ngClass]="{'is-invalid': isForm2Submitted && form2.address.errors}" autocomplete="new-password"
+                           class="form-control" formControlName="address"
+                           id="address" placeholder="Address" type="text">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="pincode">PINCODE</label>
+                  <div class="col-sm-9">
+                    <input [ngClass]="{'is-invalid': isForm2Submitted && form2.pincode.errors}" autocomplete="new-password"
+                           class="form-control" formControlName="pincode"
+                           id="pincode" placeholder="ex. 100011" type="text">
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="city">CITY</label>
+                  <div class="col-sm-9">
+                    <input [ngClass]="{'is-invalid': isForm2Submitted && form2.city.errors}" autocomplete="new-password"
+                           class="form-control" formControlName="city"
+                           id="city" placeholder="ex. Mumbai" type="text">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="state">State</label>
+                  <div class="col-sm-9">
+                    <input [ngClass]="{'is-invalid': isForm2Submitted && form2.state.errors}" autocomplete="new-password"
+                           class="form-control" formControlName="state"
+                           id="state" placeholder="ex. Maharashtra" type="text">
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="gstin">GSTIN</label>
+                  <div class="col-sm-9">
+                    <input [ngClass]="{'is-invalid': isForm2Submitted && form2.gstin.errors}" autocomplete="new-password"
+                           class="form-control" formControlName="gstin"
+                           id="gstin" placeholder="ex. 18AABCU9603R1ZM" type="text">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="websiteUrl">Website Url</label>
+                  <div class="col-sm-9">
+                    <input [ngClass]="{'is-invalid': isForm2Submitted && form2.websiteUrl.errors}" autocomplete="new-password"
+                           class="form-control" formControlName="websiteUrl"
+                           id="websiteUrl"
+                           placeholder="ex. https://www.Payments.com" type="text">
+                  </div>
+                </div>
+
+              </div>
+              <div class="d-flex justify-content-center mt-2">
+                <button awPreviousStep class="btn btn-secondary me-2" type="button">Back</button>
+                <button class="btn btn-primary" type="submit">Continue</button>
+              </div>
+            </form>
+          </aw-wizard-step>
+
+          <aw-wizard-step stepTitle="Payment Requirement">
+            <form (ngSubmit)="form3Submit()" [formGroup]="validationForm3">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="resellerPartner">Reseller Partner </label>
+                  <div class="col-sm-9">
+                    <!--                    <input type="checkbox" class="form-control form-check-input" id="paymentDone" formControlName="paymentDone"-->
+                    <!--                           [ngClass]="{'is-invalid': isForm3Submitted && form3.paymentDone.errors}" placeholder="Payment"/>-->
+
+                    <div class="form-check form-check-inline">
+                      <!--                      <input type="radio" class="form-check-input" formControlName="resellerPartner" name="resellerPartner" id="resellerPartnerYes">-->
+                      <label class="form-check-label">
+                        <input class="form-check-input" formControlName="resellerPartner" name="resellerPartner"
+                               type="radio"
+                               value="yes">
+                        Yes
+                      </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <!--                      <input type="radio" class="form-check-input" formControlName="resellerPartner" name="resellerPartner" id="resellerPartnerNo">-->
+                      <label class="form-check-label">
+                        <input class="form-check-input" formControlName="resellerPartner" name="resellerPartner"
+                               type="radio"
+                               value="no">
+                        No
+                      </label>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <div *ngIf="form3.resellerPartner.value == 'yes'">
+                    <label class="col-form-label" for="resellerPartnerId">Reseller Partner</label>
+                    <div class="col-sm-9">
+                      <select [ngClass]="{'is-invalid': isForm3Submitted && form3.resellerPartnerId.errors}"
+                              class="form-select" formControlName="resellerPartnerId"
+                              id="resellerPartnerId">
+                        <option *ngFor="let c of resellerListOptions"
+                                [ngValue]="c.FieldValue">{{c.FieldText | uppercase}}</option>
+                      </select>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="giveTestAccess">Give Test Access</label>
+                  <div class="col-sm-9">
+                    <div class="form-check form-check-inline">
+                      <!--                      <input type="radio" class="form-check-input" formControlName="giveTestAccess" name="giveTestAccess" id="giveTestAccessYes">-->
+                      <label class="form-check-label">
+                        <input class="form-check-input" formControlName="giveTestAccess" name="giveTestAccess"
+                               type="radio"
+                               value="yes">
+                        Yes
+                      </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <!--                      <input type="radio" class="form-check-input" formControlName="giveTestAccess" name="giveTestAccess" id="giveTestAccessNo">-->
+                      <label class="form-check-label">
+                        <input class="form-check-input" formControlName="giveTestAccess" name="giveTestAccess"
+                               type="radio"
+                               value="no">
+                        No
+                      </label>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div *ngIf="form3.giveTestAccess.value == 'yes'">
+                    <label class="form-label" for="pgInstruments">Example multiple select</label>
+                    <ng-select [closeOnSelect]="false"
+                               [items]="instrumentMasterOptions"
+                               [multiple]=true
+                               [ngClass]="{'is-invalid': isForm3Submitted && form3.pgInstruments.errors}"
+                               [searchable]="false"
+                               bindLabel="FieldText"
+                               formControlName="pgInstruments"
+                               id="pgInstruments"
+                               placeholder="Select instruments">
+                    </ng-select>
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex justify-content-center mt-2">
+                <button awPreviousStep class="btn btn-secondary me-2" type="button">Back</button>
+                <button class="btn btn-primary" type="submit">Continue</button>
+              </div>
+            </form>
+          </aw-wizard-step>
+
+          <!--<aw-wizard-step stepTitle="step 4">
+            <form (ngSubmit)="form4Submit()" [formGroup]="validationForm4">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="product" class="col-form-label">Product</label>
+                  <div class="col-sm-9">
+                    <input type="product" class="form-control" id="product" formControlName="product"
+                           [ngClass]="{'is-invalid': isForm4Submitted && form4.product.errors}" placeholder="Product">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label for="bank" class="col-form-label">Bank</label>
+                  <div class="col-sm-9">
+                    <input type="text" autocomplete="new-password" class="form-control" id="bank" formControlName="bank"
+                           [ngClass]="{'is-invalid': isForm4Submitted && form4.bank.errors}" placeholder="Bank">
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="accountNo" class="col-form-label">Account No</label>
+                  <div class="col-sm-9">
+                    <input type="password" class="form-control" id="accountNo" formControlName="accountNo"
+                           [ngClass]="{'is-invalid': isForm4Submitted && form4.accountNo.errors}" placeholder="Account No">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label for="businessType" class="col-form-label">Re-Enter Account No</label>
+                  <div class="col-sm-9">
+                    <input type="text" autocomplete="new-password" class="form-control" id="reAccountNo" formControlName="reAccountNo"
+                           [ngClass]="{'is-invalid': isForm4Submitted && form4.reAccountNo.errors}" placeholder="Re-Enter Account No">
+                  </div>
+                </div>
+
+              </div>
+              <div class="row mb-3">
+                <div class="col-sm-6">
+                  <label for="ifscCode" class="col-form-label">IFSC Code</label>
+                  <div class="col-sm-9">
+                    <input type="text" autocomplete="new-password" class="form-control" id="ifscCode" formControlName="ifscCode"
+                           [ngClass]="{'is-invalid': isForm4Submitted && form4.ifscCode.errors}" placeholder="IFSC Code">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label for="accountHolderName" class="col-form-label">Account Holder Name</label>
+                  <div class="col-sm-9">
+                    <input type="text" autocomplete="new-password" class="form-control" id="accountHolderName" formControlName="accountHolderName"
+                           [ngClass]="{'is-invalid': isForm4Submitted && form4.accountHolderName.errors}" placeholder="accountHolderName">
+                  </div>
+                </div>
+
+              </div>
+              <div class="d-flex justify-content-center mt-2">
+                <button class="btn btn-secondary me-2" type="button" awPreviousStep>Back</button>
+                <button class="btn btn-primary" type="submit">Continue</button>
+              </div>
+            </form>
+          </aw-wizard-step>
+
+          <aw-wizard-step stepTitle="step 5">
+            <form (ngSubmit)="form5Submit()" [formGroup]="validationForm5">
+              <div class="row">
+                <div class="col-sm-6"></div>
+                <label for="kycDone" class="col-form-label">KYC Done</label>
+                <div class="col-sm-9">
+                  <input type="kycDone" class="form-control" id="kycDone" formControlName="kycDone"
+                         [ngClass]="{'is-invalid': isForm5Submitted && form5.kycDone.errors}" placeholder="KYC Done">
+                </div>
+              </div>
+              <div class="d-flex justify-content-center mt-2">
+                <button class="btn btn-secondary me-2" type="button" awPreviousStep>Back</button>
+                <button class="btn btn-primary" type="submit">Continue</button>
+              </div>
+            </form>
+          </aw-wizard-step>
+
+          <aw-wizard-step stepTitle="step 6">
+            <form (ngSubmit)="form6Submit()" [formGroup]="validationForm6">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="resellerReturnUrl" class="col-form-label">Reseller Return Url</label>
+                  <div class="col-sm-9">
+                    <input type="resellerReturnUrl" class="form-control" id="resellerReturnUrl" formControlName="resellerReturnUrl"
+                           [ngClass]="{'is-invalid': isForm6Submitted && form6.resellerReturnUrl.errors}" placeholder="Reseller Return Url">
+                  </div>
+                </div>
+              </div>
+              &lt;!&ndash;<div class="row mb-3">
+                <label for="autoRefund" class="col-form-label">Auto Refund Time</label>
+                <div class="col-sm-9">
+                  <ngb-timepicker class="form-control" formControlName="autoRefund"
+                                  [ngClass]="{'is-invalid': isForm6Submitted && form6.autoRefund.errors}" id="autoRefund"
+                                  [(ngModel)]="form6.autoRefund"></ngb-timepicker>
+                </div>
+              </div>&ndash;&gt;
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="autoRefundHours" class="col-form-label">Auto Refund Hours</label>
+                  <div class="col-sm-9">
+                    <input type="number" class="form-control" id="autoRefundHours" formControlName="autoRefundHours"
+                           [ngClass]="{'is-invalid': isForm6Submitted && form6.autoRefundHours.errors}" placeholder="Auto Refund Hours">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label for="autoRefundMin" class="col-form-label">Auto Refund Minutes</label>
+                  <div class="col-sm-9">
+                    <input type="number" class="form-control" id="autoRefundMin" formControlName="autoRefundMin"
+                           [ngClass]="{'is-invalid': isForm6Submitted && form6.autoRefundMin.errors}" placeholder="Auto Refund Minutes">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="pushUrl" class="col-form-label">Push URL</label>
+                  <div class="col-sm-9">
+                    <input type="text" autocomplete="new-password" class="form-control" id="pushUrl" formControlName="pushUrl"
+                           [ngClass]="{'is-invalid': isForm6Submitted && form6.pushUrl.errors}" placeholder="Push URL">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label for="settlementUrl" class="col-form-label">Settlement Url</label>
+                  <div class="col-sm-9">
+                    <input type="text" autocomplete="new-password" class="form-control" id="settlementUrl" formControlName="settlementUrl"
+                           [ngClass]="{'is-invalid': isForm6Submitted && form6.settlementUrl.errors}" placeholder="Settlement Url">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="disableRefundDashboard" class="col-form-label">Disable Refund Dashboard</label>
+                  <div class="col-sm-9">
+                    <input type="checkbox" class="form-control form-check-input" id="disableRefundDashboard" formControlName="disableRefundDashboard"
+                           [ngClass]="{'is-invalid': isForm6Submitted && form6.disableRefundDashboard.errors}" placeholder="Disable Refund Dashboard">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label for="disableRefundApi" class="col-form-label">Disable Refund API</label>
+                  <div class="col-sm-9">
+                    <input type="checkbox" class="form-control form-check-input" id="disableRefundApi" formControlName="disableRefundApi"
+                           [ngClass]="{'is-invalid': isForm6Submitted && form6.disableRefundApi.errors}" placeholder="Disable Refund Api">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="integrationType" class="col-form-label">Integration Type</label>
+                  <div class="col-sm-9">
+                    <input type="text" autocomplete="new-password" class="form-control" id="integrationType" formControlName="integrationType"
+                           [ngClass]="{'is-invalid': isForm6Submitted && form6.integrationType.errors}" placeholder="Integration Type">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label for="paymentRetry" class="col-form-label">Payment Retry</label>
+                  <div class="col-sm-9">
+                    <input type="text" autocomplete="new-password" class="form-control" id="paymentRetry" formControlName="paymentRetry"
+                           [ngClass]="{'is-invalid': isForm6Submitted && form6.paymentRetry.errors}" placeholder="Payment Retry">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="linkPaymentEmail" class="col-form-label">Link Payment Email</label>
+                  <div class="col-sm-9">
+                    <input type="text" autocomplete="new-password" class="form-control" id="linkPaymentEmail" formControlName="linkPaymentEmail"
+                           [ngClass]="{'is-invalid': isForm6Submitted && form6.linkPaymentEmail.errors}" placeholder="linkPaymentEmail">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label for="linkPaymentSms" class="col-form-label">Link Payment Sms</label>
+                  <div class="col-sm-9">
+                    <input type="text" autocomplete="new-password" class="form-control" id="linkPaymentSms" formControlName="linkPaymentSms"
+                           [ngClass]="{'is-invalid': isForm6Submitted && form6.linkPaymentSms.errors}" placeholder="Link Payment Sms">
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-sm-6">
+                  <label for="invoiceMainReminder" class="col-form-label">Invoice Main Reminder</label>
+                  <div class="col-sm-9">
+                    <input type="text" autocomplete="new-password" class="form-control" id="invoiceMainReminder" formControlName="invoiceMainReminder"
+                           [ngClass]="{'is-invalid': isForm6Submitted && form6.invoiceMainReminder.errors}" placeholder="Invoice Main Reminder">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label for="reportingCycle" class="col-form-label">Reporting Cycle</label>
+                  <div class="col-sm-9">
+                    <input type="text" autocomplete="new-password" class="form-control" id="reportingCycle" formControlName="reportingCycle"
+                           [ngClass]="{'is-invalid': isForm6Submitted && form6.reportingCycle.errors}" placeholder="Reporting Cycle">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="minResellerMDR" class="col-form-label">Min Reseller MDR</label>
+                  <div class="col-sm-9">
+                    <input type="text" autocomplete="new-password" class="form-control" id="minResellerMDR" formControlName="minResellerMDR"
+                           [ngClass]="{'is-invalid': isForm6Submitted && form6.minResellerMDR.errors}" placeholder="Min Reseller MDR">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label for="maxResellerMDR" class="col-form-label">Max Reseller MDR</label>
+                  <div class="col-sm-9">
+                    <input type="text" autocomplete="new-password" class="form-control" id="maxResellerMDR" formControlName="maxResellerMDR"
+                           [ngClass]="{'is-invalid': isForm6Submitted && form6.maxResellerMDR.errors}" placeholder="Max Reseller MDR">
+                  </div>
+                </div>
+
+              </div>
+              <div class="d-flex justify-content-center mt-2">
+                <button class="btn btn-secondary me-2" type="button" awPreviousStep>Back</button>
+                <button class="btn btn-primary" type="submit">Continue</button>
+              </div>
+            </form>
+          </aw-wizard-step>-->
+          <aw-wizard-step stepTitle="finish">
+            <div class="text-center">
+              <i appFeatherIcon class="text-success mt-4 mb-2 icon-xxl" data-feather="check-circle"></i>
+              <h3 class="text-muted mb-3">Thank you !</h3>
+              <p class="w-75 mx-auto mb-4 text-muted">Successfully completed Reseller Onboarding </p>
+            </div>
+            <div class="d-flex justify-content-center mt-2">
+              <button awPreviousStep class="btn btn-secondary me-2" type="button">Back</button>
+              <button (click)="finishFunction()" class="btn btn-success" type="button">Finish</button>
+            </div>
+          </aw-wizard-step>
+
+        </aw-wizard>
+
+      </div>
+    </div>
+  </div> <!-- col -->
+
+</div>

@@ -1,0 +1,365 @@
+<!--For Notification Highliter-->
+<div class="row">
+  <div *ngIf="status===1 " class="text-lg-center">
+    <ngb-alert [dismissible]="false" [type]="'success'"><i class="feather text-primary icon-thumbs-up"></i>{{"Kyc is approved" |
+      uppercase}}</ngb-alert>
+  </div>
+  <div *ngIf="status===2 " class="text-lg-center">
+    <ngb-alert [dismissible]="false" [type]="'danger'"><i class="feather text-primary icon-thumbs-down"></i> {{"Kyc is rejected" |
+      uppercase}}</ngb-alert>
+  </div>
+</div>
+<!--For Notification Highliter End-->
+<!--Main Upload Section-->
+<!--<div>{{allKycDataFormGroup.value | json}}</div>-->
+<div class="card">
+
+  <!-- file upload section-->
+  <div class="row">
+
+    <div class="card-body row">
+<!--      <div class="card-text text-muted" >-->
+<!--        <b>Note</b>: All the documents should be duly signed and stamped-->
+<!--      </div>&nbsp;-->
+      <form [formGroup]="allKycDataFormGroup" *ngIf="merchantKycDetails?.length > 0 && this.allKycDataFormGroup">
+        <!-- <div class="row mb-4 form-check">
+          <div class="col-2">
+            <input class="form-check-input" formControlName="isWavier" id="isWavier" type="checkbox"
+                   (change)="onChangeWavier($event)"/>
+
+          </div>
+          <div class="col-10">
+            <label class="form-check-label card-title" style="color: red">Allow waiver/exception</label>
+          </div>
+          <span *ngIf="isKycFormSubmitted && allKycDataFormGroup.errors?.waiverError" #waverError id="waverError"
+               class="text-danger">
+            Need to Upload all the docs
+          </span>
+        </div> -->
+<!--                {{ wavierRemarks?.errors | json}}-->
+<!--                {{ wavierOffDate?.errors | json}}-->
+
+        <!-- <div class="row"  *ngIf="isWavier?.value">
+          <div class="col-sm-6">
+            <label class="col-form-label" for="wavierRemarks">Wavier Remarks<span aria-hidden="true"
+                                                                                  class="symbol required"
+                                                                                  style="color:red;">*</span></label>
+            <div class="col-sm-9">
+              <input #isWavierSelector [ngClass]="{'is-invalid': isKycFormSubmitted && wavierRemarks?.errors}"
+                     class="form-control"
+                     formControlName="wavierRemarks" id="wavierRemarks" placeholder="Wavier Remarks" type="text"
+                     maxlength="100" pattern="[a-zA-Z][a-zA-Z ]+"
+                     [disabled]="(permissions.includes('KYC_APPROVE') && !(permissions.includes('ADD') || permissions.includes('EDIT'))||permissions==='')"
+              >
+              <div *ngIf="isKycFormSubmitted && wavierRemarks?.errors?.required"
+                   class="invalid-feedback">
+                Wavier Remarks is required
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label class="col-form-label" for="wavierOffDate">Timebound<span aria-hidden="true" class="symbol required"
+                                                                             style="color:red;">*</span></label>
+            <div class="col-sm-9">
+              <input type="date" class="form-control" min="{{currentDate|date:'yyyy-MM-dd'}}" placeholder="dd-mm-yyyy"
+                     formControlName="wavierOffDate" id="wavierOffDate"
+                     [ngClass]="{'is-invalid': isKycFormSubmitted && allKycDataFormGroup.get('wavierOffDate')?.errors}"
+                     [disabled]="(permissions.includes('KYC_APPROVE') && !(permissions.includes('ADD') || permissions.includes('EDIT'))||permissions==='')"
+              >
+              <div *ngIf="isKycFormSubmitted && allKycDataFormGroup.get('wavierOffDate')?.errors?.required"
+                   class="invalid-feedback">
+                Timebound is required
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <div class="kyc-upload mt-4" #merchantKycDataSelector formArrayName="merchantKycData">
+          <div class="row mb-2" *ngFor="let u of merchantKycDataArr();let i= index" [formGroupName]="i">
+<!--            {{this.isKycFormSubmitted}}-->
+            <div class="row">
+<!--              {{ this.getDocListError(i)?.errors | json}}-->
+              <div class="col-sm-7 align-middle">
+                <h5 class="card-title">{{i + 1}}. {{u.value?.document}}</h5>
+                <span class="text-muted" *ngIf="u.value?.subtext">({{u.value?.subtext}})</span>
+              </div>
+              <div class="col-sm-1" style="color: rgb(36, 196, 36);">
+                <div [style.display]=" u.value?.type==='single' && u.value?.uploadSuccess  ? 'block' : 'none'">
+                  <i class="feather text-primary icon-check-circle icon-lg"></i>
+                </div>
+              </div>
+              <div class="col-sm-2 row mb-2">
+                <div class="col-md-12">
+                  <div class="input-group" *ngIf="u.value?.type==='single'">
+                    <label class="input-group-btn">
+                      <button class="btn" (click)="kycUploadFormSelect(u.value?.type, merchantKycDataArr()[i], i )"
+                              [disabled]="isButtonDisable(i) || globalDisableFlag"
+                              ngbTooltip="Click to Open File Uploader"
+                              [ngClass]="isKycFormSubmitted && u.get('docName')?.errors?.required ? 'btn-outline-danger' : 'btn-primary' ">
+                        Browse <input #takeInput [attr.id]="i" class="form-control form-control-sm"
+                                        [style.color]="true ? 'limegreen' : ''"
+                                        (change)="onFileSelect($event,i,u.value?.docId,u.value?.kycId)"
+                                        [disabled]="isButtonDisable(i) || globalDisableFlag"
+                                        type="file" style="display: none;" multiple>
+                      </button>
+                    </label>
+                  </div>
+                  <div class="align-vertical" *ngIf="u.value?.type==='other'">
+                    <div class="btn btn-warning text-uppercase" style="border-radius: 15px"
+                         [ngClass]="{ 'disabled': globalDisableFlag}"
+                         ngbTooltip="Click to add custom document type"
+                         (click)="!globalDisableFlag && addCustomDocType(i, u)"><i class="feather text-primary icon-plus"></i> Add
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="col-sm-2">
+                <!--                {{ u.get('docList').controls[0]?.get('docPath').value}}-->
+                <div class="row mt-2">
+                  <div class="col-4">
+                    <span *ngIf="u.value?.type==='single'" ngbTooltip="Uploaded Document Count"
+                          class="badge bg-warning">{{u.get('docList').controls[0]?.get('docPath').value !== '' ? getDocCount(u) : 0}}</span>
+                  </div>
+                  <div class="col-4">
+                    <a *ngIf="u.value?.type==='single'" href="javascript:void(0)"
+                       (click)="kycUploadFormSelect(u.value?.type, merchantKycDataArr()[i], i, undefined, 'view' )"
+                       ngbTooltip="More">
+                      <i class="feather text-primary icon-inbox icon-lg"></i>
+                    </a>
+                    <!--                    <a *ngIf="u.value?.type==='single'" href="javascript:void(0)"-->
+                    <!--                      (click)="addCustomDocList(i, u)" tooltip="List Uploaded Documents">-->
+                    <!--                      <i class="feather text-primary icon-eye icon-lg"></i>-->
+                    <!--                    </a>-->
+                  </div>
+                  <div class="col-4">
+                    <a *ngIf="!globalDisableFlag && u.value?.type==='single' && merchantKycDataArr()[i].get('docTypeList')['controls'].length > 0" href="javascript:void(0)"
+                       (click)="resetSelection($event, i, u)" ngbTooltip="Reset Selection">
+                      <i class="feather text-primary icon-refresh-cw icon-lg"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div formArrayName="docTypeList">
+                <!--                <div class="row mb-2" *ngFor="let docU of merchantKycDataArr()[i].get('docTypeList')['controls'];let j= index" [formGroupName]="j">-->
+                <!--                  <input type="text" formControlName="isSelected">-->
+                <!--                </div>-->
+                <div class="row"
+                     *ngFor="let radio of merchantKycDataArr()[i].get('docTypeList')['controls'];let rad =index;"
+                     [formGroupName]="rad">
+                  <div class="row">
+                    <div class="col-md-7">
+<!--                      {{radio.get('isSelected').value | json}}-->
+                      <div class="form-check form-check-inline form-control">
+                        <input *ngIf="u.value?.type==='single'" formControlName="isSelected"
+                               (change)='onRadioSelect($event,i,rad,radio)' [attr.name]="i"
+                               type="radio" class="form-check-input" [value]="radio.value?.docType"/>
+                        <input *ngIf="u.value?.type==='multi' || u.value?.type==='other'" formControlName="isSelected"
+                               [checked]="!!radio.value?.docPath"
+                               (change)="onDocTypeChangeSingle(i, rad)"
+                               type="checkbox" class="form-check-input" [value]="radio.value?.docType" [attr.name]="i">
+
+                        <label *ngIf="u.value?.type==='single' || u.value?.type==='multi'" class="form-check-label">
+                          {{radio.get('docType').value}}
+                        </label>
+<!--                                              <div>{{radio.get('docList').value | json}}</div><hr>-->
+                        <!--                      <div>{{u.value | json}}</div>-->
+                        <input *ngIf="u.value?.type==='other' && radio.value?.inputDisabled" type="text"
+                               formControlName="docType" class="form-control"
+                               [disabled]="radio.value?.inputDisabled"
+                               style="border: 1px solid #697DD1 !important;" [attr.disabled]="true"/>
+                        <input *ngIf="u.value?.type==='other' && !radio.value?.inputDisabled" type="text"
+                               formControlName="docType" class="form-control"
+                               [disabled]="radio.value?.inputDisabled"
+                               [ngClass]="{'is-invalid': radio?.get('docType').errors || (isKycFormSubmitted && getDocTypeListError(i, rad))}"
+                               />
+                      </div>
+
+                    </div>
+                    <div class="col-sm-1 mt-2" style="color: rgb(36, 196, 36);">
+                      <div *ngIf="!globalDisableFlag && (u.value?.type==='multi' || u.value?.type==='other') && !radio.value?.inputDisabled">
+                        <a href="javascript:void(0)" class="text-danger" (click)="removeCustomDocType(i, rad)">
+                          <i class="feather text-primary icon-minus-circle icon-lg"></i>
+                        </a>
+                      </div>
+                    </div>
+
+                    <!-- [ngClass]="{'is-invalid': isForm2Submitted && forradiocontrol.controls.doctype.errors}"-->
+                    <div class="col-md-2" *ngIf="u.value?.type==='multi' || u.value?.type==='other'">
+                      <div class="form-control">
+                        <button class="btn" [id]="i+'-'+rad"
+                                ngbTooltip="Click to Open File Uploader"
+                                [disabled]="isButtonDisable(i, rad) || globalDisableFlag"
+                                (click)="kycUploadFormSelect(u.value?.type, merchantKycDataArr()[i], i, rad )"
+                                [ngClass]="isKycFormSubmitted && getSubDocError(i, rad, u.docid, radio) ? 'btn-outline-danger' : 'btn-primary' "
+                        >Browse
+                          <input #takeInputSub [attr.id]="i+'sub'" class="form-control form-control-sm"
+                                 [style.color]="'limegreen'"
+                                 (change)="onFileSelectMulti($event,i,radio.value?.docId,radio.value?.kycId, radio.value?.type, rad)"
+                                 [disabled]="isButtonDisable(i, rad) || globalDisableFlag"
+                                 type="file" style="display: none;" multiple>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="col-sm-2 mt-2" *ngIf="u.value?.type==='multi' || u.value?.type==='other'">
+                      <div class="row mt-2">
+                        <div class="col-4">
+                        <span ngbTooltip="Uploaded Document Count"
+                          class="badge bg-warning">{{radio.get('docList').controls[0]?.get('docPath').value !== '' ? radio.get('docList').controls?.length || 0 : 0}}</span>
+                        </div>
+                        <div class="col-4">
+                          <a *ngIf="u.value?.type==='multi' || u.value?.type==='other'" href="javascript:void(0)"
+                             (click)="kycUploadFormSelect(u.value?.type, merchantKycDataArr()[i], i, rad, 'view')"
+                             ngbTooltip="More">
+                            <i class="feather text-primary icon-inbox icon-lg"></i>
+                          </a>
+                        </div>
+                        <div class="col-4">
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="row" *ngIf="u.value?.type==='multi' || u.value?.type==='other'">
+                    <span *ngIf="isKycFormSubmitted && getDocTypeListError(i, rad) && radio.get('docType')?.value ==='';else minFile" class="text-danger"
+                          [style]="isKycFormSubmitted && getDocTypeListError(i, rad) ? 'display:block': 'display: none'">
+                        Please Enter Doc Type
+                      </span>
+
+                    <ng-template #minFile>
+                      <span *ngIf="isKycFormSubmitted && getDocTypeListError(i, rad) && radio.get('docList')?.value?.length ===0" class="text-danger"
+                            [style]="isKycFormSubmitted && getDocTypeListError(i, rad) ? 'display:block': 'display: none'">
+                        Please upload minimum one file
+                      </span>
+                    </ng-template>
+                  </div>
+                  <!--                    {{radio.value | json}}-->
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="isKycFormSubmitted && this.getDocListError(i)?.errors && (u.value?.type==='single')">
+                <span *ngIf="isKycFormSubmitted && this.getDocListError(i)?.errors?.required && !this.isWavier?.value && merchantKycDataArr()[i].get('docTypeList')['controls'].length > 0;else noDocTypeCondition" class="text-danger">
+                  Please select proper doc type and upload file
+                </span>
+                <ng-template #noDocTypeCondition>
+                  <div  class="row" *ngIf="isKycFormSubmitted && this.getDocListError(i)?.errors && !this.isWavier?.value && (u.value?.type==='single')">
+                  <span *ngIf="isKycFormSubmitted && this.getDocListError(i)?.errors?.required" class="text-danger">
+                    Please required upload file
+                  </span>
+                  </div>
+                </ng-template>
+
+              <span #wavierTrue *ngIf="isKycFormSubmitted && this.getDocListError(i)?.errors?.required && this.isWavier?.value && merchantKycDataArr()[i].get('docTypeList')['controls'].length > 0" class="text-danger">
+                Please select proper doc type and upload file
+              </span>
+
+            </div>
+            <div class="row" *ngIf="isKycFormSubmitted && this.getDocListError(i)?.errors && (u.value?.type==='multi' || u.value?.type==='other')">
+                <span *ngIf="isKycFormSubmitted && this.getDocListError(i)?.errors?.required && !this.isWavier?.value" class="text-danger">
+                  Please select at least one doc type and upload file
+                </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-10"></div>
+          <div class="col-md-2">
+            <div class="mb-3 col-md-12" *ngIf="merchantKycDetails?.length > 0 && !permissions.includes('KYC_APPROVE')"
+                 style="margin-top:auto ;margin-bottom: auto;text-align: right;">
+              <button class="form-control btn btn-primary" (click)="submitKycData($event, allKycDataFormGroup.value)"
+                      type="submit"
+                      value="Submit">Submit
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </form>
+      <div *ngIf="merchantKycDetails?.length ===0" class="card-title"><h4>No KYC Data available</h4></div>
+    </div>
+    <div class="card-body row border-danger" *ngIf="merchantKycDetails?.length > 0 && permissions.includes('KYC_APPROVE')">
+<!--      {{ this.isApprovalEnable}}-->
+      <form [formGroup]="kycApprovalForm">
+        <div class="row">
+          <div class="col-6">
+            <label class="form-label"><b>Remarks</b></label>
+            <input type="text" placeholder="Please add remarks" class="form-control"
+                   [ngClass]="{'is-invalid': kycApprovalForm.get('remarks')?.errors?.required}"
+                   formControlName="remarks" id="remarks"/>
+          </div>
+          <div *ngIf="kycApprovalForm.get('remarks')?.errors" class="invalid-feedback">
+            Remarks is required
+          </div>
+        </div>
+        <div class="row mt-2" *ngIf="permissions.includes('KYC_APPROVE')">
+          <div class="col-xs-12">
+            <div class="text-center">
+              <button class="btn btn-secondary" [disabled]="!this.isApprovalEnable" (click)="statusApproval(1)"><i
+                class="feather icon-thumbs-up"></i>Approve
+              </button>
+              <button class="btn btn-primary" [disabled]="!this.isApprovalEnable" (click)="statusApproval(2)">Reject <i
+                class="feather icon-thumbs-down"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+  <!--  approval section-->
+  <div class="row" [style.display]="this.remarkData && this.remarkData[0]!=='Not Found Data' ? 'block' : 'none'">
+    <div class="col-md-12 stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h6 class="card-title">KYC Remark List</h6>
+          <div class="table-responsive">
+            <!-- <button type="button" (click)="exportexcel()" class="btn btn-light">Export CSV<i  class="feather icon-download"></i></button> -->
+            <table id="dataTableExample" class="table">
+              <thead>
+              <tr>
+                <!-- <th>Serial No</th> -->
+                <th>Application Status</th>
+                <th style="min-width:50px;">Application Remarks</th>
+                <th>Added By</th>
+                <th>Added On</th>
+              </tr>
+              </thead>
+              <tbody>
+              </tbody>
+              <tfoot>
+              <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Main Upload Section-->
+
+<!--Upload Doc List-->
+<app-modal #kycUploadModal [modalConfig]="kycUploadModalConfig">
+  <app-kyc-doc-list [merchantId]="merchantId" [globalDisableFlag]="globalDisableFlag" [localDisableFlag]="localDisableFlag" [selectedKycData]="currentSelectedGroup"></app-kyc-doc-list>
+</app-modal>
+<!---->
+<!--Upload Doc List-->
+<app-modal #kycFileViewModal [modalConfig]="kycViewModalConfig">
+  <iframe width="100%" height="100%" *ngIf="kycFileSrc?.type === 'FILE'" [src]="kycFileSrc.src"></iframe>
+  <img width="100%" *ngIf="kycFileSrc?.type === 'IMAGE'" [src]="kycFileSrc.src" alt="Image">
+  <div *ngIf="!kycFileSrc">
+    <p>Could not view the file</p>
+  </div>
+</app-modal>
+<!---->
+

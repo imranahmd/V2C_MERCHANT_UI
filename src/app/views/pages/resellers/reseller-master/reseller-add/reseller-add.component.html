@@ -1,0 +1,467 @@
+<div class="row">
+  <!-- col -->
+  <div class="col-md-12 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <!--        <h6 class="card-title"></h6>-->
+
+        <aw-wizard #wizardForm [awNavigationMode]="navigationMode">
+
+
+          <aw-wizard-step stepTitle="Contact Details">
+            <form (ngSubmit)="form1Submit()" [formGroup]="validationForm1">
+
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="contactPerson">Contact Name <span aria-hidden="true"
+                                                                                       class="symbol required"
+                                                                                       style="color:red;">*</span></label>
+                  <div class="col-sm-9">
+                    <input [ngClass]="{'is-invalid': isForm1Submitted && form1.contactPerson.errors}"
+                           autocomplete="new-password" class="form-control" formControlName="contactPerson"
+                           id="contactPerson"
+                           maxlength="200" placeholder="ex. Jone Day" type="text">
+                    <div *ngIf="isForm1Submitted && form1.contactPerson.errors?.required" class="invalid-feedback">
+                      Required
+                    </div>
+                    <div *ngIf="isForm1Submitted && form1.contactPerson.errors?.pattern" class="invalid-feedback">
+                      Only Alphabets allowed
+                    </div>
+                    <div *ngIf="form1.contactPerson.errors?.twoSpaces" class="invalid-feedback">
+                      More than two consecutive spaces are not allowed
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="contactNumber">Contact Number <span aria-hidden="true"
+                                                                                         class="symbol required"
+                                                                                         style="color:red;">*</span></label>
+                  <div class="col-sm-9">
+                    <input (keypress)="OnlyNumbersAllowed($event)"
+                           [ngClass]="{'is-invalid': isForm1Submitted && form1.contactNumber.errors}" autocomplete="new-password" class="form-control"
+                           formControlName="contactNumber" id="contactNumber" maxlength="10"
+                           placeholder="ex. 9988776655" type="text">
+                    <div *ngIf="isForm1Submitted && form1.contactNumber.errors?.required" class="invalid-feedback">
+                      Required
+                    </div>
+                    <div *ngIf="isForm1Submitted && form1.contactNumber.errors?.pattern" class="invalid-feedback">
+                      Please provide valid number
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="emailId">Email Id <span aria-hidden="true" class="symbol required"
+                                                                             style="color:red;">*</span></label>
+                  <div class="col-sm-9">
+                    <input [ngClass]="{'is-invalid': isForm1Submitted && form1.emailId.errors}" autocomplete="new-password"
+                           class="form-control" formControlName="emailId" id="emailId" maxlength="50"
+                           placeholder="ex. sample@Payments.com"
+                           type="email">
+                    <div *ngIf="isForm1Submitted && form1.emailId.errors?.required" class="invalid-feedback">
+                      Required
+                    </div>
+                    <div *ngIf="isForm1Submitted && form1.emailId.errors?.email" class="invalid-feedback">
+                      Please provide valid email
+                    </div>
+                    <div *ngIf="form1.emailId.errors?.twoSpaces" class="invalid-feedback">
+                      More than two consecutive spaces are not allowed
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="resellerName">Reseller Name <span aria-hidden="true"
+                                                                                       class="symbol required"
+                                                                                       style="color:red;">*</span></label>
+                  <div class="col-sm-9">
+                    <input [ngClass]="{'is-invalid': isForm1Submitted && form1.resellerName.errors}"
+                           autocomplete="new-password" class="form-control" formControlName="resellerName"
+                           id="resellerName"
+                           maxlength="50" placeholder="ex. Jone Day " type="text">
+                    <div *ngIf="isForm1Submitted && form1.resellerName.errors?.required" class="invalid-feedback">
+                      Required
+                    </div>
+                    <div *ngIf="isForm1Submitted && form1.resellerName.errors?.pattern" class="invalid-feedback">
+                      Only Alphabets allowed
+                    </div>
+                    <div *ngIf="form1.resellerName.errors?.twoSpaces" class="invalid-feedback">
+                      More than two consecutive spaces are not allowed
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <!-- <div class="d-flex justify-content-between pull-right mt-2"> -->
+                <div class="col-xs-12 mt-2">
+                  <div class="text-end">
+                    <button
+                      *ngIf="(this.permissions.includes('Add New') || this.permissions.includes('Edit'));else ifNotShow"
+                      class="btn btn-primary " type="submit">Save & Next
+                    </button>
+                    <ng-template #ifNotShow>
+                      <button #ifNotShow (click)="this.wizardForm.goToNextStep();" class="btn btn-primary"> Next
+                      </button>
+                    </ng-template>
+                  </div>
+                </div>
+
+              </div>
+
+            </form>
+          </aw-wizard-step>
+
+          <aw-wizard-step stepTitle="Business Details">
+            <form (ngSubmit)="form2Submit()" [formGroup]="validationForm2">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="legalName">Legal Name <span aria-hidden="true"
+                                                                                 class="symbol required"
+                                                                                 style="color:red;">*</span></label>
+                  <div class="col-sm-9">
+                    <input [ngClass]="{'is-invalid': isForm2Submitted && form2.legalName.errors}" autocomplete="new-password"
+                           class="form-control" formControlName="legalName" id="legalName" maxlength="200"
+                           placeholder="ex.Ram" type="text">
+
+                    <div *ngIf="isForm2Submitted && form2.legalName.errors?.required" class="invalid-feedback">
+                      Required
+                    </div>
+                    <div *ngIf="isForm2Submitted && form2.legalName.errors?.pattern" class="invalid-feedback">
+                      Please enter proper Legal Name
+                    </div>
+                    <!-- <div *ngIf="form2.legalName.errors?.twoSpaces" class="invalid-feedback">
+                      More than two consecutive spaces not allowed
+                    </div> -->
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="legalName">Date Of Incorporation <span aria-hidden="true"
+                                                                                            class="symbol required"
+                                                                                            style="color:red;">*</span></label>
+                  <div class="col-sm-9">
+                    <!--                    <input [ngClass]="{'is-invalid': isForm2Submitted && form2.dateOfIncorporation.errors}" class="form-control"-->
+                    <!--                           formControlName="dateOfIncorporation" id="dateOfIncorporation" placeholder="Legal Name" type="text" autocomplete="new-password"-->
+                    <!--                           maxlength="50">-->
+                    <input [ngClass]="{'is-invalid': isForm2Submitted && form2.dateOfIncorporation.errors}" class="form-control" formControlName="dateOfIncorporation"
+                           id="dateOfIncorporation" max="{{ date |date:'yyyy-MM-dd'}}"
+                           placeholder="dd-mm-yyyy"
+                           type="date">
+
+                    <div *ngIf="isForm2Submitted && form2.legalName.errors?.required" class="invalid-feedback">
+                      Required
+                    </div>
+                    <div *ngIf="isForm2Submitted && form2.legalName.errors?.pattern" class="invalid-feedback">
+                      Only Alphabets allowed
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="brandName">Trade Name</label>
+                  <div class="col-sm-9">
+                    <input [ngClass]="{'is-invalid': isForm2Submitted && form2.brandName.errors}" autocomplete="new-password"
+                           class="form-control" formControlName="brandName" id="brandName" maxlength="200"
+                           placeholder="ex.Google" type="text">
+
+                    <div *ngIf="isForm2Submitted && form2.brandName.errors?.required" class="invalid-feedback">
+                      Required
+                    </div>
+                    <div *ngIf="isForm2Submitted && form2.brandName.errors?.pattern" class="invalid-feedback">
+                      Please enter proper Trade Name
+                    </div>
+                    <!-- <div *ngIf="form2.brandName.errors?.twoSpaces" class="invalid-feedback">
+                      More than two consecutive spaces are not allowed
+                    </div> -->
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="businessType">Business Type <span aria-hidden="true"
+                                                                                       class="symbol required"
+                                                                                       style="color:red;">*</span></label>
+                  <div class="col-sm-9">
+                    <select (keypress)="OnlyCharacterAllowed($event)"
+                            [ngClass]="{'is-invalid': isForm2Submitted && form2.businessType.errors}" class="form-select" formControlName="businessType"
+                            id="businessType">
+                      <option disabled hidden selected value="">Select</option>
+                      <option *ngFor="let c of businessTypeOptions" [ngValue]="c.FieldValue">{{c.FieldText | uppercase
+                        }}</option>
+                    </select>
+                    <!--                    <input type="number" class="form-control" id="businessType" formControlName="businessType"-->
+                    <!--                           [ngClass]="{'is-invalid': isForm2Submitted && form2.businessType.errors}" placeholder="Business Type">-->
+
+                    <div *ngIf="isForm2Submitted && form2.businessType.errors?.required" class="invalid-feedback">
+                      Required
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="businessCategory">Business Category <span aria-hidden="true"
+                                                                                               class="symbol required"
+                                                                                               style="color:red;">*</span></label>
+                  <div class="col-sm-9">
+                    <!--                    <input type="text" autocomplete="new-password" class="form-control" id="businessCategory" formControlName="businessCategory"-->
+                    <!--                           [ngClass]="{'is-invalid': isForm2Submitted && form2.businessCategory.errors}" placeholder="Business Category">-->
+                    <!--                    <select [ngClass]="{'is-invalid': isForm2Submitted && form2.businessCategory.errors}"-->
+                    <!--                            class="form-select" formControlName="businessCategory" id="businessCategory">-->
+                    <!--                      <option hidden value="" disabled selected>Select</option>-->
+                    <!--                      <option *ngFor="let c of resellerCategoryOptions" [ngValue]="c.FieldValue">{{c.FieldText |-->
+                    <!--                        uppercase}}</option>-->
+                    <!--                    </select>-->
+                    <ng-select (change)="subCategory(selectedAttributes)" (clear)="resetsubcategory()" (keypress)="OnlyCharacterAllowed($event)"
+                               [(ngModel)]="selectedAttributes" [items]="resellerCategoryOptions" [ngClass]="{'is-invalid': isForm2Submitted && form2.businessCategory.errors}"
+                               bindLabel="FieldText"
+                               bindValue="FieldValue"
+                               formControlName="businessCategory"
+                               maxLength="50" placeholder="Select"
+                               required>
+                      <ng-template let-item="item" ng-option-tmp>
+                        <div title="{{item.FieldText}}">{{item.FieldText}}</div>
+                      </ng-template>
+                    </ng-select>
+
+
+                    <div *ngIf="isForm2Submitted && form2.businessCategory.errors?.required" class="invalid-feedback">
+                      Required
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="subCategory">Sub Category</label>
+                  <div class="col-sm-9">
+                    <!--                    <input [ngClass]="{'is-invalid': isForm2Submitted && form2.subCategory.errors}" class="form-control"-->
+                    <!--                           formControlName="subCategory" id="subCategory" placeholder="Sub Category" type="text" autocomplete="new-password"-->
+                    <!--                           maxlength="50">-->
+                    <ng-select (keypress)="OnlyCharacterAllowed($event)" [(ngModel)]="selectedAttributesCategorydata" [items]="resellerSubCategoryOptions"
+                               [ngClass]="{'is-invalid': isForm2Submitted && form2.subCategory.errors}" bindLabel="FieldText"
+                               bindValue="FieldValue"
+                               formControlName="subCategory" maxlength="50"
+                               placeholder="Select">
+                      <ng-template let-item="item" ng-option-tmp>
+                        <div title="{{item.FieldText}}">{{item.FieldText}}</div>
+                      </ng-template>
+                    </ng-select>
+                    <div *ngIf="isForm2Submitted && form2.subCategory.errors?.required" class="invalid-feedback">
+                      Please enter Sub Category
+                    </div>
+
+                    <div *ngIf="isForm2Submitted && form2.subCategory.errors?.pattern" class="invalid-feedback">
+                      Please enter proper SubCategory Name
+                    </div>
+
+                    <div *ngIf="isForm2Submitted && form2.subCategory.errors?.twoSpaces" class="invalid-feedback">
+                      More than two consecutive spaces are not allowed
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="turnOverLastFinYear">TurnOver Last Financial Year</label>
+                  <div class="col-sm-9">
+                    <input (keypress)="OnlyNumbersAllowed($event)"
+                           [ngClass]="{'is-invalid': isForm2Submitted && form2.turnOverLastFinYear.errors}" autocomplete="new-password" class="form-control"
+                           formControlName="turnOverLastFinYear" id="turnOverLastFinYear" maxlength="10" placeholder="ex. 127000"
+                           type="text">
+
+                    <div *ngIf="isForm2Submitted && form2.turnOverLastFinYear.errors?.required"
+                         class="invalid-feedback">
+                      Required
+                    </div>
+
+                    <div *ngIf="isForm2Submitted && form2.turnOverLastFinYear.errors?.pattern" class="invalid-feedback">
+                      Please enter valid TurnOver
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="expMonthlyTurnOver">Expected Monthly TurnOver</label>
+                  <div class="col-sm-9">
+                    <input (keypress)="OnlyNumbersAllowed($event)"
+                           [ngClass]="{'is-invalid': isForm2Submitted && form2.expMonthlyTurnOver.errors}" autocomplete="new-password" class="form-control"
+                           formControlName="expMonthlyTurnOver" id="expMonthlyTurnOver" maxlength="10" placeholder="ex. 11000"
+                           type="text">
+
+                    <div *ngIf="isForm2Submitted && form2.expMonthlyTurnOver.errors?.required" class="invalid-feedback">
+                      Required
+                    </div>
+
+                    <div *ngIf="isForm2Submitted && form2.expMonthlyTurnOver.errors?.pattern" class="invalid-feedback">
+                      Please enter valid Monthly TurnOver
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="avgAmountPerTransaction">Average Amount Per Transaction</label>
+                  <div class="col-sm-9">
+                    <input (keypress)="OnlyNumbersAllowed($event)"
+                           [ngClass]="{'is-invalid': isForm2Submitted && form2.avgAmountPerTransaction.errors}" autocomplete="new-password" class="form-control"
+                           formControlName="avgAmountPerTransaction" id="avgAmountPerTransaction" maxlength="10" placeholder="ex. 1200"
+                           type="text">
+
+                    <div *ngIf="isForm2Submitted && form2.avgAmountPerTransaction.errors?.required"
+                         class="invalid-feedback">
+                      Required
+                    </div>
+
+                    <div *ngIf="isForm2Submitted && form2.avgAmountPerTransaction.errors?.pattern"
+                         class="invalid-feedback">
+                      Please enter valid Amount
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="address">Address <span aria-hidden="true"
+                                                                            class="symbol required"
+                                                                            style="color:red;">*</span></label>
+                  <div class="col-sm-9">
+                    <input [ngClass]="{'is-invalid': isForm2Submitted && form2.address.errors}" autocomplete="new-password"
+                           class="form-control" formControlName="address" id="address" maxlength="500"
+                           placeholder="Address" type="text">
+
+                    <div *ngIf="isForm2Submitted && form2.address.errors?.required" class="invalid-feedback">
+                      Required
+                    </div>
+                    <div *ngIf="form2.address.errors?.twoSpaces" class="invalid-feedback">
+                      More than two consecutive spaces are not allowed
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="pincode">Pincode <span aria-hidden="true"
+                                                                            class="symbol required"
+                                                                            style="color:red;">*</span></label>
+                  <div class="col-sm-9">
+                    <input (keypress)="OnlyNumbersAllowed($event)" [ngClass]="{'is-invalid': isForm2Submitted && form2.pincode.errors}"
+                           autocomplete="new-password" class="form-control" formControlName="pincode" id="pincode"
+                           maxlength="6" placeholder="ex. 100011"
+                           type="text">
+
+                    <div *ngIf="isForm2Submitted && form2.pincode.errors?.required" class="invalid-feedback">
+                      Required
+                    </div>
+                    <div *ngIf="isForm2Submitted && form2.pincode.errors?.pattern" class="invalid-feedback">
+                      PINCODE should be of minimum of 6 digits
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="city">City <span aria-hidden="true"
+                                                                      class="symbol required"
+                                                                      style="color:red;">*</span></label>
+                  <div class="col-sm-9">
+                    <input [ngClass]="{'is-invalid': isForm2Submitted && form2.city.errors}" autocomplete="new-password"
+                           class="form-control" formControlName="city" id="city" maxlength="100"
+                           placeholder="ex. Mumbai" type="text">
+
+                    <div *ngIf="isForm2Submitted && form2.city.errors?.required" class="invalid-feedback">
+                      Required
+                    </div>
+                    <div *ngIf="form2.city.errors?.pattern" class="invalid-feedback">
+                      Please enter proper City Name
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="state">State <span aria-hidden="true"
+                                                                        class="symbol required"
+                                                                        style="color:red;">*</span></label>
+                  <div class="col-sm-9">
+                    <input [ngClass]="{'is-invalid': isForm2Submitted && form2.state.errors}" autocomplete="new-password"
+                           class="form-control" formControlName="state" id="state" maxlength="100"
+                           placeholder="ex. Maharashtra" type="text">
+
+                    <div *ngIf="isForm2Submitted && form2.state.errors?.required" class="invalid-feedback">
+                      Required
+                    </div>
+                    <div *ngIf="form2.state.errors?.pattern" class="invalid-feedback">
+                      Please enter proper State Name
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="businessModel">Business Model <span aria-hidden="true"
+                                                                                         class="symbol required"
+                                                                                         style="color:red;">*</span></label>
+                  <div class="col-sm-9">
+
+                    <textarea [ngClass]="{'is-invalid': isForm2Submitted && form2.businessModel.errors}"
+                              autocomplete="new-password" class="form-control" formControlName="businessModel"
+                              id="businessModel" maxlength="500" pattern="^(?!\d+$)(?:[a-zA-Z0-9][a-zA-Z0-9 ,-./!#%^*()@&$]*)?$" placeholder="Business Model"
+                              type="text"></textarea>
+
+                    <!-- <input [ngClass]="{'is-invalid': isForm2Submitted && form2.businessModel.errors}"
+                           class="form-control" formControlName="businessModel" id="businessModel"
+                           placeholder="ex.Retailer" type="text" autocomplete="new-password" maxlength="50"> -->
+
+                    <div *ngIf="isForm2Submitted && form2.businessModel.errors?.required" class="invalid-feedback">
+                      Required
+                    </div>
+                    <div *ngIf="form2.businessModel.errors?.twoSpaces" class="invalid-feedback">
+                      More than two consecutive spaces are not allowed
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="text-end mt-4">
+
+                    <button awPreviousStep class="btn btn-secondary me-2" type="button">Back</button>
+                    <button
+                      *ngIf="(this.permissions.includes('Add New') || this.permissions.includes('Edit'));else ifNotShow"
+                      class="btn btn-primary " type="submit">Save & Next
+                    </button>
+                    <ng-template #ifNotShow>
+                      <button #ifNotShow (click)="this.wizardForm.goToNextStep();" class="btn btn-primary"> Next
+                      </button>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+
+            </form>
+          </aw-wizard-step>
+
+          <aw-wizard-step stepTitle="finish">
+            <div class="text-center">
+              <i appFeatherIcon class="text-success mt-4 mb-2 icon-xxl" data-feather="check-circle"></i>
+              <h3 class="text-muted mb-3">Thank you !</h3>
+              <p *ngIf="(this.permissions.includes('Add New') || this.permissions.includes('Edit'))"
+                 class="w-75 mx-auto mb-4 text-muted">Successfully completed Reseller Onboarding </p>
+            </div>
+            <div class="d-flex justify-content-center mt-2">
+              <button awPreviousStep class="btn btn-secondary me-2" type="button">Back</button>
+              <button (click)="finishFunction()"
+                      *ngIf="(this.permissions.includes('Add New') || this.permissions.includes('Edit'))"
+                      [disabled]="!(this.permissions.includes('Add New') || this.permissions.includes('Edit'))"
+                      class="btn btn-success" type="button">Finish
+              </button>
+            </div>
+          </aw-wizard-step>
+
+        </aw-wizard>
+
+      </div>
+    </div>
+  </div> <!-- col -->
+
+</div>

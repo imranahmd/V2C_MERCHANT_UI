@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>PayFi</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="frame-ancestors'self';">
+  <link rel="icon" href="assets/images/PayFi.jpeg" type="image/jpeg">
+  <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
+  <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-balham.css">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <!-- End fonts -->
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      if (window.top !== window.self) {
+        document.body.innerHTML = "<h1>This site cannot be viewed in an iframe.</h1>";
+        window.stop();
+      }
+    });
+  </script>
+
+</head>
+<body>
+  <app-root>
+    <div class="spinner-wrapper full-screen">
+      <div class="spinner"></div>
+    </div>
+  </app-root>
+</body>
+</html>

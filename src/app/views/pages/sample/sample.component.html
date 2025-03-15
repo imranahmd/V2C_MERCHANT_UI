@@ -1,0 +1,77 @@
+<div class="col-12">
+  <div class="card">
+    <div class="row">
+      <div class="col-xl-10 main-content">
+        <!--<button type="button" class="btn btn-primary " (click)="onBtnC($event)">Add Rows</button>-->
+        <button (click)="onExportCSV()" class="btn btn-secondary" type="button">Export CSV</button>
+        <div class="btn-group mb-1 mb-md-0">
+          <button class="btn btn-primary" type="button">Columns</button>
+          <div class="btn-group" ngbDropdown role="group">
+            <button class="btn btn-primary dropdown-toggle-split" ngbDropdownToggle></button>
+            <div ngbDropdownMenu>
+              <ng-select
+                [(ngModel)]="tableSelectedColumn"
+                [closeOnSelect]="false"
+                [items]="columnDefs"
+                [multiple]=true
+                bindLabel="field">
+                <ng-template let-index="index" let-item="item" let-item$="item$" ng-option-tmp>
+                  <input [ngModel]="item$.selected" id="item-{{index}}" type="checkbox"/> {{item.field.toUpperCase()}}
+                </ng-template>
+              </ng-select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-2">
+        <input [(ngModel)]="globalSearch" [ngbTypeahead]="search" autocomplete="new-password" class="form-control"
+               id="typeahead-basic"
+               placeholder="Search" type="text"/>
+      </div>
+    </div>
+    <div class="row" style="min-height: 470px">
+      <div class="col-12 col-xl-12 grid-margin stretch-card ag-theme-alpine" style="margin-bottom: 0px">
+
+        <ag-grid-angular (filterChanged)="onFilterChange($event)"
+                         (filterModified)="onFilterModified($event)"
+                         (filterOpened)="onFilterOpened($event)"
+                         (gridReady)="onGridReady($event)"
+                         (rowClicked)="onRowClicked($event)"
+                         (rowDoubleClicked)="onRowDoubleClicked($event)"
+                         [columnDefs]="tableSelectedColumn"
+                         [defaultColDef]="defaultColDef"
+                         [enableCellTextSelection]=true
+                         [paginationPageSize]="pageSize"
+                         [pagination]="true"
+                         [rowData]="rowData"
+                         [rowModelType]=""
+                         [rowSelection]="'single'"
+                         [suppressPaginationPanel]="true"
+                         class="ag-theme-alpine"
+                         style="width: 100%; height: auto;"
+        ></ag-grid-angular>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <select (change)="onPageSizeChanges($event)" [(ngModel)]="pageSize"
+                class="form-select d-flex justify-content-end col-4"
+                name="pageSize" style="width: auto">
+          <option [ngValue]="10">10</option>
+          <option [ngValue]="20">20</option>
+          <option [ngValue]="30">30</option>
+        </select>
+      </div>
+
+      <div class="col-md-8">
+        <ngb-pagination (pageChange)="onPaginationChange($event)"
+                        [(page)]="currentPage"
+                        [boundaryLinks]="true"
+                        [collectionSize]="collectionSize" [maxSize]="5" [pageSize]="pageSize"
+                        [rotate]="true" class="d-flex justify-content-end align-right"></ngb-pagination>
+      </div>
+
+    </div>
+  </div>
+</div>
+

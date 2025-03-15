@@ -1,0 +1,285 @@
+<!-- {{Resdatas|json}} -->
+<h3 class="card-title">Invoice Based Payment System</h3>
+<div class="card pt-0 mb-5">
+  <!--  <div class="card-header">-->
+  <!--    <h4 class="card-title">Merchant MDR</h4>-->
+  <!--  </div>-->
+  <div class="card-body">
+
+    <form (ngSubmit)="onSubmit(CreateInvoiceform.value)" [formGroup]="CreateInvoiceform" appBlockCopyPaste>
+      <!-- <form appBlockCopyPaste> -->
+      <div>
+        <div class="row">
+
+        </div>
+
+
+        <!-- <ngb-accordion #acc="ngbAccordion" [closeOthers]="closeOthers" [activeIds]="activeIds">
+    <ngb-panel title="Service Provider Setup" id="pan-1">ngbPanelContent -->
+        <!-- <ng-template > -->
+        <div class="row">
+
+
+        </div>
+        <div class="row">
+
+
+          <div class="col-sm-4">
+            <div class="mb-3">
+              <label class="form-label">Invoice Number <span aria-hidden="true" class="symbol required"
+                  style="color:red;">*</span></label>
+                  <!-- (keypress)="OnlyCharacterNumberAllowed($event)" -->
+              <input
+                [ngClass]="{'is-invalid': isForm1Submitted && form1.Invoice.errors}" autocomplete="new-password"
+                class="form-control" formControlName="Invoice" maxlength="20" placeholder="Invoice" minlength="3"
+                type="text">
+              <div *ngIf="isForm1Submitted && form1.Invoice.errors?.required" class="invalid-feedback">
+                Please Enter Invoice Number
+              </div>
+              <div *ngIf="isForm1Submitted && (form1.Invoice.errors?.minlength||form1.Invoice.errors?.pattern)" class="invalid-feedback">
+                Please Enter Valid Invoice Number
+              </div>
+
+
+              <!-- <div *ngIf="isForm1Submitted && form1.remark.errors?.required"
+      class="invalid-feedback">
+      Please fill this field
+  </div>  -->
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="mb-3">
+              <label class="form-label">Amount<span aria-hidden="true" class="symbol required"
+                  style="color:red;">*</span></label>
+              <input (keypress)="OnlyNumbersAllowed($event)"
+                [ngClass]="{'is-invalid': isForm1Submitted && form1.Amount.errors}" autocomplete="new-password"
+                class="form-control" formControlName="Amount" maxlength="10" placeholder="Amount" type="text">
+              <div *ngIf="isForm1Submitted && form1.Amount.errors?.required" class="invalid-feedback">
+                Please Enter Amount
+              </div>
+
+              <!-- <div *ngIf="isForm1Submitted && form1.remark.errors?.required"
+      class="invalid-feedback">
+      Please fill this field
+  </div>  -->
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="mb-3">
+              <label class="form-label">Valid UpTo <span aria-hidden="true" class="symbol required"
+                  style="color:red;">*</span></label>
+              <input [ngClass]="{'is-invalid': isForm1Submitted && form1.Valid.errors}" autocomplete="new-password"
+                class="form-control" formControlName="Valid"
+                [max]="maxDate"
+                 maxlength="50"
+                min="{{currentnewDate|date:'yyyy-MM-dd'}}" placeholder="Valid UpTo" type="Date">
+              <div *ngIf="isForm1Submitted && form1.Valid.errors?.required" class="invalid-feedback">
+                Please fill this field
+              </div>
+
+
+              <!-- <div *ngIf="isForm1Submitted && form1.remark.errors?.required"
+      class="invalid-feedback">
+      Please fill this field
+  </div>  -->
+            </div>
+          </div>
+
+          <div class="col-md-12">
+
+            <div class="mb-3">
+              <label class="form-label">Remark<span aria-hidden="true" class="symbol required"
+                  style="color:red;">*</span></label>
+              <textarea (focus)="fun('Remark')" (focusout)="funover('Remark')"
+                [ngClass]="{'is-invalid': isForm1Submitted && form1.Remark.errors}" autocomplete="new-password"
+                class="form-control" formControlName="Remark" id="Remark" maxlength="500" placeholder="Remark"
+                type="text">
+
+
+                              ></textarea>
+              <div *ngIf="isForm1Submitted && form1.Remark.errors?.required" class="invalid-feedback">
+                Please Enter Remark
+              </div>
+
+
+            </div>
+
+          </div>
+
+
+          <div class="col-sm-4">
+            <div class="mb-3">
+              <label class="form-label">Name <span aria-hidden="true" class="symbol required"
+                  style="color:red;">*</span></label>
+              <input [ngClass]="{'is-invalid': isForm1Submitted && form1.Name.errors}" autocomplete="new-password"
+                class="form-control" formControlName="Name" maxlength="100" placeholder="Name" type="text">
+              <div *ngIf="isForm1Submitted && form1.Name.errors?.required" class="invalid-feedback">
+                Please Enter Name
+              </div>
+
+              <div *ngIf="isForm1Submitted && form1.Name.errors?.pattern" class="invalid-feedback">
+                Please Enter Valid Name
+              </div>
+
+              <div *ngIf="isForm1Submitted && form1.Name.errors?.twoSpaces" class="invalid-feedback">
+                More than two consecutive spaces are not allowed
+              </div>
+
+
+              <!-- <div *ngIf="isForm1Submitted && form1.remark.errors?.required"
+      class="invalid-feedback">
+      Please fill this field
+  </div>  -->
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="mb-3">
+              <label class="form-label">Email ID <span aria-hidden="true" class="symbol required"
+                  style="color:red;">*</span></label>
+              <input [ngClass]="{'is-invalid': isForm1Submitted && form1.Email.errors}" autocomplete="new-password"
+                class="form-control" formControlName="Email" maxlength="50" placeholder="Email ID" type="text">
+              <div *ngIf="isForm1Submitted && form1.Email.errors?.required" class="invalid-feedback">
+                Please Enter Email ID
+              </div>
+
+              <div *ngIf="isForm1Submitted && form1.Email.errors?.pattern" class="invalid-feedback">
+                Please Enter Valid Email ID
+              </div>
+
+              <!-- <div *ngIf="isForm1Submitted && form1.remark.errors?.required"
+      class="invalid-feedback">
+      Please fill this field
+  </div>  -->
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="mb-3">
+              <label class="form-label">Contact Number <span aria-hidden="true" class="symbol required"
+                  style="color:red;">*</span></label>
+              <input (keypress)="OnlyNumbersAllowed($event)"
+                [ngClass]="{'is-invalid': isForm1Submitted && form1.Contact.errors}" autocomplete="new-password"
+                class="form-control" formControlName="Contact" maxlength="10" placeholder="Contact Number" type="text">
+              <div *ngIf="isForm1Submitted && form1.Contact.errors?.required" class="invalid-feedback">
+                Please Enter Contact Number
+              </div>
+
+              <div *ngIf="isForm1Submitted && form1.Contact.errors?.pattern" class="invalid-feedback">
+                Please Enter Valid Contact Number
+              </div>
+
+              <!-- <div *ngIf="isForm1Submitted && form1.remark.errors?.required"
+      class="invalid-feedback">
+      Please fill this field
+  </div>  -->
+            </div>
+          </div>
+
+          <div *ngIf=" NotificationData?.mailNotification=='1'" class="mb-3 col-md-4">
+            <label class="col-form-label" for="exampleInputUsername1">Invoice Mail Notification<span aria-hidden="true"
+                class="symbol required" style="color:red;">*</span></label>
+            <!-- <input class="form-control" type="text" autocomplete="new-password" formControlName="paymentRetry" placeholder="Payment retry"
+              name="requried" #requried="" required id="paymentRetry"
+              [ngClass]="{'is-invalid': isForm6Submitted && form6.paymentRetry.errors}" /> -->
+            <!-- <p class="text-danger mt-1" *ngIf="requried?.errors?.required">required error</p> -->
+            <!-- <option [ngValue]="" [disabled]="true" >All</option> -->
+
+
+            <select (focus)="fun('InvoiceMail')" (focusout)="funover('InvoiceMail')"
+              [ngClass]="{'is-invalid': isForm1Submitted && form1.InvoiceMail.errors}" autocomplete="new-password"
+              class="form-select" formControlName="InvoiceMail" id="paymentRetry" id="InvoiceMail" maxlength="50">
+
+
+              <!-- <option [ngValue]="" [disabled]="true" >Select Invoice Mail Notification</option> -->
+              <option disabled value="">Select Invoice Mail Notification</option>
+              <option selected value="1">Yes</option>
+              <option value="0">No</option>
+
+            </select>
+            <div *ngIf="isForm1Submitted && form1.InvoiceMail.errors?.required" class="invalid-feedback">
+              Please select Invoice Mail Notification
+            </div>
+
+
+          </div>
+
+
+          <div *ngIf=" NotificationData?.smsNotification=='1'" class="mb-3 col-md-4">
+
+            <label class="col-form-label" for="exampleInputUsername1">Invoice SMS Notification<span aria-hidden="true"
+                class="symbol required" style="color:red;">*</span></label>
+            <!-- <input class="form-control" type="text" autocomplete="new-password" formControlName="paymentRetry" placeholder="Payment retry"
+              name="requried" #requried="" required id="paymentRetry"
+              [ngClass]="{'is-invalid': isForm6Submitted && form6.paymentRetry.errors}" /> -->
+            <!-- <p class="text-danger mt-1" *ngIf="requried?.errors?.required">required error</p> -->
+
+
+            <select (focus)="fun('InvoiceNotification')" (focusout)="funover('InvoiceNotification')"
+              [ngClass]="{'is-invalid': isForm1Submitted && form1.InvoiceNotification.errors}" class="form-select"
+              formControlName="InvoiceNotification" id="InvoiceNotification" id="paymentRetry">
+              <option disabled value="">Select Invoice SMS Notification</option>
+              <option selected value="1">Yes</option>
+              <option value="0">No</option>
+
+            </select>
+
+            <div *ngIf="isForm1Submitted && form1.InvoiceNotification.errors?.required" class="invalid-feedback">
+              Please select SMS Notification
+            </div>
+
+
+          </div>
+
+
+        </div>
+
+        <!-- </ng-template> -->
+        <!--
+              </ngb-panel>
+
+
+            </ngb-accordion> -->
+
+
+      </div>
+      <!-- <div class="row mb-2">
+          <div class="col-md-10"></div>
+
+          <button type="button" class="form-control btn btn-danger pull-right mt-3" (click)="reset()"
+         >Reset
+  </button>
+
+          <div class="col-md-2">
+
+              <button type="submit" class="form-control btn btn-primary pull-right mt-3">Submit
+              </button>
+
+          </div>
+      </div> -->
+      <div class="row mb-2">
+        <div class="col-md-8"></div>
+        <div class="col-md-2">
+          <!--          <div class="text-end">-->
+          <button (click)="reset()" class="form-control btn btn-danger pull-right mt-3" type="button">Reset
+          </button>
+          <!--          </div>-->
+        </div>
+        <div class="col-md-2">
+          <!--          <div class="text-end">-->
+          <button [disabled]="this.loading||(NotificationData?.mailNotification=='0'&& NotificationData?.smsNotification=='0')" id="submit" class="form-control btn btn-primary pull-right mt-3" type="submit">
+
+            <span aria-hidden="true" id="loading" role="status"></span>
+            Submit
+
+          </button>
+          <!--          </div>-->
+        </div>
+      </div>
+
+    </form>
+
+  </div>
+</div>

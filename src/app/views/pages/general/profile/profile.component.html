@@ -1,0 +1,140 @@
+
+<div class="row profile-body">
+  <!-- left wrapper start -->
+  <div class=" d-flex justify-content-around  ">
+    <div class="col-md-4 card rounded" >
+      <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <h4 class="card-title mb-0">Account Details</h4>
+        </div>
+        <hr style="color: black;">
+
+        <div class="mt-3">
+          <label class="tx-12 fw-bolder mb-0 text-uppercase">Account Number:</label>
+          <p class="text-muted">{{Resdata?.accountNumber}}</p>
+        </div>
+        <div class="mt-3">
+          <label class="tx-12 fw-bolder mb-0 text-uppercase">Account Holder
+            :</label>
+          <p class="text-muted">{{Resdata?.account_holder}}</p>
+        </div>
+        <div class="mt-3">
+          <label class="tx-12 fw-bolder mb-0 text-uppercase">IFSC Code
+            :</label>
+          <p class="text-muted">{{Resdata?.ifscCode}}</p>
+        </div>
+  
+
+
+        <!-- <div class="mt-3">
+          <label class="tx-11 fw-bolder mb-0 text-uppercase">Commercials of Reseller:</label>
+          <p class="text-muted">www.nobleui.com</p>
+        </div> -->
+
+       
+        
+      </div>
+    </div>
+
+    <div class=" col-md-4 card rounded">
+      <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <h4 class="card-title mb-0">Buiness Details</h4>
+        
+         
+        </div>
+        <hr style="color: black;">
+        <div class="mt-3">
+          <label class="tx-12 fw-bolder mb-0 text-uppercase">Merchant Name:</label>
+          <p class="text-muted">{{Resdataone?.merchant_name}}</p>
+        </div>
+        
+        <div class="mt-3">
+          <label class="tx-12 fw-bolder mb-0 text-uppercase">Business Name
+            :</label>
+          <p class="text-muted">{{Resdataone?.business_name}}</p>
+        </div>
+        <div class="mt-3">
+          <label class="tx-12 fw-bolder mb-0 text-uppercase">EMAIL-ID
+            :</label>
+          <p class="text-muted">{{Resdataone?.email_id}}</p>
+        </div>
+        <div class="mt-3">
+          <label class="tx-12 fw-bolder mb-0 text-uppercase">GSTIN
+            :</label>
+          <p class="text-muted">{{Resdataone?.GSTINNo}}</p>
+        </div>
+
+        
+  
+
+
+        <!-- <div class="mt-3">
+          <label class="tx-11 fw-bolder mb-0 text-uppercase">Commercials of Reseller:</label>
+          <p class="text-muted">www.nobleui.com</p>
+        </div> -->
+
+       
+        
+      </div>
+    </div>
+
+    <div class="col-md-4 card rounded">
+      <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <h4 class="card-title mb-0">Service Details</h4>
+         
+        </div>
+        <hr style="color: black;">
+        <div class="mt-3">
+          <label class="tx-12 fw-bolder mb-0 text-uppercase">Auth ID
+            :</label>
+          <p class="text-muted">{{Resdataone?.MerchantId}}</p>
+        </div>
+        <div class="mt-3">
+          <label class="tx-12 fw-bolder mb-0 text-uppercase">Transaction Key
+            : </label>
+          <p class="text-muted">{{Resdataone?.transaction_key}}</p>
+        </div>
+        <div class="mt-3">
+          <label class="tx-12 fw-bolder mb-0 text-uppercase"> Type
+            : </label> 
+            <br>
+           <input  [(ngModel)]="payin" class="form-check-input readonly" type="checkbox"
+
+         
+        >
+        
+        <label class="form-check-label" for="Intent">
+          &nbsp;  Collect
+        </label>
+  
+        </div>
+
+        <div class="mt-3">
+          <input  [(ngModel)]="payout" class="form-check-input readonly" type="checkbox"
+
+         
+        >
+        <label class="form-check-label" for="Intent">
+         &nbsp; Payout
+        </label>
+  
+        </div>
+
+        <!-- <div class="mt-3">
+          <label class="tx-11 fw-bolder mb-0 text-uppercase">Commercials of Reseller:</label>
+          <p class="text-muted">www.nobleui.com</p>
+        </div> -->
+
+       
+        
+      </div>
+    </div>
+
+  </div>
+  <!-- left wrapper end -->
+  <!-- middle wrapper start -->
+ 
+  <!-- right wrapper end -->
+</div>

@@ -1,0 +1,243 @@
+<!-- {{Resdatas|json}} -->
+<div class="card pt-0 mb-5">
+  <!--  <div class="card-header">-->
+  <!--    <h4 class="card-title">Merchant MDR</h4>-->
+  <!--  </div>-->
+  <div class="card-body">
+    <form (ngSubmit)="onSubmit(merchantMDRform.value)" [formGroup]="merchantMDRform" appBlockCopyPaste>
+      <div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="mb-3">
+              <label class="form-label">Merchant Id <span aria-hidden="true" class="symbol required" style="color:red;">*</span></label>
+              <!-- <input type="text" autocomplete="new-password"  maxlength="10" class="form-control" placeholder="Max Reseller MDR"
+                  formControlName="merchantId"> -->
+              <ng-select (click)="loadDatabyMid()" (keyup.enter)="loadDatabyMid()" formControlName="merchantId"
+                         placeholder="merchantId">
+                <ng-option *ngFor="let merchant of Resultdata" [value]="merchant.MerchantId">
+                  {{merchant.merchant_name}} ({{merchant.MerchantId}})
+                </ng-option>
+              </ng-select>
+
+
+            </div>
+          </div>
+        </div>
+
+
+        <!-- <ngb-accordion #acc="ngbAccordion" [closeOthers]="closeOthers" [activeIds]="activeIds">
+          <ngb-panel title="Service Provider Setup" id="pan-1">ngbPanelContent -->
+        <!-- <ng-template > -->
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="mb-3">
+              <label class="form-label">Service Provider <span aria-hidden="true" class="symbol required"
+                                                               style="color:red;">*</span></label>
+              <select (change)="seletservice($event)" [ngClass]="{'is-invalid': isForm1Submitted && form1.spId.errors}" aria-label="Default select example"
+                      class="form-select" formControlName="spId">
+                <option class="drop" value="">Select Service Provider</option>
+                <option *ngFor="let service of Resdata" [value]="service.FieldValue">
+                  {{service.FieldText}}</option>
+              </select>
+              <!-- <div *ngIf="isForm1Submitted && form1.spId.errors?.required" class="invalid-feedback">
+                  Please fill this field
+              </div> -->
+            </div>
+          </div><!-- Col -->
+          <div class="col-sm-4">
+            <div class="mb-3">
+              <label class="form-label">Instrument <span aria-hidden="true" class="symbol required"
+                                                         style="color:red;">*</span></label>
+              <select (change)="selectinstrument($event)" [ngClass]="{'is-invalid': isForm1Submitted && form1.instrument_id.errors}" aria-label="Default select example"
+                      class="form-select"
+                      formControlName="instrument_id">
+                <option class="drop" disabled selected value="">Select Instrument</option>
+                <option *ngFor="let instrument of Resdatas" [disabled]="!(Instrumentselect)"
+                        [value]="instrument.FieldValue">
+                  {{instrument.FieldText}}</option>
+              </select>
+              <!-- <div *ngIf="isForm1Submitted && form1.instrument_id.errors?.required"
+                  class="invalid-feedback">
+                  Please fill this field
+              </div> -->
+            </div>
+          </div>
+          <!-- Col -->
+
+          <div class="col-sm-4">
+            <div class="mb-3">
+              <label class="form-label">Bank Selection <span aria-hidden="true" class="symbol required"
+                                                             style="color:red;">*</span></label>
+              <select [ngClass]="{'is-invalid': isForm1Submitted && form1.bank_id.errors}" aria-label="Default select example"
+                      class="form-select form-control" formControlName="bank_id">
+                <option class="drop" value="">Select Bank</option>
+                <option *ngFor="let bank of Resbank" [disabled]="!(bankselect)" [value]="bank.FieldValue">
+                  {{bank.FieldText}}
+                </option>
+              </select>
+              <!-- <div *ngIf="isForm1Submitted && form1.bank_id.errors?.required"
+                  class="invalid-feedback">
+                  Please fill this field
+              </div> -->
+            </div>
+          </div>
+          <!-- Col -->
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="mb-3">
+              <label class="form-label">Instrument Brand <span aria-hidden="true" class="symbol required"
+                                                               style="color:red;">*</span></label>
+              <select [ngClass]="{'is-invalid': isForm1Submitted && form1.instrumentBrand.errors}" aria-label="Default select example" class="form-select"
+                      formControlName="instrumentBrand">
+                <option value="">Select Instrument Brand</option>
+                <option *ngFor="let instruments of ResinstrumentBrand" [value]="instruments.FieldText">
+                  {{instruments.FieldValue}}</option>
+              </select>
+              <!-- <div *ngIf="isForm1Submitted && form1.spId.errors?.required" class="invalid-feedback">
+                  Please fill this field
+              </div> -->
+            </div>
+          </div><!-- Col -->
+          <div class="col-sm-4">
+            <div class="mb-3">
+              <label class="form-label">Status <span aria-hidden="true" class="symbol required"
+                                                     style="color:red;">*</span></label>
+              <select [ngClass]="{'is-invalid': isForm1Submitted && form1.status.errors}" aria-label="Default select example"
+                      class="form-select form-control" formControlName="status">
+                <option class="drop" disabled value="">Select Status</option>
+                <option *ngFor="let bank of Resbank" [value]="bank.FieldValue">
+                  {{bank.FieldText}}
+                </option>
+              </select>
+              <!-- <div *ngIf="isForm1Submitted && form1.status.errors?.required"
+                  class="invalid-feedback">
+                  Please fill this field
+              </div> -->
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="mb-3">
+              <label class="form-label">Remark <span aria-hidden="true" class="symbol required"
+                                                     style="color:red;">*</span></label>
+              <input [ngClass]="{'is-invalid': isForm1Submitted && form1.remark.errors}" autocomplete="new-password" class="form-control" formControlName="remark" maxlength="50"
+                     placeholder="Remark"
+                     type="text">
+              <!-- <div *ngIf="isForm1Submitted && form1.remark.errors?.required"
+                  class="invalid-feedback">
+                  Please fill this field
+              </div> -->
+            </div>
+          </div>
+        </div>
+
+        <!-- </ng-template> -->
+        <!--
+                    </ngb-panel>
+
+
+                  </ngb-accordion> -->
+
+
+      </div>
+      <div class="row mb-2">
+        <div class="col-md-10"></div>
+        <div class="col-md-2">
+          <!--          <div class="text-end">-->
+          <button [disabled]="!(this.permissions.includes('Add New') || this.permissions.includes('Edit'))" class="form-control btn btn-primary pull-right mt-3"
+                  type="submit">Add New
+          </button>
+          <!--          </div>-->
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xl-10 main-content">
+    <button (click)="onExportCSV()" class="btn btn-light" type="button">Export CSV<i class="feather text-primary icon-download"></i>
+    </button>
+
+    <div class="btn-group" ngbDropdown role="group">
+      <button class="btn btn-primary" ngbDropdownToggle>Columns</button>
+      <div class="ng-dropdown-panel-items p-1" ngbDropdownMenu
+           style="height: 250px;width: 250px; overflow: scroll; scroll-behavior: smooth">
+        <div class="form-group">
+          <!--            <label for="columns" class="form-label"> All Columns <span aria-hidden="true" class="symbol required" style="color:red;">*</span></label>-->
+          <div *ngIf="columnDefs" class="list-group ng-option">
+              <span *ngFor="let column of columnDefs; let i = index" class="checkbox">
+                <label class="list-group-item p-2">
+                  <input (change)="updateSelectedTimeslots($event)" [checked]="(tableSelectedColumn && (-1 !==tableSelectedColumn.indexOf(column)) ? 'checked': '')" class="form-check-input me-1" name="{{column.headerName}}"
+                         type="checkbox"
+                         value="{{i}}">
+                  {{column.field | uppercase }}
+                  <span aria-hidden="true" class="symbol required" style="color:red;">*</span></label>
+              </span>
+          </div>
+
+        </div>
+
+
+      </div>
+    </div>
+
+    <!-- <div class="btn-group mb-1 mb-md-0">
+      <button class="btn btn-primary" type="button">Columns</button>
+      <div class="btn-group" ngbDropdown role="group">
+        <button class="btn btn-primary dropdown-toggle-split" ngbDropdownToggle></button>
+        <div ngbDropdownMenu>
+          <ng-select [(ngModel)]="tableSelectedColumn" [closeOnSelect]="false" [items]="columnDefs"
+                     [multiple]=true bindLabel="field">
+            <ng-template let-index="index" let-item="item" let-item$="item$" ng-option-tmp>
+              <input [ngModel]="item$.selected" id="item-{{index}}" type="checkbox"/>
+              {{item.field.toUpperCase()}}
+            </ng-template>
+          </ng-select>
+        </div>
+      </div>
+    </div> -->
+
+
+  </div>
+  <div *ngIf="this.permissions.includes('Search')" class="col-xl-2">
+    <input [(ngModel)]="globalSearch" [ngbTypeahead]="search" autocomplete="new-password" class="form-control"
+           id="typeahead-basic" placeholder="Search" type="text"/>
+  </div>
+</div>
+
+<div class="row" style="min-height: 500px">
+  <div class="col-12 col-xl-12 grid-margin stretch-card ag-theme-alpine">
+    <ag-grid-angular (filterChanged)="onFilterChange($event)" (filterModified)="onFilterModified($event)"
+                     (filterOpened)="onFilterOpened($event)"
+                     (gridReady)="onGridReady($event)" (rowClicked)="onRowClicked($event)"
+                     (rowDoubleClicked)="onRowDoubleClicked($event)"
+                     [columnDefs]="tableSelectedColumn" [defaultColDef]="defaultColDef"
+                     [enableCellTextSelection]=true
+                     [paginationPageSize]="pageSize" [pagination]="true" [rowData]="rowData" [rowModelType]=""
+                     [rowSelection]="'single'" [suppressPaginationPanel]="true" class="ag-theme-alpine"
+                     style="width: 100%; height: auto;">
+    </ag-grid-angular>
+  </div>
+</div>
+
+
+<div class="row bg-white p-2 mt-0">
+  <div class="col-md-4">
+    <select (change)="onPageSizeChanges($event)" [(ngModel)]="pageSize"
+            class="form-select d-flex justify-content-end col-4" name="pageSize" style="width: auto">
+      <option [ngValue]="10">10</option>
+      <option [ngValue]="20">20</option>
+      <option [ngValue]="30">30</option>
+    </select>
+  </div>
+
+  <div class="col-md-8">
+    <ngb-pagination (pageChange)="onPaginationChange($event)" [(page)]="currentPage" [boundaryLinks]="true"
+                    [collectionSize]="collectionSize" [maxSize]="5" [pageSize]="pageSize" [rotate]="true"
+                    class="d-flex justify-content-end col-8 align-right">
+    </ngb-pagination>
+  </div>
+
+</div>

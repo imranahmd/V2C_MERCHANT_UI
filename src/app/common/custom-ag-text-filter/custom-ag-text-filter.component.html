@@ -1,0 +1,54 @@
+<div class="ag-filter">
+  <div>
+    <div class="ag-filter-body-wrapper">
+      <div ref="ag-filter-loading" class="loading-filter ag-hidden">
+        Loading...
+      </div>
+      <div>
+        <div class="ag-filter-header-container" (click)="toggleEverything()">
+          <label id="selectAllContainer">
+            <div id="selectAll" class="ag-filter-checkbox">
+              <span
+                class="ag-icon"
+                [ngClass]="
+                  isEverythingSelected
+                    ? 'ag-icon-checkbox-checked'
+                    : 'ag-icon-checkbox-unchecked'
+                "
+              ></span>
+            </div>
+            <span class="ag-filter-value">(Selected All)</span>
+          </label>
+        </div>
+        <div id="richList" class="ag-set-filter-list">
+          <div class="ag-virtual-list-viewport">
+            <div
+              class="ag-virtual-list-container"
+              [attr.style.height]="containerHeight"
+            >
+              <div
+                style="line-height: 28px;"
+                *ngFor="let item of onFilterValuesChanged$ | async"
+                (click)="toggleItem(item)"
+              >
+                <label class="ag-set-filter-item">
+                  <div class="ag-filter-checkbox">
+                    <span
+                      class="ag-icon"
+                      [ngClass]="
+                        selectedValuesMap[item]
+                          ? 'ag-icon-checkbox-checked'
+                          : 'ag-icon-checkbox-unchecked'
+                      "
+                    ></span>
+                  </div>
+                  <span class="ag-filter-value">{{ item }}</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

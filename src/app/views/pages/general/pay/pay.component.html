@@ -1,0 +1,69 @@
+<div class="row">
+    <div class="card">
+        <div class="tab-content mt-3" id="lineTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-line-tab">
+                <div class="card-header row">
+                    <div class="col">
+                        <h4>Link Based Payment</h4>
+                    </div>
+                </div>
+
+                <div class="card-body bg-white">
+                    <form [formGroup]="settlementForm" (ngSubmit)="onSubmit()">
+                        <div class="row">
+                            <input type="hidden" formControlName="merchantId" [value]="Resdataone?.MerchantId || ''" />
+                            <input type="hidden" formControlName="transactionKey"
+                                [value]="Resdataone?.transaction_key || ''" />
+
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Amount<span class="required"
+                                            style="color:red;">*</span></label>
+                                    <input class="form-control" formControlName="amount"
+                                        placeholder="Please Enter Amount" type="text" />
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Mobile<span class="required"
+                                            style="color:red;">*</span></label>
+                                    <input class="form-control" formControlName="mobile"
+                                        [value]="Resdataone?.contact_number || ''" placeholder="Please Enter Mobile"
+                                        type="text" />
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Email<span class="required"
+                                            style="color:red;">*</span></label>
+                                    <input class="form-control" formControlName="email"
+                                        [value]="Resdataone?.email_id || ''" placeholder="Please Enter Email"
+                                        type="email" />
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4" *ngIf="settlementForm.get('refNumber')">
+                                <div class="mb-3">
+                                    <input type="hidden" class="form-control" formControlName="refNumber"
+                                        [value]="settlementForm.get('refNumber')?.value || ''" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <button class="form-control btn btn-primary" type="submit"
+                                        [disabled]="settlementForm.invalid">
+                                        <!-- <h5 style="font-size: 20px;">Submit</h5> -->
+                                         Submit
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,491 @@
+<div *ngIf="this.DynamicData" class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="mb-2">{{this.FilterInputs?.DisplayName}}</h4>
+
+
+        <form (ngSubmit)="onNewSubmit(dynamicForm.value)" [formGroup]="dynamicForm" novalidate>
+          <div class="row">
+            <ng-container *ngFor="let controls of DynamicData">
+              <ng-container [ngSwitch]="controls.data_type">
+                <!-- <div > -->
+                <div *ngSwitchCase="'text'" class="mb-3 col-md-4">
+                  <label class="form-label" for="exampleInputUsername1"> {{controls.parameter_name}}
+                  </label>
+
+                  <input *ngSwitchCase="'text'" [formControlName]="controls.id"
+                         [id]="controls.id" [name]="controls.id" [ngClass]="{'is-invalid': isForm6Submitted && form6[controls.id].errors }"
+                         [placeholder]="controls.parameter_name" [type]="controls.data_type"
+                         class="form-control"/>
+
+                  <!-- <div *ngIf="isForm6Submitted" class="invalid-feedback">
+                    Kindly enter the appropriate value
+                  </div> -->
+
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.required"
+                       class="invalid-feedback">
+                    {{controls.error_message}}
+                  </div>
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.pattern"
+                       class="invalid-feedback">
+                    Kindly enter in appropriate format
+                  </div>
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.min" class="invalid-feedback">
+                    Kindly enter valid minimum value
+                  </div>
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.max" class="invalid-feedback">
+                    Kindly enter value with in maximum limit
+                  </div>
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.minlength"
+                       class="invalid-feedback">
+                    Kindly enter valid minimum length value
+                  </div>
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.maxlength"
+                       class="invalid-feedback">
+                    Kindly enter allowed maximum characters
+                  </div>
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.email" class="invalid-feedback">
+                    Kindly enter a valid Email ID
+                  </div>
+
+                </div>
+                <div *ngSwitchCase="'decimal'" class="mb-3 col-md-4">
+                  <label class="form-label" for="exampleInputUsername1"> {{controls.parameter_name}}
+                  </label>
+
+                  <input (keypress)="decimalFilter($event)" *ngSwitchCase="'decimal'" [formControlName]="controls.id"
+                         [id]="controls.id" [name]="controls.id" [ngClass]="{'is-invalid': isForm6Submitted && form6[controls.id].errors }"
+                         [placeholder]="controls.parameter_name" class="form-control"
+                         type="text"/>
+
+                  <!-- <div *ngIf="isForm6Submitted" class="invalid-feedback">
+                    Kindly enter the appropriate value
+                  </div> -->
+
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.required"
+                       class="invalid-feedback">
+                    {{controls.error_message}}
+                  </div>
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.pattern"
+                       class="invalid-feedback">
+                    Kindly enter in appropriate format
+                  </div>
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.min" class="invalid-feedback">
+                    Kindly enter valid minimum value
+                  </div>
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.max" class="invalid-feedback">
+                    Kindly enter value with in maximum limit
+                  </div>
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.minlength"
+                       class="invalid-feedback">
+                    Kindly enter valid minimum length value
+                  </div>
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.maxlength"
+                       class="invalid-feedback">
+                    Kindly enter allowed maximum characters
+                  </div>
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.email" class="invalid-feedback">
+                    Kindly enter a valid Email ID
+                  </div>
+
+                </div>
+                <div *ngSwitchCase="'number'" class="mb-3 col-md-4">
+                  <label class="form-label" for="exampleInputUsername1"> {{controls.parameter_name}}
+                  </label>
+
+                  <input (keypress)="OnlyNumbersAllowed($event)" *ngSwitchCase="'number'"
+                         [formControlName]="controls.id" [id]="controls.id" [name]="controls.id" [ngClass]="{'is-invalid': isForm6Submitted && form6[controls.id].errors }"
+                         [placeholder]="controls.parameter_name" autocomplete="new-password"
+                         class="form-control"
+                         type="text"/>
+
+                  <!-- <div *ngIf="isForm6Submitted" class="invalid-feedback">
+                    Kindly enter the appropriate value
+                  </div> -->
+
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.required"
+                       class="invalid-feedback">
+                    {{controls.error_message}}
+                  </div>
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.pattern"
+                       class="invalid-feedback">
+                    Kindly enter in appropriate format
+                  </div>
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.min" class="invalid-feedback">
+                    Kindly enter valid minimum value
+                  </div>
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.max" class="invalid-feedback">
+                    Kindly enter value with in maximum limit
+                  </div>
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.minlength"
+                       class="invalid-feedback">
+                    Kindly enter valid minimum length value
+                  </div>
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.maxlength"
+                       class="invalid-feedback">
+                    Kindly enter allowed maximum characters
+                  </div>
+
+                </div>
+
+                <div *ngSwitchCase="'select'" class="mb-3 col-md-4">
+                  <label class="form-label" for="exampleInputUsername1">
+                    {{controls.parameter_name}} </label>
+
+                  <!-- <select [id]="controls.id"
+                    *ngSwitchCase="'select'" [name]="controls.id"
+                    [formControlName]="controls.id"
+                    class="form-control"
+                    [ngClass]="{'is-invalid': isForm6Submitted  && form6[controls.id].errors }">
+                    <option *ngFor="let value of selectdata;let i = index;"
+                       [value]="value.value">
+                      {{value.name}}  {{value.value}}
+                    </option>
+                  </select>  -->
+                  <!-- (clear)="resetSubcategory()" -->
+                  <!-- (change)="subCategory(selectedAttributes)" -->
+
+                  <!-- <ng-select *ngSwitchCase="'select'" [items]="controls.list_of_values" bindLabel="name"
+                  bindValue="value" [formControlName]="controls.id"
+                  [id]="controls.id"
+                  [placeholder]="controls.parameter_name"
+                  [ngClass]="{'is-invalid': isForm6Submitted  && form6[controls.id].errors }"
+                  [(ngModel)]="selectedAttributes"
+                >
+
+                  <ng-template ng-option-tmp let-item="item">
+                   <div title="{{item.value}}">{{item.name}} {{item.value}}</div>
+                   </ng-template>
+       </ng-select> -->
+
+                  <ng-select (focus)="fun(controls.id)" (focusout)="funover(controls.id)" *ngSwitchCase="'select'"
+                             [formControlName]="controls.id"
+                             [id]="controls.id" [ngClass]="{'is-invalid': isForm6Submitted  && form6[controls.id].errors }" [placeholder]="controls.parameter_name"
+                             class="main-select"
+                             style="overflow: visible;"
+                  >
+                    <ng-option *ngFor="let merchant of controls.list_of_values" [value]="merchant.value"
+                               style="overflow: visible;">
+                      {{merchant.name}} ({{merchant.value}})
+                    </ng-option>
+                  </ng-select>
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.required"
+                       class="invalid-feedback">
+                    {{controls.error_message}}
+                  </div>
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.pattern"
+                       class="invalid-feedback">
+                    Kindly enter in appropriate format
+                  </div>
+                </div>
+                <div class="mb-3 col-md-4" *ngSwitchCase="'dropdown'">
+                  <label for="exampleInputUsername1" class="form-label">
+                    {{controls.parameter_name}} </label>
+
+
+                  <ng-select style="overflow: visible;" *ngSwitchCase="'dropdown'" [formControlName]="controls.id"
+                             [id]="controls.id"  (keypress)="OnlyCharacterAllowed($event)"
+                             [placeholder]="controls.parameter_name" class="main-select" (focus)="fun(controls.id)" (focusout)="funover(controls.id)"
+                             [ngClass]="{'is-invalid': isForm6Submitted  && form6[controls.id].errors }"
+                  >
+                    <ng-option style="overflow: visible;" *ngFor="let merchant of controls.list_of_values"
+                               [value]="merchant.value">
+                      {{merchant.name}} ({{merchant.value}})
+                    </ng-option>
+                  </ng-select>
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.required"
+                       class="invalid-feedback">
+                    {{controls.error_message}}
+                  </div>
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.pattern"
+                       class="invalid-feedback">
+                    Kindly enter in appropriate format
+                  </div>
+                </div>
+
+                <div *ngSwitchCase="'textarea'" class="mb-3 col-md-4">
+                  <label class="form-label" for="exampleInputUsername1">
+                    {{controls.parameter_name}} </label>
+
+                  <textarea *ngSwitchCase="'textarea'" [formControlName]="controls.id"
+                            [id]="controls.id" [name]="controls.id"
+                            [ngClass]="{'is-invalid': isForm6Submitted && form6[controls.id].errors  }" [placeholder]="controls.parameter_name"
+                            class="form-control"></textarea>
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.required"
+                       class="invalid-feedback">
+                    {{controls.error_message}}
+                  </div>
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.pattern"
+                       class="invalid-feedback">
+                    Kindly enter in appropriate format
+                  </div>
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.min" class="invalid-feedback">
+                    Kindly enter valid minimum value
+                  </div>
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.max" class="invalid-feedback">
+                    Kindly enter value with in maximum limit
+                  </div>
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.minlength"
+                       class="invalid-feedback">
+                    Kindly enter valid minimum length value
+                  </div>
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.maxlength"
+                       class="invalid-feedback">
+                    Kindly enter allowed maximum characters
+                  </div>
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.email" class="invalid-feedback">
+                    Kindly enter a valid Email ID
+                  </div>
+                </div>
+                <div *ngSwitchCase="'date'" class="mb-3 col-md-4">
+                  <label class="form-label" for="exampleInputUsername1"> {{controls.parameter_name}}
+                  </label>
+
+                  <input (change)="changeDate(controls.id)" *ngSwitchCase="'date'" [formControlName]="controls.id"
+                         [id]="controls.id" [name]="controls.id" [ngClass]="{'is-invalid': isForm6Submitted  && form6[controls.id].errors }"
+                         [ngModel]="dt | date:'yyyy-MM-dd'" [placeholder]="controls.parameter_name"
+                         [type]="controls.data_type"
+                         class="form-control"
+                         max="{{newDate|date:'yyyy-MM-dd'}}"  min="{{pastDate|date:'yyyy-MM-dd'}}"/>
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.required"
+                       class="invalid-feedback">
+                    {{controls.error_message}}
+                  </div>
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.pattern"
+                       class="invalid-feedback">
+                    Kindly enter in appropriate format
+                  </div>
+
+                </div>
+                <div *ngSwitchCase="'file'" class="mb-3 col-md-4">
+                  <label class="form-label" for="exampleInputUsername1"> {{controls.parameter_name}}
+                  </label>
+
+                  <input *ngSwitchCase="'file'" [formControlName]="controls.id"
+                         [id]="controls.id" [name]="controls.id" [ngClass]="{'is-invalid': isForm6Submitted  && form6[controls.id].errors }"
+                         [placeholder]="controls.parameter_name" [type]="controls.data_type" [type]="controls.data_type"
+                         class="form-control"/>
+                  <div *ngIf="isForm6Submitted && form6[controls.id].errors?.required"
+                       class="invalid-feedback">
+                    {{controls.error_message}}
+                  </div>
+                </div>
+                <!-- </div> -->
+              </ng-container>
+              <br>
+            </ng-container>
+          </div>
+          <!-- *ngIf="fieldData && !permissions.includes('RISK_APPROVE')" -->
+          <div class="row">
+            <div class="col-md-8"></div>
+            <div class="col-md-2">
+              <button (click)="resetform($event)" class="form-control btn btn-danger pull-right" type="button">Reset
+              </button>
+            </div>
+            <div class="col-md-2">
+              <!-- *ngIf="fieldData && !permissions.includes('RISK_APPROVE')" -->
+              <button
+                [disabled]="this.loading" class="form-control btn btn-primary pull-right" type="submit">
+                <span aria-hidden="true" id="loading" role="status"></span>
+                Search
+              </button>
+            </div>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div  [style.display]="this.DynamicValues ? 'block' : 'none'" class="row">
+  <div class="row" >
+    <div class="col-12 col-xl-12 stretch-card">
+      <div class="row flex-grow-1">
+        <div class="col-md-2 grid-margin stretch-card">
+          <div class="card cards">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-baseline">
+                <!-- <h6 class="card-title mb-0">Active Merchants</h6> -->
+                <span class="mb-0" style="font-size: 10px; white-space: nowrap;"> Total Count<h4>{{this.collectionSize}}</h4></span>
+  
+              </div>
+             
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2 grid-margin stretch-card" *ngIf="this.Id=='3'">
+          <div class="card cards">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-baseline">
+                <!-- <h6 class="card-title mb-0">Active Merchants</h6> -->
+                <span class="mb-0" style="font-size: 10px; white-space: nowrap;"> Total Debit Amt<h4>₹{{this.debitAmout}}</h4></span>
+  
+              </div>
+             
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2 grid-margin stretch-card" *ngIf="this.Id=='3'">
+          <div class="card cards">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-baseline">
+                <!-- <h6 class="card-title mb-0">Active Merchants</h6> -->
+                <span class="mb-0" style="font-size: 10px; white-space: nowrap;"> Total Credit Amt<h4>₹{{this.creditAmout}}</h4></span>
+              </div>
+            </div>
+          </div>
+        </div>
+       
+        <div class="col-md-2 grid-margin stretch-card" *ngIf="this.Id=='2'">
+          <div class="card cards">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-baseline">
+                <!-- <h6 class="card-title mb-0">Active Merchants</h6> -->
+                <span class="mb-0" style="font-size: 10px; white-space: nowrap;"> Total Success Amt<h4>₹{{this.successAmout}}</h4></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2 grid-margin stretch-card" *ngIf="this.Id=='2'">
+          <div class="card cards">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-baseline">
+                <!-- <h6 class="card-title mb-0">Active Merchants</h6> -->
+                <span class="mb-0" style="font-size: 10px; white-space: nowrap;"> Total Pending Amt<h4>₹{{this.pendingAmout}}</h4></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2 grid-margin stretch-card" *ngIf="this.Id=='2'">
+          <div class="card cards">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-baseline">
+                <!-- <h6 class="card-title mb-0">Active Merchants</h6> -->
+                <span class="mb-0" style="font-size: 10px; white-space: nowrap;"> Total Failed Amt<h4>₹{{this.failedAmout}}</h4></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2 grid-margin stretch-card"   *ngFor="let data of this.JSONData">
+          <div class="card cards" *ngIf="(data.Key!='transAmount')">
+            <div class="card-body">
+              <div class="d-flex ">
+                <!-- <h6 class="card-title mb-0">Active Merchants</h6> -->
+                <span  style="font-size: 10px; white-space: nowrap;"> Total {{data.Key.replace('Amount','Amt').replace('amount','Amt')}}<h4>₹{{data.Value}}</h4></span>            
+              </div>             
+            </div>
+          </div>
+        </div>
+     
+  
+  
+  
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-12 row main-content">
+    <!--<button type="button" class="btn btn-primary " (click)="onBtnC($event)">Add Rows</button>-->
+<div class="col-md-3"  >
+    <button (click)="onExportCSV()" title="Export Excel" class="btn btn-light  bg-success" type="button"><i
+      class="feather icon-download text-white"></i>
+    </button>&nbsp;
+    <div class="btn-group   mb-1 mb-md-0">
+      <!--      <button type="button" class="btn btn-primary">Columns</button>-->
+      <div class="btn-group" ngbDropdown role="group">
+        <button class="btn btn-primary" title="Columns" ngbDropdownToggle></button>
+        <div class="ng-dropdown-panel-items p-1" ngbDropdownMenu
+             style="height: 250px;width: 250px; overflow: scroll; scroll-behavior: smooth">
+          <div class="form-group">
+            <!--            <label for="columns" class="form-label"> All Columns</label>-->
+            <div *ngIf="columnDefs" class="list-group ng-option">
+                <span *ngFor="let column of columnDefsCopy; let i = index" class="checkbox">
+                  <label class="list-group-item p-2">
+                    <input (change)="updateSelectedTimeslots($event)" [checked]="(tableSelectedColumn && (-1 !==tableSelectedColumn.indexOf(column)) ? 'checked': '')" class="form-check-input me-1" name="{{column.headerName}}"
+                           type="checkbox"
+                           value="{{i}}"/>
+                    <!--                    {{column.field | uppercase }}-->
+                    {{(column?.headerName?.replace('_', '') || column?.field?.replace('_', '')) }}
+                  </label>
+                </span>
+            </div>
+
+          </div>
+          <!--          <ng-select-->
+          <!--            [(ngModel)]="tableSelectedColumn"-->
+          <!--            [closeOnSelect]="false"-->
+          <!--            [items]="columnDefs"-->
+          <!--            [multiple]=true-->
+          <!--            bindLabel="field">-->
+          <!--            <ng-template let-index="index" let-item="item" let-item$="item$" ng-option-tmp>-->
+          <!--              <input [ngModel]="item$.selected" id="item-{{index}}" type="checkbox"/> {{item.field.toUpperCase()}}-->
+          <!--            </ng-template>-->
+          <!--          </ng-select>-->
+
+        </div>
+      </div>
+    </div>
+  </div>
+  
+    <!-- <div class="col-md-9 row">
+      <div class="col-md-4" style="background-color: white;"  >
+        <div class=" " style="font-size: 13px;">Total Count : <b> {{this.collectionSize}}</b></div> 
+      </div>
+      <div class="col-md-4" style="background-color: white;font-size: 13px;" *ngFor="let data of this.JSONData">
+        <div class=" ">Total {{data.Key}} : <b> ₹{{data.Value}}</b></div> 
+      </div>
+    </div> -->
+    
+    <!-- <button (click)="quickFilterShowAction($event)" class="btn btn-light" type="button">Quick Filters<i
+      class="feather icon-filter"></i></button>
+ -->
+  </div>
+  <div class="row col-xl-12">
+    
+    <!-- <input id="typeahead-basic" type="text" autocomplete="new-password" placeholder="Search" class="form-control" (selectItem)="searchQuickFilter($event)" [(ngModel)]="globalSearch" [ngbTypeahead]="search"/> -->
+  </div>
+
+  <div class="row" style="min-height: 470px">
+    <div class="col-12 col-xl-12 grid-margin stretch-card ag-theme-alpine" style="margin-bottom: 0px">
+      <ag-grid-angular (gridReady)="onGridReady($event)"
+                       [columnDefs]="tableSelectedColumn"
+                       (filterChanged)="onFilterChange($event)"
+                       (filterModified)="onFilterModified($event)"
+                       [enableCellTextSelection]=true
+                       [paginationPageSize]="pageSize"
+                       [pagination]="true"
+                       [rowData]="rowData"
+                       [suppressPaginationPanel]="true" class="ag-theme-alpine"
+                       style="width: 100%; height: auto;"
+      ></ag-grid-angular>
+    </div>
+  </div>
+  <div class="row bg-white p-2 mt-0">
+    <div class="col-md-4">
+      <select (change)="onPageSizeChanges($event)" [(ngModel)]="pageSize"
+              class="form-select d-flex justify-content-end col-4"
+              name="pageSize" style="width: auto">
+        <option [ngValue]="10">10</option>
+        <option [ngValue]="20">20</option>
+        <option [ngValue]="30">30</option>
+      </select>
+    </div>
+
+    <div class="col-md-8">
+      <ngb-pagination
+        (pageChange)="onPaginationChange($event)"
+        [(page)]="currentPage"
+        [boundaryLinks]="true"
+        [collectionSize]="collectionSize"
+        [maxSize]="5"
+        [pageSize]="pageSize"
+        [rotate]="true"
+        class="d-flex justify-content-end align-right">
+      </ngb-pagination>
+    </div>
+
+  </div>
+</div>

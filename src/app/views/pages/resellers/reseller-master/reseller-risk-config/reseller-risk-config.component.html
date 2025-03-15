@@ -1,0 +1,174 @@
+<div class="row mb-2">
+  <div class="col-xs-12">
+    <div class="text-end">
+      <button (click)="previousStep($event)" class="btn btn-secondary pull-right"><i class="feather text-primary arrow-left"></i>Back
+      </button>
+
+    </div>
+  </div>
+  <!-- <div class="col-sm-6 justify-content-between">
+
+  </div> -->
+</div>
+
+
+<form (ngSubmit)="onNewSubmit(ResellerForm.value)" [formGroup]="dynamicForm" novalidate>
+
+  <!-- <input [type]="controls.datatype" [formControlName]="controls.field_name"/> -->
+  <!-- <input type="text" autocomplete="new-password" [value]="ConfigData"> -->
+  <!-- {{ConfigData|json}} -->
+  <div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body ">
+          <form [formGroup]="ResellerForm" novalidate>
+
+            <div *ngIf="currentURL" class="mb-3 col-md-12">
+              <label class="form-label" for="exampleInputUsername1"> Reseller ID </label>
+
+              <!-- <input class="form-control"  type="text" autocomplete="new-password"
+                minlength="5" /> -->
+
+              <ng-select (change)="onSubmit(ResellerForm.value)" formControlName="ResellerID" formControlName="Mid"
+                         id="mid" name="mid" placeholder="Reseller ID">
+                <ng-option *ngFor="let reseller of Resultdata" [value]="reseller.ResellerId"
+                           id="selectedOption">{{reseller.reseller_name}} ({{reseller.ResellerId}})
+                </ng-option>
+              </ng-select>
+
+            </div>
+          </form>
+          <ng-container *ngFor="let controls of fieldData">
+            <div *ngIf="controls.level=='1'">
+              <ng-container [ngSwitch]="controls.datatype">
+                <div class="col">
+
+                  <div class="mb-3 col-md-6">
+                    <label *ngSwitchCase="'text'" class="form-label"
+                           for="exampleInputUsername1"> {{controls.field_label}}
+                    </label>
+
+                    <input *ngSwitchCase="'text'" [formControlName]="controls.field_name" [id]="controls.field_name"
+                           [name]="controls.field_name"
+                           [placeholder]="controls.field_label" [type]="controls.datatype" [value]="controls.field_value||''"
+                           class="form-control" minlength="5"/>
+
+                  </div>
+                  <div class="mb-3 col-md-6">
+                    <label *ngSwitchCase="'select'" class="form-label" for="exampleInputUsername1">
+                      {{controls.field_label}} </label>
+
+                    <select (change)="changeProject($event,controls.field_name)" *ngSwitchCase="'select'"
+                            [id]="controls.field_name" [name]="controls.field_name"
+                            class="form-control">
+                      <!-- <option readonly selected>{{controls.field_label}}</option> -->
+                      <option *ngFor="let value of selectdata;let i = index;" [selected]="controls.field_value==value"
+                              [value]="value">
+                        {{value}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="mb-3 col-md-6">
+                    <label *ngSwitchCase="'textarea'" class="form-label" for="exampleInputUsername1">
+                      {{controls.field_label}} </label>
+
+                    <textarea *ngSwitchCase="'textarea'" [id]="controls.field_name" [id]="controls.field_name"
+                              [name]="controls.field_name" [placeholder]="controls.field_label"
+                              [value]="controls.field_value||''" class="form-control"
+                              maxlength="300"></textarea>
+
+                  </div>
+                  <div class="mb-3 col-md-6">
+                    <label *ngSwitchCase="'date'" class="form-label"
+                           for="exampleInputUsername1"> {{controls.field_label}}
+                    </label>
+
+                    <input *ngSwitchCase="'date'" [id]="controls.field_name" [id]="controls.field_name"
+                           [name]="controls.field_name"
+                           [placeholder]="controls.field_label" [type]="controls.datatype" [type]="controls.datatype"
+                           [value]="controls.field_value||''" class="form-control" minlength="5"/>
+
+                  </div>
+                  <div class="mb-3 col-md-6">
+                    <label *ngSwitchCase="'file'" class="form-label"
+                           for="exampleInputUsername1"> {{controls.field_label}}
+                    </label>
+
+                    <input *ngSwitchCase="'file'" [id]="controls.field_name" [id]="controls.field_name"
+                           [name]="controls.field_name"
+                           [placeholder]="controls.field_label" [type]="controls.datatype" [type]="controls.datatype"
+                           [value]="controls.field_value||''" class="form-control" minlength="5"/>
+
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+            <form [formGroup]="dynamicNewForm" novalidate>
+
+              <div *ngIf="controls.level=='2'">
+                <div *ngIf="instrumentdata[0]" class="row ">
+                  <label class="form-label" for="exampleInputUsername1"> {{controls.field_label}} </label>
+
+                  <ng-container *ngFor="let control of instrumentdata">
+                    <div class="mb-3 col-md-3">
+                      <label class="form-label" for="exampleInputUsername1"> {{control}} </label>
+
+                      <input [formControlName]="control+'_'+controls.field_name" [id]="control" [name]="control"
+                             [placeholder]="control" autocomplete="new-password" class="form-control" minlength="5"
+                             type="text"/>
+
+                    </div>
+                  </ng-container>
+                  <br>
+                </div>
+              </div>
+            </form>
+            <br>
+          </ng-container>
+          <button *ngIf="fieldData" class="form-control btn btn-primary pull-right" type="submit">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</form>
+
+<!-- <form [formGroup]="dynamicNewForm" novalidate> -->
+
+
+<!-- <div class="row" *ngIf="fieldData">
+  <div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body row ">
+        <ng-container *ngFor="let control of Beneficernce">
+          <div class="mb-3 col-md-3">
+            <label for="exampleInputUsername1" class="form-label"> {{control.instrument_id}} </label>
+
+            <input class="form-control"  [formControlName]="control.instrument_id" [id]="control.instrument_id"
+              type="text" autocomplete="new-password" [placeholder]="control.field_label" [name]="control.instrument_id" minlength="5" />
+
+          </div>
+        </ng-container>
+        <br>
+      </div>
+      <input  class="form-control btn btn-primary" type="submit" />
+
+    </div>
+  </div>
+</div> -->
+
+
+<!--
+     <div *ngFor="let ticket of t.controls; let i = index" class="list-group list-group-flush">
+      <div class="list-group-item">
+          <h5 class="card-title">Ticket {{i + 1}}</h5>
+          <div  class="form-row">
+              <div class="form-group col-6">
+                  <label>Name</label>
+                  <input type="text" autocomplete="new-password" formControlName="name" class="form-control"  />
+                  </div>
+              </div>
+
+          </div>
+      </div>  -->
+<!-- </form> -->

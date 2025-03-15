@@ -1,0 +1,112 @@
+// Write your custom css/scss here
+
+.ng-select-disabled >.ng-value-label {
+  padding: 0 5px;
+  color: black !important;
+}
+
+.ng-select-disable {
+  .ng-value-label{
+    padding: 0 5px;
+    color: black !important;
+  }
+}
+
+.ng-select .ng-select-multiple .ng-select-disabled {
+  .ng-select-container .ng-value-container .ng-value .ng-value-label {
+    padding: 0 5px;
+    color: black !important;
+  }
+}
+
+.ng-select-disabled {
+  .ng-value-label{
+    color: black !important;
+  }
+}
+
+
+.nav-link.disabled {
+  //color: var(--bs-nav-link-disabled-color) !important;
+  color: #4f4f4f!Important;
+  pointer-events: none;
+  cursor: not-allowed !important;
+}
+
+.nav-item.nav-category.disabled{
+  color: #b2b2b2!Important;
+}
+
+.merchant-creation-aside-nav{
+  &.collapse {
+    display: block;
+    @media(max-width: 991px) {
+      display: none;
+    }
+    &.show {
+      @media(max-width: 991px) {
+        display: block;
+      }
+    }
+  }
+  ul {
+    //list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 19.5%;
+    //background-color: #f1f1f1;
+    height: 100%; /* Full height */
+    position: fixed !important; /* Make it stick, even on scroll */
+    overflow: hidden !important; /* Enable scrolling if the sidenav has too much content */
+  }
+
+  .nav-item {
+    border-radius: .2rem;
+    .nav-link {
+      color: $body-color;
+      i {
+        color: $text-muted;
+      }
+    }
+    &.active, &:hover {
+      background: rgba($primary, .1);
+      .nav-link {
+        &, i {
+          color: $primary;
+        }
+      }
+      .disabled {
+        background: rgba(105, 103, 103, 0.16);
+      }
+    }
+  }
+}
+.email-aside-nav {
+
+  ul {
+    //list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 19.5%;
+    //background-color: #f1f1f1;
+    height: 100%; /* Full height */
+    position: fixed !important; /* Make it stick, even on scroll */
+    overflow: hidden !important; /* Enable scrolling if the sidenav has too much content */
+  }
+}
+
+.merchant-creation-aside-nav .nav-item.active, .merchant-creation-aside-nav .nav-item:hover {
+  background: rgba(101, 113, 255, 0.1);
+
+  .disabled {
+    background: rgba(105, 103, 103, 0.16);
+  }
+}
+
+.ag-theme-alpine {
+  /* disable all borders */
+  --ag-borders: none;
+  /* then add back a border between rows */
+  --ag-borders-row: dashed 1px;
+  --ag-row-border-color: rgb(150, 150, 200);
+}

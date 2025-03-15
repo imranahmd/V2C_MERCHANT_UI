@@ -1,0 +1,34 @@
+<div class="card">
+  <div class="card-header">
+    <h4>Get Started</h4>
+
+  </div>
+  <div class="card-body">
+<!--    <h4 class="text-primary mb-3" style="padding-bottom: 2px; text-decoration: underline solid red 3px;">Get Started</h4>-->
+    <div class="timeline-wrapper">
+      <ul class="StepProgress">
+        <li class="StepProgress-item" [ngClass]="progressCount >= 10? 'is-done': ''">
+          <div class="bold time"></div>
+          <div class="bold">Verification</div>
+          <div><span class="text-muted">Email and Mobile number is verified</span></div>
+        </li>
+        <li class="StepProgress-item" [ngClass]="progressCount >= 20? 'is-done': ''">
+          <!--      <div class="bold time">2</div>-->
+          <div class="bold">Complete Application</div>
+          <div><span class="text-muted">Enter basic business details and KYC documents to complete your application</span></div>
+          <div *ngIf="!(progressCount >= 20)"><button class="btn btn-primary" [disabled]="progressCount >= 20" (click)="onCompleteApplication($event)">Complete Application<i class="feather text-primary icon-chevron-right"></i></button></div>
+        </li>
+        <li class="StepProgress-item current" [ngClass]="progressCount >= 30? 'is-done': ''">
+          <!--      <div class="bold time">12:00 Pm</div>-->
+          <div class="bold">Application Review</div>
+          <div><span class="text-muted">Account details will be verified and submitted</span></div>
+        </li>
+        <li class="StepProgress-item" [ngClass]="progressCount == 40? 'is-done': ''">
+          <!--      <div class="bold time">01:00 Pm</div>-->
+          <div class="bold">Account Activation</div>
+          <div><span class="text-muted">Account will be activated and status will mailed.</span></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

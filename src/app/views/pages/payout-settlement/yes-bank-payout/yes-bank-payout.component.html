@@ -1,0 +1,34 @@
+<div class="col-md-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+
+      <h6 class="card-title">Generate Payout</h6>
+
+      <form (ngSubmit)="onSubmit(yesbankForm.value)" [formGroup]="yesbankForm" class="forms-sample">
+        <div class="row mb-3">
+          <label class="col-sm-3 col-form-label" for="exampleInputUsername2">Payout Date:</label>
+          <div class="col-sm-9">
+            <input (keydown)="noKeyInput($event)" [ngClass]="{'is-invalid': isForm1Submitted && form1.payoutDate.errors}" class="form-control" formControlName="payoutDate"
+                   placeholder="dd-mm-yyyy" type="date">
+            <div *ngIf="isForm1Submitted && form1.payoutDate.errors?.required" class="invalid-feedback">
+              Required
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <div class="col-xs-12">
+            <div class="text-end">
+
+              <button class="btn btn-primary pull-right" type="submit">
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>

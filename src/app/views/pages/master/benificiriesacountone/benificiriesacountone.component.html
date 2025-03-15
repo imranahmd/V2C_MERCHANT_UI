@@ -1,0 +1,60 @@
+
+<div class="card">
+    <div class="card-header">
+      <h4>Beneficiary Account</h4>
+    </div>
+    <div class="row mb-2">
+        <div class="col-xl-10">
+          <!--<button type="button" class="btn btn-primary " (click)="onBtnC($event)">Add Rows</button>-->
+          <button type="button" class="btn btn-light" (click)="onAddNew($event)">
+            Add
+            New<i class="feather text-primary icon-plus"></i></button>
+          <button type="button" class="btn btn-light" title="Export Excel" (click)="onExportCSV()">
+            <i class="feather text-primary icon-download"></i></button>
+           <div class="btn-group mb-1 mb-md-0">
+            <!--      <button type="button" class="btn btn-primary">Columns</button>-->
+      
+          </div>
+        </div>
+      
+      </div>
+
+     <div class="row" style="min-height:500px"  >
+        <div class="col-12 col-xl-12 grid-margin stretch-card ag-theme-alpine" style="margin-bottom: 0px">
+     
+    
+          <ag-grid-angular [enableCellTextSelection]=true (gridReady)="onGridReady($event)"
+            [columnDefs]="tableSelectedColumn" [defaultColDef]="defaultColDef" [paginationPageSize]="pageSize"
+            (filterChanged)="onFilterChange($event)"
+            [pagination]="true" [rowData]="rowData" [rowModelType]="" [rowSelection]="'single'"
+            [suppressPaginationPanel]="true" style="width: 100%; height: auto;">
+          </ag-grid-angular>
+    
+    
+        </div>
+      </div>
+      <div class="row bg-white p-2 mt-0"   >
+        <div class="col-md-4">
+            <select (change)="onPageSizeChanges($event)" [(ngModel)]="pageSize"
+              class="form-select d-flex justify-content-end col-4" name="pageSize" style="width: auto">
+              <option [ngValue]="10">10</option>
+              <option [ngValue]="20">20</option>
+              <option [ngValue]="30">30</option>
+            </select>
+          </div>
+      
+          <div class="col-md-8">
+            <ngb-pagination (pageChange)="onPaginationChange($event)" [(page)]="currentPage" [boundaryLinks]="true"
+              [collectionSize]="collectionSize" [maxSize]="5" [pageSize]="pageSize" [rotate]="true"
+              class="d-flex justify-content-end align-right">
+            </ngb-pagination>
+          </div>
+    
+      </div>
+      <app-modal #modalbloked [modalConfig]="modalConfigBlocked">
+        <app-benificiries-popup (closeModal)="closeModalBlocked($event)" [merchantStatusConfig]="tableInfo"
+          [onMerchantMId]="BlockedmerchantSelectEvent" [onMerchantAdd]="AddmerchantSelectEvent"></app-benificiries-popup>
+      </app-modal>
+    
+    </div>
+

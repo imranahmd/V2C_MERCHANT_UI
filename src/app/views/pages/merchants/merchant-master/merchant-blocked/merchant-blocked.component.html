@@ -1,0 +1,77 @@
+<div class="row" style="min-height: 100px">
+  <div class="card">
+
+
+    <div class="card-body">
+
+      <form (ngSubmit)="MerchantStatus(merchatstatusform.value)" [formGroup]="merchatstatusform">
+
+
+        <div class="row">
+
+          <div class="col-sm-12">
+            <div class="mb-12">
+              <label class="form-label">Merchant Status</label>
+              <!-- <input type="text" autocomplete="new-password" formControlName="Status"> -->
+              <select [ngClass]="{'is-invalid': isForm1Submitted && form1.Status.errors}" aria-label="Default select example" class="form-select"
+                      formControlName="Status"
+                      placeholder="Select Merchant Status">
+                <option [disabled]="true" [ngValue]="null">Select Merchant Status</option>
+
+                <!-- <option [selected]="true"  value="" selected disabled>Select Merchant Status</option> -->
+                <option *ngFor="let merchantstatuslist of Resdata" [value]="merchantstatuslist.FieldValue">
+                  {{merchantstatuslist.FieldText}}</option>
+              </select>
+              <div *ngIf="isForm1Submitted && form1.Status.errors?.required" class="invalid-feedback">
+                Please fill this field
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row mt-2">
+          <div class="col-sm-12">
+            <label for="exampleFormControlTextarea1">Comment</label>
+            <textarea [ngClass]="{'is-invalid': isForm1Submitted && form1.Remark.errors}" class="form-control" formControlName="Remark"
+                      maxlength="200" rows="3"></textarea>
+            <div *ngIf="isForm1Submitted && form1.Remark.errors?.required" class="invalid-feedback">
+              Please fill this field
+            </div>
+            <div *ngIf="isForm1Submitted && form1.Remark.errors?.twoSpaces" class="invalid-feedback">
+              More than two consecutive spaces are not allowed
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row mt-3 ">
+          <div class="col-md-4">
+            <button [disabled]="this.loading" class="btn btn-lg btn-primary"
+                    type="submit">
+              <span aria-hidden="true" id="loading" role="status"></span>
+              Submit
+            </button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- <input type="date" class="form-control">
+&nbsp;
+<div class="form-group">
+    <label for="exampleFormControlTextarea1">Comment</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+  </div>
+
+
+&nbsp;
+&nbsp;
+<button type="button" class="btn btn-lg btn-primary" >Submit</button>
+&nbsp; -->

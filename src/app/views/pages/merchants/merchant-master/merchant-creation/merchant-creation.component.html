@@ -1,0 +1,83 @@
+<div class="row inbox-wrapper">
+  <div class="col-lg-12">
+    <div class="card">
+<!--      <a style="background-color: blue" id="contact" routerLink="/merchants/self-onboarding"><h5><i class="feather text-primary icon-lg icon-arrow-left"></i></h5></a>-->
+<!--      <div class="">-->
+        <div class="row">
+          <!--          <div class="col-12">-->
+          <div class="col-md-8">
+            <div class="row">
+              <div class="col-2 d-flex align-items-center justify-content-between">
+                <button (click)="isAsideNavCollapsed = !isAsideNavCollapsed" [attr.aria-expanded]="!isAsideNavCollapsed"
+                        aria-controls="asideNav" class="navbar-toggle btn btn-icon border d-inline-flex d-lg-none"
+                        type="button">
+                  <i class="feather text-primary icon-chevron-down"></i>
+                </button>
+              </div>
+<!--              <div class="col-3 order-md-first"><i class="feather text-primary icon-lg icon-arrow-left"></i> </div>-->
+              <div class="col-10 order-md-first text-lg-start d-flex justify-content">
+                <a style="margin: 8px;border: 5px solid;" class="btn btn-primary" id="contact" routerLink="/merchants/self-onboarding"><i class="feather text-primary icon-lg icon-arrow-left"></i></a>
+                <h4 class="mb-3 mt-3" *ngIf="isAdd; else ifNotShow">{{'Merchant On-Boarding ('+merchantId+')'}}</h4>
+                <ng-template #ifNotShow><h4 class="mb-3 mt-3">{{'Merchant On-Boarding' }} <span style="color:#6571ff">{{'('+merchantId+')'}}</span></h4></ng-template>
+                <p *ngIf="!isAdd" class="text-muted">{{selectedMerchantId}}</p>
+<!--                <a id="contact" routerLink="/merchants/self-onboarding"><h5><i class="feather text-primary icon-arrow-left-circle"></i> Back to Get Started</h5></a>-->
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <!--              <div class="text-end">-->
+            <!--                <button *ngIf="this.previousPath" class="btn btn-sm btn-secondary pull-right" (click)="previousStep($event)"><i class="feather text-primary icon-arrow-left"></i>Back-->
+            <!--                </button>-->
+            <!--                <button *ngIf="this.nextPath" class="btn btn-primary pull-right" (click)="nextStep($event)">Next <i class="feather text-primary icon-arrow-right"></i>-->
+            <!--                </button>-->
+            <!--              </div>-->
+
+            <div class="text-end mb-2 mt-3">
+              <div class="btn-group pull-right">
+                <button (click)="previousStep($event)" *ngIf="this.previousPath" [disabled]="disableMenu" class="btn btn-outline-primary"
+                        type="button">
+                  <i class="feather text-primary icon-chevron-left"></i>Back
+                </button>
+                <button (click)="nextStep($event)" *ngIf="this.nextPath" [disabled]="disableMenu" class="btn btn-outline-primary"
+                        type="button">
+                  Next<i class="feather text-primary icon-chevron-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+<!--      </div>-->
+<!--            <div class="card-body vh-100">-->
+      <div class="row" style="margin-right: 0!important;">
+        <div class="col-sm-3 col-sm border-end-lg">
+<!--          <nav class="inside-sidebar">-->
+            <div #collapse="ngbCollapse" [(ngbCollapse)]="isAsideNavCollapsed" class="merchant-creation-aside-nav" id="asideNav">
+              <ul class="nav flex-column">
+                <ng-container #menuListItem *ngFor="let item of menuItems">
+                  <li [ngClass]="{'active': inbox.isActive}" class="nav-item">
+                    <a #inbox="routerLinkActive"
+                       [ngClass]="{'disabled': disableMenu && item.link !== '/merchants/merchant-creation/merchant-add'}"
+                       class="nav-link d-flex align-items-center"
+                       queryParamsHandling="preserve" routerLink="{{item.link}}" [state]="{ data: menuItems}"
+                       routerLinkActive="active"
+                       (click)="isAsideNavCollapsed = !isAsideNavCollapsed"
+                    >
+                      <i class="feather text-primary {{item.icon}} icon-lg me-2"></i>
+                      {{item.label | titlecase}}
+                      <!--                      <span class="badge bg-danger fw-bolder ms-auto">2</span>-->
+                    </a>
+                  </li>
+                </ng-container>
+
+            </ul>
+          </div>
+          <!--          </nav>-->
+        </div>
+        <div class="col-sm-9 col-sm">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+<!--            </div>-->
+    </div>
+  </div>
+</div>

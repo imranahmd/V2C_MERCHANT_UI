@@ -1,0 +1,231 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="dynamicForm" novalidate>
+
+  <!-- <input [type]="controls.datatype" [formControlName]="controls.field_name"/> -->
+
+
+  <div class="grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <!-- <div class="mb-3 col-md-6">
+
+          <input class="form-control" type="'radio'"  [id]="controls.field_name" [type]="controls.datatype"/>
+          <input class="form-control" type="'checkbox'"  [id]="controls.field_name" [type]="controls.datatype" />
+
+        </div> -->
+        <div class="row">
+          <ng-container *ngFor="let controls of fieldData">
+            <!-- {{controls.field_name}} -->
+
+            <ng-container [ngSwitch]="controls.datatype">
+
+              <div *ngSwitchCase="'text'" class="mb-3 col-sm-6 ">
+                <label *ngSwitchCase="'text'" [for]="controls.field_name"
+                       class="form-label"> {{controls.field_label}} </label>
+
+                <input *ngSwitchCase="'text'" [formControlName]="controls.field_name" [id]="controls.field_name"
+                       [maxlength]="this.JSONvalue['maxLength']" [name]="controls.field_name" [ngClass]="{'is-invalid': isForm6Submitted  && form6[controls.field_name].errors }"
+                       [placeholder]="controls.field_label" [type]="controls.datatype"
+                       class="form-control"/>
+                <div *ngIf="isForm6Submitted && form6[controls.field_name].errors?.required"
+                     class="invalid-feedback">
+                  Enter mandatory value
+                </div>
+                <div *ngIf="isForm6Submitted && form6[controls.field_name].errors?.pattern"
+                     class="invalid-feedback">
+                  Enter appropriate value
+                </div>
+                <div *ngIf="isForm6Submitted && form6[controls.field_name].errors?.min" class="invalid-feedback">
+                  Enter valid min value
+                </div>
+                <div *ngIf="isForm6Submitted && form6[controls.field_name].errors?.max" class="invalid-feedback">
+                  Enter value in max limit
+                </div>
+                <div *ngIf="isForm6Submitted && form6[controls.field_name].errors?.minlength"
+                     class="invalid-feedback">
+                  Enter valid min length
+                </div>
+                <div *ngIf="isForm6Submitted && form6[controls.field_name].errors?.maxlength"
+                     class="invalid-feedback">
+                  Enter allowed max characters
+                </div>
+                <div *ngIf="isForm6Submitted && form6[controls.field_name].errors?.email" class="invalid-feedback">
+                  Enter a valid Email ID
+                </div>
+
+              </div>
+
+              <div *ngSwitchCase="'number'" class="mb-3 col-sm-6 ">
+                <label *ngSwitchCase="'text'" [for]="controls.field_name"
+                       class="form-label"> {{controls.field_label}} </label>
+
+                <input (keypress)="OnlyNumbersAllowed($event)" *ngSwitchCase="'text'" [formControlName]="controls.field_name"
+                       [id]="controls.field_name" [maxlength]="this.JSONvalue['maxLength']" [name]="controls.field_name"
+                       [ngClass]="{'is-invalid': isForm6Submitted  && form6[controls.field_name].errors }" [placeholder]="controls.field_label"
+                       [type]="controls.datatype"
+                       class="form-control"/>
+                <div *ngIf="isForm6Submitted && form6[controls.field_name].errors?.required"
+                     class="invalid-feedback">
+                  Enter mandatory value
+                </div>
+                <div *ngIf="isForm6Submitted && form6[controls.field_name].errors?.pattern"
+                     class="invalid-feedback">
+                  Enter appropriate value
+                </div>
+                <div *ngIf="isForm6Submitted && form6[controls.field_name].errors?.min" class="invalid-feedback">
+                  Enter valid min value
+                </div>
+                <div *ngIf="isForm6Submitted && form6[controls.field_name].errors?.max" class="invalid-feedback">
+                  Enter value in max limit
+                </div>
+                <div *ngIf="isForm6Submitted && form6[controls.field_name].errors?.minlength"
+                     class="invalid-feedback">
+                  Enter valid min length
+                </div>
+                <div *ngIf="isForm6Submitted && form6[controls.field_name].errors?.maxlength"
+                     class="invalid-feedback">
+                  Enter allowed max characters
+                </div>
+                <div *ngIf="isForm6Submitted && form6[controls.field_name].errors?.email" class="invalid-feedback">
+                  Enter a valid Email ID
+                </div>
+
+              </div>
+              <div *ngSwitchCase="'select'" class="mb-3 col-sm-6">
+                <label *ngSwitchCase="'select'" [for]="controls.field_name"
+                       class="form-label"> {{controls.field_label}} </label>
+
+                <select *ngSwitchCase="'select'" [formControlName]="controls.field_name" [id]="controls.field_name"
+                        [name]="controls.field_name"
+                        [ngClass]="{'is-invalid': isForm6Submitted  && form6[controls.field_name].errors }" class="form-control">
+                  <option readonly>{{controls.field_label}}</option>
+                  <option *ngFor="let value of controls['options']" [value]="value">
+                    {{value}}
+                  </option>
+                </select>
+                <div *ngIf="isForm6Submitted && form6[controls.field_name].errors?.required"
+                     class="invalid-feedback">
+                  Enter mandatory value
+                </div>
+              </div>
+              <div *ngSwitchCase="'textarea'" class="mb-3 col-sm-12">
+                <label *ngSwitchCase="'textarea'" [for]="controls.field_name"
+                       class="form-label"> {{controls.field_label}} </label>
+
+                <textarea *ngSwitchCase="'textarea'" [formControlName]="controls.field_name"
+                          [id]="controls.field_name" [id]="controls.field_name" [name]="controls.field_name"
+                          [ngClass]="{'is-invalid': isForm6Submitted  && form6[controls.field_name].errors }" [placeholder]="controls.field_label"
+                          class="form-control"
+                ></textarea>
+                <div *ngIf="isForm6Submitted && form6[controls.field_name].errors?.required"
+                     class="invalid-feedback">
+                  Enter mandatory value
+                </div>
+                <div *ngIf="isForm6Submitted && form6[controls.field_name].errors?.pattern"
+                     class="invalid-feedback">
+                  Enter appropriate value
+                </div>
+                <div *ngIf="isForm6Submitted && form6[controls.field_name].errors?.min" class="invalid-feedback">
+                  Enter valid min value
+                </div>
+                <div *ngIf="isForm6Submitted && form6[controls.field_name].errors?.max" class="invalid-feedback">
+                  Enter value in max limit
+                </div>
+                <div *ngIf="isForm6Submitted && form6[controls.field_name].errors?.minlength"
+                     class="invalid-feedback">
+                  Enter valid min length
+                </div>
+                <div *ngIf="isForm6Submitted && form6[controls.field_name].errors?.maxlength"
+                     class="invalid-feedback">
+                  Enter allowed max characters
+                </div>
+                <div *ngIf="isForm6Submitted && form6[controls.field_name].errors?.email" class="invalid-feedback">
+                  Enter a valid Email ID
+                </div>
+
+
+              </div>
+              <div *ngSwitchCase="'date'" class="mb-3 col-sm-6">
+                <label *ngSwitchCase="'date'" [for]="controls.field_name"
+                       class="form-label"> {{controls.field_label}} </label>
+
+                <input *ngSwitchCase="'date'" [formControlName]="controls.field_name" [id]="controls.field_name"
+                       [id]="controls.field_name" [name]="controls.field_name" [ngClass]="{'is-invalid': isForm6Submitted  && form6[controls.field_name].errors }"
+                       [placeholder]="controls.field_label" [type]="controls.datatype" [type]="controls.datatype"
+                       class="form-control"/>
+                <div *ngIf="isForm6Submitted && form6[controls.field_name].errors?.required"
+                     class="invalid-feedback">
+                  Enter mandatory value
+                </div>
+              </div>
+              <div *ngSwitchCase="'file'" class="mb-3 col-sm-6">
+                <label *ngSwitchCase="'file'" [for]="controls.field_name"
+                       class="form-label"> {{controls.field_label}} </label>
+
+                <input *ngSwitchCase="'file'" [formControlName]="controls.field_name" [id]="controls.field_name"
+                       [id]="controls.field_name" [name]="controls.field_name" [ngClass]="{'is-invalid': isForm6Submitted  && form6[controls.field_name].errors }"
+                       [placeholder]="controls.field_label" [type]="controls.datatype" [type]="controls.datatype"
+                       class="form-control"/>
+                <div *ngIf="isForm6Submitted && form6[controls.field_name].errors?.required"
+                     class="invalid-feedback">
+                  Enter mandatory value
+                </div>
+              </div>
+            </ng-container>
+            <!-- <div style="color: lightslategrey;">{{listdata.field_value}}</div> -->
+
+          </ng-container>
+
+          <br>
+          <div class="row">
+            <!-- *ngIf="fieldData &&  (permissions.includes('Add New'))" -->
+            <div class="col-md-10"></div>
+            <div class="col-md-2">
+              <input class="form-control btn btn-primary" type="submit"/></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div *ngIf="listdata">  {{listdata|json}}</div> -->
+    </div>
+  </div>
+
+
+  <!-- <ng-container *ngSwitchCase="'radio'">
+    <label *ngFor="let option of prop.options">
+      <input type="radio" [name]="prop.key" [formControlName]="prop.key" [value]="option.value" class="form-control">{{option.label}}
+    </label>
+  </ng-container> -->
+
+  <!-- <ng-container *ngFor="let validation of controls.validations">
+      <span *ngIf="dynamicForm.controls[controls.field_name].touched && dynamicForm.controls[controls.field_name].errors">
+        <p *ngIf="dynamicForm.controls[controls.field_name].errors[validation.name]">
+          {{validation.message}}
+        </p>
+      </span>
+  </ng-container> -->
+
+
+</form>
+
+
+<!--
+<nav class="page-breadcrumb">
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a routerLink=".">Forms</a></li>
+  <li class="breadcrumb-item"><a routerLink=".">Advanced Elements</a></li>
+  <li class="breadcrumb-item active" aria-current="page">Form Validation</li>
+</ol>
+</nav>
+
+<div class="row">
+<div class="col-md-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Form Validation</h4>
+      <p class=“text-muted”>Read the <a href="https://github.com/rsaenen/ngx-custom-validators" target="_blank"> Official Ngx-custom-validators Documentation </a>for a full list of instructions and other options.</p>
+    </div>
+  </div>
+</div>
+</div>
+-->
+

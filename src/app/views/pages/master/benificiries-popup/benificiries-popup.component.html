@@ -1,0 +1,174 @@
+<div class="row">
+    <div class="card">
+        <div class="card-body bg-white">
+            <form [formGroup]="serviceForm">
+
+                <div class="row">
+
+
+
+                   
+
+
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">Account Number<span aria-hidden="true"
+                                    class="symbol required" style="color:red;">*</span></label>
+                            <input  (paste)="false" class="form-control" id="AccountNumber" type="text" class="form-control"
+                                formControlName="AccountNumber" placeholder="Account Number"
+                                [ngClass]="{'is-invalid': isForm1Submitted && serviceForm.get('serviceClassInvoker')?.errors}"
+                                maxlength="25" minlength="10"  (keypress)="NoSpaceAllowed($event)" (keypress)="OnlyCharacterNumberAllowed($event)"/>
+                            <div *ngIf="isForm1Submitted && serviceForm.get('serviceClassInvoker')?.errors?.required"
+                                class="invalid-feedback">
+                                Please Enter Account Number
+                            </div>
+
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">Retypeaccount Number<span aria-hidden="true"
+                                    class="symbol required" style="color:red;">*</span></label>
+                            <input (paste)="false" class="form-control" id="RetypeAccountNumber" type="text" class="form-control"
+                                formControlName="RetypeAccountNumber" placeholder="RetypeAccountNumber" maxlength="25" minlength="10"
+                                [ngClass]="{'is-invalid': isForm1Submitted && serviceForm.get('serviceClassInvoker')?.errors}"
+                                (keypress)="NoSpaceAllowed($event)"   (keypress)="OnlyCharacterNumberAllowed($event)" />
+                            <div *ngIf="isForm1Submitted && serviceForm.get('serviceClassInvoker')?.errors?.required"
+                                class="invalid-feedback">
+                                Please Enter Account Number
+                            </div>
+
+
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">IFSC Code<span aria-hidden="true"
+                                    class="symbol required" style="color:red;">*</span></label>
+                            <input class="form-control" id="IFSCCode" type="text" class="form-control"
+                                formControlName="IFSCCode" placeholder=" Please Enter IFSCCode"
+                                [ngClass]="{'is-invalid': isForm1Submitted && serviceForm.get('serviceClassInvoker')?.errors}"
+                                maxlength="11" (keyup)="upperCase($event)" pattern="^[A-Z]{4}0[A-Z0-9]{6}$"  (keypress)="NoSpaceAllowed($event)"  (keypress)="OnlyCharacterNumberAllowed($event)"/>
+                            <div *ngIf="isForm1Submitted && serviceForm.get('serviceClassInvoker')?.errors?.required"
+                                class="invalid-feedback">
+                                Please Enter Account Number
+                            </div>
+
+
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">Bank Name<span aria-hidden="true"
+                                    class="symbol required" style="color:red;">*</span></label>
+                            <input class="form-control" id="BankName" type="text" class="form-control"
+                                formControlName="BankName" placeholder=" Please Enter Bank Name"
+                                [ngClass]="{'is-invalid': isForm1Submitted && serviceForm.get('serviceClassInvoker')?.errors}"
+                                maxlength="50" (keypress)="OnlyCharacterAllowed($event)" />
+                            <div *ngIf="isForm1Submitted && serviceForm.get('serviceClassInvoker')?.errors?.required"
+                                class="invalid-feedback">
+                                Please Enter Bank Name
+                            </div>
+
+
+
+                        </div>
+
+
+                    </div>
+
+                    
+
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">Account Holder<span aria-hidden="true"
+                                    class="symbol required" style="color:red;">*</span></label>
+                            <input class="form-control" id="AccountHolder" type="text" class="form-control"
+                                formControlName="AccountHolder" placeholder="AccountHolder"
+                                [ngClass]="{'is-invalid': isForm1Submitted && serviceForm.get('serviceClassInvoker')?.errors}"
+                                maxlength="50"   (keypress)="OnlyCharacterAllowed($event)"/>
+                            <div *ngIf="isForm1Submitted && serviceForm.get('serviceClassInvoker')?.errors?.required"
+                                class="invalid-feedback">
+                                Please Enter Account Holder
+                            </div>
+
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">Mobile Number<span aria-hidden="true"
+                                    class="symbol required" style="color:red;">*</span></label>
+                            <input class="form-control" id="Mobileno" type="text" class="form-control"
+                                formControlName="Mobileno" placeholder="Mobile Number"
+                                [ngClass]="{'is-invalid': isForm1Submitted && serviceForm.get('serviceClassInvoker')?.errors}"
+                                (keypress)="OnlyNumbersAllowed($event)" maxlength="10" />
+                            <div *ngIf="isForm1Submitted && serviceForm.get('serviceClassInvoker')?.errors?.required"
+                                class="invalid-feedback">
+                                Please Enter Mobile Number
+                            </div>
+
+
+
+                        </div>
+
+
+                    </div>
+                   
+                   
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">EMAIL-ID</label>
+                            <input class="form-control" id="SuccessStatus" type="text" class="form-control"
+                                formControlName="EMAILID" placeholder="EMAIL-ID" maxlength="50"  (keypress)="NoSpaceAllowed($event)"
+                              />
+
+
+                        </div>
+
+
+                    </div>
+               
+                  
+
+
+
+
+                </div>
+
+
+
+
+                <div class="row">
+                    <div class="col-md-10"></div>
+
+                    <div class="col-md-2">
+                        <button type="button" class="form-control btn btn-primary pull-right"
+                            (click)="onGenerate()" [disabled]="this.loading">
+                            <span id="gloading" role="status" aria-hidden="true"></span>
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

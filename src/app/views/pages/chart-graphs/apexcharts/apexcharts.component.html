@@ -1,0 +1,243 @@
+<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Risk Dashboard</h4>
+        <!-- <p class=“text-muted”>Merchant wise risk analysis</p> -->
+        <form [formGroup]="RiskChartForm" novalidate>
+          <div class="mb-3 col-md-12">
+            <label class="form-label text-muted" for="exampleInputUsername1"> Merchant ID </label>
+            <ng-select (click)="onSubmit(RiskChartForm.controls['Mid'].value)" [(ngModel)]="categoryDefaultValue"
+                       formControlName="Mid" id="mid" name="mid" placeholder="Merchant ID">
+              <ng-option *ngFor="let merchant of Resultdata" [value]="merchant.MerchantId" id="selectedOption">
+                {{merchant.Merchant_Id}}
+                <!-- ({{merchant.Merchant_Id}}) -->
+              </ng-option>
+            </ng-select>
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+
+  <div class="col-xl-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+
+        <!-- <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"
+                  [colors]="chartOptions.colors" [stroke]="chartOptions.stroke"
+                  [legend]="chartOptions.legend" [dataLabels]="chartOptions.dataLabels"></apx-chart> -->
+        <div *ngIf="piechart" class="row" id="chart">
+          <h6 class="card-title">Risk Level</h6>
+          <apx-chart [chart]="chartOptions.chart" [colors]="chartOptions.colors" [dataLabels]="chartOptions.dataLabels"
+                     [labels]="chartOptions.labels" [legend]="chartOptions.legend"
+                     [responsive]="chartOptions.responsive"
+                     [series]="chartOptions.series" [stroke]="chartOptions.stroke"></apx-chart>
+        </div>
+        <div class="container text-center">
+          <div class="row ">
+            <div class="col p-2">
+              <button class="btn btn-danger btn-sm text-nowrap" type="button">High Risk</button>
+            </div>
+            <!-- </div>
+            <div class="row"> -->
+            <div class="col p-2">
+              <button class="btn btn-primary btn-sm text-nowrap" type="button">Extreme Risk</button>
+            </div>
+            <div class="col p-2">
+              <button class="btn btn-success btn-sm text-nowrap" type="button">No Risk</button>
+            </div>
+            <div class="col p-2">
+              <button class="btn btn-warning btn-sm text-nowrap" type="button">Low Risk</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="row" fxLayout="row" fxLayoutAlign="space-evenly center"  *ngIf="piechart">
+          <div class="col-md-3" fxFlex style="white-space: nowrap;text-align: right;">
+            <button type="button" class="btn btn-warning">Low Risk</button>
+
+          </div>
+          <div class="col-md-3" fxFlex style="white-space: nowrap;text-align: right;">
+            <button type="button" class="btn btn-danger">High Risk</button>
+
+          </div>
+          <div class="col-md-3" fxFlex style="white-space: nowrap;text-align: right;">
+            <button type="button" class="btn btn-primary">Extreme Risk</button>
+
+          </div>
+          <div class="col-md-3" fxFlex style="white-space: nowrap;text-align: right;">
+            <button type="button" class="btn btn-success">No Risk</button>
+
+          </div>
+
+
+        </div> -->
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Risk Code</h6>
+        <!-- <app-chartjs [onMerchantRisk]="RiskSelectEvent"></app-chartjs> -->
+
+        <div id="chart-quarter">
+          <apx-chart [chart]="chartQuarterOptions.chart" [grid]="chartQuarterOptions.grid"
+                     [legend]="chartQuarterOptions.legend" [plotOptions]="chartQuarterOptions.plotOptions"
+                     [series]="chartQuarterOptions.series" [title]="chartQuarterOptions.title"
+                     [xaxis]="chartQuarterOptions.xaxis"
+                     [yaxis]="chartQuarterOptions.yaxis"></apx-chart>
+        </div>
+
+        <!-- <canvas baseChart
+            [datasets]="barChartnewData"
+            [labels]="mbarChartnewLabels"
+            [options]="barChartNewOptions"
+            [legend]="barChartnewLegend"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas> -->
+        <!-- <apx-chart [series]="barChartOptions.series" [chart]="barChartOptions.chart"
+                [colors]="barChartOptions.colors" [grid]="barChartOptions.grid" [xaxis]="barChartOptions.xaxis"
+                [yaxis]="barChartOptions.yaxis" [plotOptions]="barChartOptions.plotOptions"></apx-chart> -->
+        <!-- <div id="barchart">
+                  <apx-chart
+                    [series]="newchartOptions.series"
+                    [chart]="newchartOptions.chart"
+                    [dataLabels]="newchartOptions.dataLabels"
+                    [plotOptions]="newchartOptions.plotOptions"
+                    [yaxis]="newchartOptions.yaxis"
+                    [xaxis]="newchartOptions.xaxis"
+                    [fill]="newchartOptions.fill"
+                    [title]="newchartOptions.title"
+                    [legend]="newchartOptions.legend"
+                    [colors]="newchartOptions.colors"
+                    [grid]="newchartOptions.grid"
+                  ></apx-chart>
+                </div>
+                 -->
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+<!-- <div class="row" >
+
+
+</div> -->
+<!--
+<div class="row">
+
+  <div class="col-xl-12 grid-margin stretch-card">
+      <div class="card">
+          <div class="card-body">
+              <h6 class="card-title">Risk Transaction</h6>
+
+              <apx-chart [series]="mixedChartOptions.series" [chart]="mixedChartOptions.chart"
+                  [colors]="mixedChartOptions.colors" [grid]="mixedChartOptions.grid"
+                  [stroke]="mixedChartOptions.stroke" [plotOptions]="mixedChartOptions.plotOptions"
+                  [legend]="mixedChartOptions.legend" [fill]="mixedChartOptions.fill"
+                  [labels]="mixedChartOptions.labels" [markers]="mixedChartOptions.markers"
+                  [xaxis]="mixedChartOptions.xaxis" [yaxis]="mixedChartOptions.yaxis"
+                  [tooltip]="mixedChartOptions.tooltip"></apx-chart>
+
+          </div>
+      </div>
+  </div>
+</div> -->
+
+
+<!-- <div class="row">
+  <div class="col-xl-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">HeatMap chart</h6>
+
+        <apx-chart
+          [series]="heatMapChartOptions.series"
+          [chart]="heatMapChartOptions.chart"
+          [colors]="heatMapChartOptions.colors"
+          [grid]="heatMapChartOptions.grid"
+          [dataLabels]="heatMapChartOptions.dataLabels"
+          [stroke]="heatMapChartOptions.stroke"
+          [xaxis]="heatMapChartOptions.xaxis"
+          [yaxis]="heatMapChartOptions.yaxis"
+          [title]="heatMapChartOptions.title"
+          [plotOptions]="heatMapChartOptions.plotOptions"
+          [theme]="heatMapChartOptions.theme"
+        ></apx-chart>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Radar chart</h6>
+
+        <apx-chart
+          [series]="radarChartOptions.series"
+          [chart]="radarChartOptions.chart"
+          [colors]="radarChartOptions.colors"
+          [grid]="radarChartOptions.grid"
+          [legend]="radarChartOptions.legend"
+          [labels]="radarChartOptions.labels"
+          [stroke]="radarChartOptions.stroke"
+          [fill]="radarChartOptions.fill"
+          [xaxis]="radarChartOptions.xaxis"
+          [yaxis]="radarChartOptions.yaxis"
+          [markers]="radarChartOptions.markers"
+          [plotOptions]="radarChartOptions.plotOptions"
+        ></apx-chart>
+
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- <div class="row">
+  <div class="col-xl-6 grid-margin grid-margin-xl-0 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Scatter chart</h6>
+
+        <apx-chart
+          [series]="scatterChartOptions.series"
+          [chart]="scatterChartOptions.chart"
+          [colors]="scatterChartOptions.colors"
+          [grid]="scatterChartOptions.grid"
+          [markers]="scatterChartOptions.markers"
+          [legend]="scatterChartOptions.legend"
+          [xaxis]="scatterChartOptions.xaxis"
+          [yaxis]="scatterChartOptions.yaxis"
+        ></apx-chart>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-6 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">RadialBar chart</h6>
+
+        <apx-chart
+          [series]="radialBarChartOptions.series"
+          [chart]="radialBarChartOptions.chart"
+          [colors]="radialBarChartOptions.colors"
+          [grid]="radialBarChartOptions.grid"
+          [plotOptions]="radialBarChartOptions.plotOptions"
+          [labels]="radialBarChartOptions.labels"
+          [legend]="radialBarChartOptions.legend"
+        ></apx-chart>
+
+      </div>
+    </div>
+  </div>
+</div> -->

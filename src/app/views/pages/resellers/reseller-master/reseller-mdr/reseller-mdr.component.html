@@ -1,0 +1,618 @@
+<!-- {{Resdatas|json}} -->
+
+
+<div class="row mb-2">
+  <div class="col-xs-12">
+    <div class="text-end">
+      <button (click)="previousStep($event)" class="btn btn-secondary pull-right"><i
+        class="feather arrow-left"></i>Back
+      </button>
+      <button (click)="nextStep($event)" class="btn btn-primary pull-right">Next <i
+        class="feather arrow-right"></i></button>
+    </div>
+  </div>
+  <!-- <div class="col-sm-6 justify-content-between">
+
+  </div> -->
+</div>
+
+
+<div class="card pt-0 mb-5">
+  <div class="card-body">
+    <h6 class="card-title">Reseller MSF</h6>
+    <form (ngSubmit)="onSubmit(resellerMDRform.value)" [formGroup]="resellerMDRform">
+      <div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="mb-3">
+              <label class="form-label">Reseller Id</label>
+              <!-- <input type="text" autocomplete="new-password" class="form-control" placeholder="Max Reseller MDR"
+                  formControlName="resellerId"> -->
+              <ng-select (click)="loadDatabyMid()" (keyup.enter)="loadDatabyMid()" formControlName="resellerId"
+                         placeholder="resellerId">
+                <ng-option *ngFor="let reseller of Resultdata" [value]="reseller.ResellerId">
+                  {{reseller.reseller_name}} ({{reseller.ResellerId}})
+                </ng-option>
+              </ng-select>
+
+
+            </div>
+          </div>
+        </div>
+
+
+        <ngb-accordion #acc="ngbAccordion" [activeIds]="activeIds" [closeOthers]="closeOthers">
+          <ngb-panel id="pan-1" title="Service Provider Setup">
+            <ng-template ngbPanelContent>
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="mb-3">
+                    <label class="form-label">Service Provide</label>
+                    <select (change)="seletservice($event)" [ngClass]="{'is-invalid': isForm1Submitted && form1.spId.errors}" aria-label="Default select example"
+                            class="form-select"
+                            formControlName="spId">
+                      <option value="">Select Service Provide</option>
+                      <option *ngFor="let service of Resdata" [value]="service.FieldValue">
+                        {{service.FieldText}}</option>
+                    </select>
+                    <!-- <div *ngIf="isForm1Submitted && form1.spId.errors?.required" class="invalid-feedback">
+                        Please fill this field
+                    </div> -->
+                  </div>
+                </div><!-- Col -->
+                <div class="col-sm-4">
+                  <div class="mb-3">
+                    <label class="form-label">Instrument</label>
+                    <select (change)="selectinstrument($event)" [ngClass]="{'is-invalid': isForm1Submitted && form1.instrument_id.errors}" aria-label="Default select example"
+                            class="form-select"
+                            formControlName="instrument_id">
+                      <option value="">--Select--</option>
+                      <option *ngFor="let instrument of Resdatas" [disabled]="!(Instrumentselect)"
+                              [value]="instrument.FieldValue">
+                        {{instrument.FieldText}}</option>
+                    </select>
+                    <!-- <div *ngIf="isForm1Submitted && form1.instrument_id.errors?.required"
+                        class="invalid-feedback">
+                        Please fill this field
+                    </div> -->
+                  </div>
+                </div>
+                <!-- Col -->
+
+                <div class="col-sm-4">
+                  <div class="mb-3">
+                    <label class="form-label">Bank Selection</label>
+                    <select [ngClass]="{'is-invalid': isForm1Submitted && form1.bank_id.errors}" aria-label="Default select example" class="form-select"
+                            formControlName="bank_id">
+                      <option value="">--Select--</option>
+                      <option *ngFor="let bank of Resbank" [disabled]="!(bankselect)" [value]="bank.FieldValue">
+                        {{bank.FieldText}}
+                      </option>
+                    </select>
+                    <!-- <div *ngIf="isForm1Submitted && form1.bank_id.errors?.required"
+                        class="invalid-feedback">
+                        Please fill this field
+                    </div> -->
+                  </div>
+                </div>
+                <!-- Col -->
+              </div>
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="mb-3">
+                    <label class="form-label">Instrument Brand</label>
+                    <select [ngClass]="{'is-invalid': isForm1Submitted && form1.instrumentBrand.errors}" aria-label="Default select example" class="form-select"
+                            formControlName="instrumentBrand">
+                      <option value="">Select Instrument Brand</option>
+                      <option *ngFor="let instruments of ResinstrumentBrand" [value]="instruments.FieldText">
+                        {{instruments.FieldValue}}</option>
+                    </select>
+                    <!-- <div *ngIf="isForm1Submitted && form1.spId.errors?.required" class="invalid-feedback">
+                        Please fill this field
+                    </div> -->
+                  </div>
+                </div><!-- Col -->
+              </div>
+
+            </ng-template>
+
+          </ngb-panel>
+
+          <ngb-panel id="pan-2" title="Aggregator Setup">
+            <ng-template ngbPanelContent>
+
+
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="mb-3">
+                    <label class="form-label"> Aggr MDR Type</label>
+
+                    <select [ngClass]="{'is-invalid': isForm1Submitted && form1.mdrType.errors}" aria-label="Default select example" class="form-select"
+                            formControlName="mdrType">
+                      <option value="1">Percentage</option>
+                      <option value="2">Flat</option>
+                    </select>
+                    <!-- <div *ngIf="isForm1Submitted && form1.mdrType.errors?.required"
+                        class="invalid-feedback">
+                        Please fill this field
+                    </div> -->
+                    <!-- <ng-select [items]="MDRType"
+                        [searchable]="false"
+                        [(ngModel)]="selectedMDRType">
+                      </ng-select> -->
+                  </div>
+                </div>
+                <!-- Col -->
+                <div class="col-sm-4">
+                  <div class="mb-3">
+                    <label class="form-label">Aggr MDR</label>
+                    <input [ngClass]="{'is-invalid': isForm1Submitted && form1.aggrMdr.errors}" appTwoDigitDecimaNumber autocomplete="new-password" class="form-control"
+                           formControlName="aggrMdr"
+                           placeholder="Aggr MDR" type="text">
+                    <!-- <div *ngIf="isForm1Submitted && form1.aggrMdr.errors?.required"
+                        class="invalid-feedback">
+                        Please fill this field
+                    </div> -->
+                  </div>
+                </div>
+
+                <div class="col-sm-4">
+                  <div class="mb-3">
+                    <label class="form-label">Min MDR</label>
+                    <input [ngClass]="{'is-invalid': isForm1Submitted && form1.minMdr.errors}" appTwoDigitDecimaNumber autocomplete="new-password" class="form-control"
+                           formControlName="minMdr"
+                           placeholder="Min MDR" type="text">
+                    <!-- <div *ngIf="isForm1Submitted && form1.minMdr.errors?.required"
+                        class="invalid-feedback">
+                        Please fill this field
+                    </div> -->
+                  </div>
+
+                </div><!-- Col -->
+
+              </div>
+
+              <div class="row">
+
+                <div class="col-sm-4">
+                  <div class="mb-3">
+                    <label class="form-label">Max MDR</label>
+                    <input [ngClass]="{'is-invalid': isForm1Submitted && form1.maxMdr.errors}" appTwoDigitDecimaNumber autocomplete="new-password" class="form-control"
+                           formControlName="maxMdr"
+                           placeholder="Max MDR" type="text">
+                    <!-- <div *ngIf="isForm1Submitted && form1.maxMdr.errors?.required"
+                        class="invalid-feedback">
+                        Please fill this field
+                    </div> -->
+                  </div>
+                </div><!-- Col -->
+              </div>
+
+            </ng-template>
+
+          </ngb-panel>
+
+          <ngb-panel id="pan-3" title="Bank Setup">
+            <ng-template ngbPanelContent>
+
+
+              <div class="row">
+                <div class="col-sm-4">
+
+                  <div class="mb-3">
+                    <label class="form-label"> Bank MDR Type</label>
+
+                    <select [ngClass]="{'is-invalid': isForm1Submitted && form1.bankMdrType.errors}" aria-label="Default select example" class="form-select"
+                            formControlName="bankMdrType">
+                      <option value="1">Percentage</option>
+                      <option value="2">Flat</option>
+                    </select>
+                    <!-- <div *ngIf="isForm1Submitted && form1.bankMdrType.errors?.required"
+                        class="invalid-feedback">
+                        Please fill this field
+                    </div> -->
+                    <!-- <ng-select [items]="MDRType"
+                            [searchable]="false"
+                            [(ngModel)]="selectedMDRType">
+                          </ng-select> -->
+                  </div>
+                </div>
+                <!-- Col -->
+
+
+                <div class="col-sm-4">
+                  <div class="mb-3">
+                    <label class="form-label">Bank MDR</label>
+                    <input [ngClass]="{'is-invalid': isForm1Submitted && form1.baseRate.errors}" appTwoDigitDecimaNumber autocomplete="new-password" class="form-control"
+                           formControlName="baseRate"
+                           placeholder="Bank MDR"
+                           type="text">
+                    <!-- <div *ngIf="isForm1Submitted && form1.baseRate.errors?.required"
+                        class="invalid-feedback">
+                        Please fill this field
+                    </div> -->
+                  </div>
+                </div><!-- Col -->
+
+                <div class="col-sm-4">
+                  <div class="mb-3">
+                    <label class="form-label">Min Bank MDR</label>
+                    <input [ngClass]="{'is-invalid': isForm1Submitted && form1.minBaseRate.errors}" appTwoDigitDecimaNumber autocomplete="new-password" class="form-control"
+                           formControlName="minBaseRate"
+                           placeholder="Min Bank MDR"
+                           type="text">
+                    <!-- <div *ngIf="isForm1Submitted && form1.minBaseRate.errors?.required"
+                        class="invalid-feedback">
+                        Please fill this field
+                    </div> -->
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="row">
+
+                <div class="col-sm-4">
+                  <div class="mb-3">
+                    <label class="form-label">Max Bank MDR</label>
+                    <input [ngClass]="{'is-invalid': isForm1Submitted && form1.maxBaseRate.errors}" appTwoDigitDecimaNumber autocomplete="new-password" class="form-control"
+                           formControlName="maxBaseRate"
+                           placeholder="Max Bank MDR"
+                           type="text">
+                    <!-- <div *ngIf="isForm1Submitted && form1.maxBaseRate.errors?.required"
+                        class="invalid-feedback">
+                        Please fill this field
+                    </div> -->
+                  </div>
+                </div>
+                <!-- Col -->
+
+              </div>
+
+            </ng-template>
+
+          </ngb-panel>
+
+          <ngb-panel id="pan-4" title="Reseller Setup">
+            <ng-template ngbPanelContent>
+
+
+              <div class="row">
+
+                <div class="col-sm-4">
+                  <div class="mb-3">
+                    <label class="form-label"> Reseller MDR Type</label>
+
+                    <select [ngClass]="{'is-invalid': isForm1Submitted && form1.resellerMdrType.errors}" aria-label="Default select example" class="form-select"
+                            formControlName="resellerMdrType">
+                      <option value="1">Percentage</option>
+                      <option value="2">Flat</option>
+                    </select>
+                    <!-- <div *ngIf="isForm1Submitted && form1.mdrType.errors?.required"
+                        class="invalid-feedback">
+                        Please fill this field
+                    </div> -->
+                    <!-- <ng-select [items]="MDRType"
+                        [searchable]="false"
+                        [(ngModel)]="selectedMDRType">
+                      </ng-select> -->
+                  </div>
+                </div>
+
+                <div class="col-sm-4">
+                  <div class="mb-3">
+                    <label class="form-label">Reseller MDR</label>
+                    <input [ngClass]="{'is-invalid': isForm1Submitted && form1.resellerMdr.errors}" appTwoDigitDecimaNumber autocomplete="new-password" class="form-control"
+                           formControlName="resellerMdr"
+                           placeholder="Reseller MDR"
+                           type="text">
+
+
+                    <!-- <div *ngIf="isForm1Submitted && form1.resellerMdr.errors?.required"
+                        class="invalid-feedback">
+                        Please fill this field
+                    </div> -->
+                  </div>
+                </div><!-- Col -->
+
+
+                <div class="col-sm-4">
+                  <div class="mb-3">
+                    <label class="form-label">Min Reseller MDR</label>
+                    <input [ngClass]="{'is-invalid': isForm1Submitted && form1.minResellerMdr.errors}" appTwoDigitDecimaNumber autocomplete="new-password" class="form-control"
+                           formControlName="minResellerMdr"
+                           placeholder="Min Reseller MDR"
+                           type="text">
+                    <!-- <div *ngIf="isForm1Submitted && form1.minResellerMdr.errors?.required"
+                        class="invalid-feedback">
+                        Please fill this field
+                    </div> -->
+                  </div>
+                </div>
+                <!-- Col -->
+                <div class="col-sm-4">
+                  <div class="mb-3">
+                    <label class="form-label">Max Reseller MDR</label>
+                    <input [ngClass]="{'is-invalid': isForm1Submitted && form1.maxResellerMdr.errors}" appTwoDigitDecimaNumber autocomplete="new-password" class="form-control"
+                           formControlName="maxResellerMdr"
+                           placeholder="Max Reseller MDR"
+                           type="text">
+                    <!-- <div *ngIf="isForm1Submitted && form1.maxResellerMdr.errors?.required"
+                        class="invalid-feedback">
+                        Please fill this field
+                    </div> -->
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- <div class="row">
+
+                              <div class="col-sm-4">
+                                  <div class="mb-3">
+                                      <label class="form-label">Max Bank MDR</label>
+                                      <input type="text" autocomplete="new-password" class="form-control" placeholder="Max Bank MDR"
+                                          formControlName="maxBaseRate" [ngClass]="{'is-invalid': isForm1Submitted && form1.maxBaseRate.errors}">
+                                          <div *ngIf="isForm1Submitted && form1.maxBaseRate.errors?.required"
+                                          class="invalid-feedback">
+                                          Please fill this field
+                                      </div>
+                                  </div>
+                              </div>
+
+
+                          </div> -->
+
+            </ng-template>
+
+          </ngb-panel>
+
+          <ngb-panel id="pan-5" title="General Setup">
+            <ng-template ngbPanelContent>
+
+              <div class="row">
+
+                <div class="col-sm-4">
+                  <div class="mb-3">
+                    <label class="form-label">Start Date</label>
+                    <div class="mb-3">
+                      <div class="input-group">
+                        <input [ngClass]="{'is-invalid': isForm1Submitted && form1.startDate.errors}" class="form-control" formControlName="startDate" placeholder="yyyy-mm-dd"
+                               type="date">
+                        <!-- <div *ngIf="isForm1Submitted && form1.startDate.errors?.required"
+                            class="invalid-feedback">
+                            Please fill this field
+                        </div> -->
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Col -->
+
+
+                <div class="col-sm-4">
+                  <div class="mb-3">
+                    <label class="form-label">End Date</label>
+                    <div class="mb-3">
+                      <div class="input-group">
+                        <input [ngClass]="{'is-invalid': isForm1Submitted && form1.endDate.errors}" class="form-control" formControlName="endDate" placeholder="yyyy-mm-dd"
+                               type="date">
+                        <!-- <div *ngIf="isForm1Submitted && form1.endDate.errors?.required"
+                            class="invalid-feedback">
+                            Please fill this field
+                        </div> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Col -->
+
+                <div class="col-sm-4">
+                  <div class="mb-3">
+                    <label class="form-label">Preference</label>
+                    <input [ngClass]="{'is-invalid': isForm1Submitted && form1.prefrences.errors}" autocomplete="new-password" class="form-control" formControlName=prefrences
+                           placeholder="Preference"
+                           type="text">
+                    <!-- <div *ngIf="isForm1Submitted && form1.prefrences.errors?.required"
+                        class="invalid-feedback">
+                        Please fill this field
+                    </div> -->
+                  </div>
+                </div>
+                <!-- Col -->
+
+
+              </div>
+
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="mb-3">
+                    <label class="form-label">Payout By</label>
+                    <select [ngClass]="{'is-invalid': isForm1Submitted && form1.payout.errors}" aria-label="Default select example" class="form-select"
+                            formControlName="payout">
+                      <option value="0">Payments</option>
+                      <option value="1">Bank</option>
+                      <option value="2">Payments+Bank</option>
+
+                    </select>
+                    <!-- <div *ngIf="isForm1Submitted && form1.payout.errors?.required"
+                        class="invalid-feedback">
+                        Please fill this field
+                    </div> -->
+                  </div>
+                </div><!-- Col -->
+                <div class="col-sm-4">
+                  <div class="mb-3">
+                    <label class="form-label">Surcharge</label>
+                    <select [ngClass]="{'is-invalid': isForm1Submitted && form1.surcharge.errors}" aria-label="Default select example" class="form-select"
+                            formControlName="surcharge">
+                      <option value="1">Yes</option>
+                      <option value="0">No</option>
+
+
+                    </select>
+
+                    <!-- <div *ngIf="isForm1Submitted && form1.surcharge.errors?.required"
+                        class="invalid-feedback">
+                        Please fill this field
+                    </div> -->
+                  </div>
+                </div><!-- Col -->
+
+                <div class="col-sm-4">
+                  <div class="mb-3">
+                    <label class="form-label">MID</label>
+                    <input (keypress)="OnlyNumbersAllowed($event)" [ngClass]="{'is-invalid': isForm1Submitted && form1.mid.errors}" autocomplete="new-password" class="form-control"
+                           formControlName="mid"
+                           maxlength="50"
+                           placeholder="MID" type="text">
+                    <!-- <div *ngIf="isForm1Submitted && form1.mid.errors?.required"
+                        class="invalid-feedback">
+                        Please fill this field
+                    </div> -->
+                  </div>
+                </div><!-- Col -->
+              </div>
+
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="mb-3">
+                    <label class="form-label">TID</label>
+                    <input [ngClass]="{'is-invalid': isForm1Submitted && form1.tid.errors}" autocomplete="new-password" class="form-control" formControlName="tid"
+                           placeholder="TID"
+                           type="text">
+                    <!-- <div *ngIf="isForm1Submitted && form1.tid.errors?.required"
+                        class="invalid-feedback">
+                        Please fill this field
+                    </div> -->
+                  </div>
+                </div><!-- Col -->
+
+
+                <div class="col-sm-4">
+                  <div class="mb-3">
+                    <label class="form-label">Min Amount</label>
+                    <input (keypress)="OnlyNumbersAllowed($event)" [ngClass]="{'is-invalid': isForm1Submitted && form1.minAmt.errors}" autocomplete="new-password" class="form-control"
+                           formControlName="minAmt"
+                           placeholder="Min Amount"
+                           type="text">
+                    <!-- <div *ngIf="isForm1Submitted && form1.minAmt.errors?.required"
+                        class="invalid-feedback">
+                        Please fill this field
+                    </div> -->
+                  </div>
+                </div>
+
+                <div class="col-sm-4">
+                  <div class="mb-3">
+                    <label class="form-label">Max Amount</label>
+                    <input (keypress)="OnlyNumbersAllowed($event)" [ngClass]="{'is-invalid': isForm1Submitted && form1.maxAmt.errors}" autocomplete="new-password" class="form-control"
+                           formControlName="maxAmt"
+                           placeholder="Max Amount"
+                           type="text">
+                    <!-- <div *ngIf="isForm1Submitted && form1.maxAmt.errors?.required" class="invalid-feedback">
+                        Please fill this field
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+
+
+              <!-- <div class="row">
+
+                                  <div class="col-sm-4">
+                                      <div class="mb-3">
+                                          <label class="form-label">Max Bank MDR</label>
+                                          <input type="text" autocomplete="new-password" class="form-control" placeholder="Max Bank MDR"
+                                              formControlName="maxBaseRate" [ngClass]="{'is-invalid': isForm1Submitted && form1.maxBaseRate.errors}">
+                                              <div *ngIf="isForm1Submitted && form1.maxBaseRate.errors?.required"
+                                              class="invalid-feedback">
+                                              Please fill this field
+                                          </div>
+                                      </div>
+                                  </div>
+
+
+                              </div> -->
+
+            </ng-template>
+
+          </ngb-panel>
+
+        </ngb-accordion>
+
+
+      </div>
+      <div class="row mb-2">
+        <div class="col-xs-12">
+          <div class="text-end">
+            <button class="btn btn-primary mt-3" type="submit">Add New</button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xl-10 main-content">
+    <button (click)="onExportCSV()" class="btn btn-light" type="button">Export CSV<i class="feather text-primary icon-download"></i>
+    </button>
+    <div class="btn-group mb-1 mb-md-0">
+      <button class="btn btn-primary" type="button">Columns</button>
+      <div class="btn-group" ngbDropdown role="group">
+        <button class="btn btn-primary dropdown-toggle-split" ngbDropdownToggle></button>
+        <div ngbDropdownMenu>
+          <ng-select [(ngModel)]="tableSelectedColumn" [closeOnSelect]="false" [items]="columnDefs" [multiple]=true
+                     bindLabel="field">
+            <ng-template let-index="index" let-item="item" let-item$="item$" ng-option-tmp>
+              <input [ngModel]="item$.selected" id="item-{{index}}" type="checkbox"/>
+              {{item.field.toUpperCase()}}
+            </ng-template>
+          </ng-select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-2">
+    <input [(ngModel)]="globalSearch" [ngbTypeahead]="search" autocomplete="new-password" class="form-control"
+           id="typeahead-basic" placeholder="Search" type="text"/>
+  </div>
+</div>
+
+<div class="row" style="min-height: 500px">
+  <div class="col-12 col-xl-12 grid-margin stretch-card ag-theme-alpine">
+    <ag-grid-angular (filterChanged)="onFilterChange($event)" (filterModified)="onFilterModified($event)"
+                     (filterOpened)="onFilterOpened($event)"
+                     (gridReady)="onGridReady($event)" (rowClicked)="onRowClicked($event)"
+                     (rowDoubleClicked)="onRowDoubleClicked($event)"
+                     [columnDefs]="tableSelectedColumn" [defaultColDef]="defaultColDef"
+                     [enableCellTextSelection]=true
+                     [paginationPageSize]="pageSize" [pagination]="true" [rowData]="rowData" [rowModelType]=""
+                     [rowSelection]="'single'" [suppressPaginationPanel]="true" class="ag-theme-alpine"
+                     style="width: 100%; height: auto;">
+    </ag-grid-angular>
+  </div>
+</div>
+
+
+<div class="row bg-white p-2 mt-0">
+  <div class="col-md-4">
+    <select (change)="onPageSizeChanges($event)" [(ngModel)]="pageSize"
+            class="form-select d-flex justify-content-end col-4" name="pageSize" style="width: auto">
+      <option [ngValue]="10">10</option>
+      <option [ngValue]="20">20</option>
+      <option [ngValue]="30">30</option>
+    </select>
+  </div>
+
+  <div class="col-md-8">
+    <ngb-pagination (pageChange)="onPaginationChange($event)" [(page)]="currentPage" [boundaryLinks]="true"
+                    [collectionSize]="collectionSize" [maxSize]="5" [pageSize]="pageSize" [rotate]="true"
+                    class="d-flex justify-content-end col-8 align-right">
+    </ngb-pagination>
+  </div>
+
+</div>

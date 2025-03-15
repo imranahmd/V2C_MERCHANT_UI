@@ -1,0 +1,239 @@
+<div class="row">
+  <div class="card">
+
+    <div class="tab-content mt-3" id="lineTabContent">
+      <div class="tab-pane fade show active" #home id="home" role="tabpanel" aria-labelledby="home-line-tab">
+        <div class="card-header row">
+          <div class="col">
+            <h4>Refund Request Status</h4>
+          </div>
+
+        </div>
+
+        <div class="card-body bg-white">
+          <form [formGroup]="refundStatusForm" (ngSubmit)="onSubmit(refundStatusForm.value)">
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="mb-3">
+                  <label class="form-label">Search By <span aria-hidden="true" class="symbol required"
+                    style="color:red;">*</span></label>
+
+                  <ng-select placeholder=" Select Search By" id="SearchBy" formControlName="SearchBy"
+                    [items]="Search_By" bindLabel="FieldText" bindValue="FieldValue"
+                    (keypress)="OnlyCharacterAllowed($event)" [inputAttrs]="{maxlength:'50'}"
+                    (keydown)="NoDoubleSpace($event)"
+                    [ngClass]="{'is-invalid': submitForm1 && refundStatusForm.get('SearchBy')?.errors}">
+
+                  </ng-select>
+                  <div *ngIf="submitForm1 && refundStatusForm.get('SearchBy')?.errors?.required"
+                  class="invalid-feedback">
+                  Please Select Search By
+                </div>
+
+                </div>
+              </div>
+
+
+              <div class="col-sm-4">
+                <div class="mb-3">
+                  <label class="form-label">From Date <span aria-hidden="true" class="symbol required"
+                      style="color:red;">*</span></label>
+                  <input class="form-control" id="searchFromDate" type="date" class="form-control"
+                    formControlName="FromDate" placeholder="From Date" min="{{pastDate|date:'yyyy-MM-dd'}}"
+                    [ngClass]="{'is-invalid': submitForm1 && refundStatusForm.get('FromDate')?.errors}"
+                    [max]="getToday()" />
+
+                  <div *ngIf="submitForm1 && refundStatusForm.get('FromDate')?.errors?.required"
+                    class="invalid-feedback">
+                    Please Select Valid From Date
+                  </div>
+                </div>
+
+
+              </div>
+
+              <div class="col-sm-4">
+                <div class="mb-3">
+                  <label class="form-label">To Date <span aria-hidden="true" class="symbol required"
+                      style="color:red;">*</span></label>
+                  <input class="form-control" id="searchToDate" type="date" class="form-control"
+                    formControlName="ToDate" placeholder="To Date" min="{{pastDate|date:'yyyy-MM-dd'}}"
+                    [ngClass]="{'is-invalid': submitForm1 && refundStatusForm.get('ToDate')?.errors}"
+                    [max]="getToday()" />
+
+                  <div *ngIf="submitForm1 && refundStatusForm.get('ToDate')?.errors?.required" class="invalid-feedback">
+                    Please Select Valid To Date
+                  </div>
+                </div>
+
+
+              </div>
+
+
+
+              <div class="col-sm-4">
+                <div class="mb-3">
+                  <label class="form-label">Agg Transaction Id</label>
+                  <input class="form-control" formControlName="transactionId" placeholder="Agg Transaction Id"
+                    type="text" autocomplete="new-password" id="bankId" maxlength="40"
+                    (keypress)="OnlyNumbersAllowed($event)">
+                  <!-- [ngClass]="{'is-invalid': submitForm1 && refundStatusForm.get('transactionId')?.errors}" -->
+                  <!-- <div *ngIf="submitForm1 && refundStatusForm.get('transactionId')?.errors?.pattern" class="invalid-feedback">
+                      Please Enter Valid 1Pay Transaction Id 
+                    </div> -->
+
+                </div>
+              </div>
+
+              <div class="col-sm-4">
+                <div class="mb-3">
+                  <label class="form-label">Merchant Transaction Id</label>
+                  <input class="form-control" formControlName="merchantTransactionId"
+                    placeholder="Merchant Transaction Id" type="text" autocomplete="new-password"
+                    id="merchantTransactionId" maxlength="40" (keypress)="OnlyCharacterNumberAllowed($event)"
+                    [ngClass]="{'is-invalid': submitForm1 && refundStatusForm.get('merchantTransactionId')?.errors}">
+
+                  <div *ngIf="submitForm1 && refundStatusForm.get('merchantTransactionId')?.errors?.twoSpaces"
+                    class="invalid-feedback">
+                    More than two consecutive spaces are not allowed
+                  </div>
+
+
+                </div>
+              </div>
+
+              <div class="col-sm-4">
+                <div class="mb-3">
+                  <label class="form-label">Refund Id</label>
+                  <input class="form-control" formControlName="refundId" placeholder="Refund Id" type="text"
+                    autocomplete="new-password" id="bankId" maxlength="40">
+
+                </div>
+              </div>
+
+              <div class="col-sm-4">
+                <div class="mb-3">
+                  <label class="form-label">Refund Type</label>
+
+                  <ng-select placeholder="Select Refund Type" id="merchantId" formControlName="refundType"
+                    (keypress)="OnlyCharacterAllowed($event)" maxlenght="50" [inputAttrs]="{maxlength:'50'}"
+                    (keydown)="NoDoubleSpace($event)">
+                    <ng-option id="selectedOption" *ngFor="let refundtype of refundTypeData"
+                      [value]="refundtype.FieldValue">
+                      {{refundtype.FieldText}}
+                    </ng-option>
+                  </ng-select>
+
+                </div>
+              </div>
+
+              <div class="col-sm-4">
+                <div class="mb-3">
+                  <label class="form-label">Refund Status</label>
+
+                  <ng-select placeholder="Select Refund Status" id="merchantId" formControlName="refundStatus"
+                    (keypress)="OnlyCharacterAllowed($event)" [inputAttrs]="{maxlength:'50'}"
+                    (keydown)="NoDoubleSpace($event)">
+                    this.refundStatusData=res
+                    <ng-option id="selectedOption" *ngFor="let refundStatus of refundStatusData"
+                      [value]="refundStatus.FieldText">
+                      {{refundStatus.FieldText}}
+                    </ng-option>
+                  </ng-select>
+
+                </div>
+              </div>
+
+
+            </div>
+
+
+            <div class="row">
+              <div class="col-md-8"></div>
+              <div class="col-md-2">
+                <button type="button" class="form-control btn btn-danger pull-right" (click)="resetform()">Reset
+                </button>
+              </div>
+              <div class="col-md-2">
+                <button class="form-control btn btn-primary pull-right" type="submit" [disabled]="this.loading">
+                  <span id="loading" role="status" aria-hidden="true"></span>
+                  Search
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+
+
+
+
+  </div>
+</div>
+
+<div *ngIf="this.refundStatusdata">
+  <div class="row mb-md-2 mt-2">
+    <div class="col-xl-10 main-content">
+      <button (click)="onExportCSV()" class="btn btn-light" type="button">Export CSV<i
+          class="feather icon-download"></i>
+      </button>&nbsp;
+      <div class="btn-group" ngbDropdown role="group">
+        <button class="btn btn-primary" ngbDropdownToggle>Columns</button>
+        <div ngbDropdownMenu class="ng-dropdown-panel-items p-1"
+          style="height: 250px;width: 250px; overflow: scroll; scroll-behavior: smooth">
+          <div class="form-group">
+            <!--            <label for="columns" class="form-label"> All Columns <span aria-hidden="true" class="symbol required" style="color:red;">*</span></label>-->
+            <div *ngIf="columnDefs" class="list-group ng-option">
+              <span *ngFor="let column of columnDefs; let i = index" class="checkbox">
+                <label class="list-group-item p-2">
+                  <input class="form-check-input me-1" type="checkbox" value="{{i}}" name="{{column.headerName}}"
+                    (change)="updateSelectedTimeslots($event)"
+                    [checked]="(tableSelectedColumn && (-1 !==tableSelectedColumn.indexOf(column)) ? 'checked': '')">
+                  {{column?.field?.replace('_',' ')?.replace('_',' ')?.replace('_',' ') | uppercase }}
+                </label>
+              </span>
+            </div>
+
+          </div>
+
+
+        </div>
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+  <div class="row" style="min-height: 500px">
+    <div class="col-12 col-xl-12 stretch-card ag-theme-alpine">
+      <ag-grid-angular [enableCellTextSelection]=true [columnDefs]="columnDefs" [defaultColDef]="defaultColDef"
+        class="ag-theme-alpine" [rowData]="rowData" (firstDataRendered)="dataRendered($event)"
+        (gridReady)="onGridReady($event)" [paginationPageSize]="pageSize" [pagination]="true" [rowSelection]="'single'"
+        [suppressPaginationPanel]="true" style="width: 100%; height: auto;">
+      </ag-grid-angular>
+    </div>
+  </div>
+  <div class="row bg-white p-2 mt-0">
+    <div class="col-md-4">
+      <select (change)="onPageSizeChanges($event)" [(ngModel)]="pageSize"
+        class="form-select d-flex justify-content-end col-4" name="pageSize" style="width: auto">
+        <option [ngValue]="10">10</option>
+        <option [ngValue]="20">20</option>
+        <option [ngValue]="30">30</option>
+      </select>
+    </div>
+
+    <div class="col-md-8">
+      <ngb-pagination (pageChange)="onPaginationChange($event)" [(page)]="currentPage" [boundaryLinks]="true"
+        [collectionSize]="collectionSize" [maxSize]="5" [pageSize]="pageSize" [rotate]="true"
+        class="d-flex justify-content-end align-right">
+      </ngb-pagination>
+    </div>
+
+  </div>
+</div>

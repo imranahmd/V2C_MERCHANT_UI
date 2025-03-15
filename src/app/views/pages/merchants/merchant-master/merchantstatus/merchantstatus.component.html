@@ -1,0 +1,64 @@
+<div class="row" style="min-height: 100px">
+  <div class="card">
+    <!-- <button type="button" class="btn-close" aria-label="Close"></button> -->
+
+
+    <div class="card-body">
+      <form (ngSubmit)="MerchantStatus(merchatstatusform.value)" [formGroup]="merchatstatusform">
+
+
+        <div *ngIf="datetype" class="row">
+
+          <div class="col-sm-12">
+            <div class="mb-12">
+
+              <label class="form-label">Merchant Status</label>
+              <input [ngClass]="{'is-invalid': isForm1Submitted && form1.Status.errors}" class="form-control" formControlName="Status" placeholder="yyyy-mm-dd"
+                     type="date">
+
+              <div *ngIf="isForm1Submitted && form1.Status.errors?.required" class="invalid-feedback">
+                Please fill this field
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row mt-2">
+          <div class="col-sm-12">
+            <label for="exampleFormControlTextarea1">Comment</label>
+            <textarea [ngClass]="{'is-invalid': isForm1Submitted && form1.Remark.errors}" class="form-control" formControlName="Remark"
+                      rows="3"></textarea>
+            <div *ngIf="isForm1Submitted && form1.Remark.errors?.required" class="invalid-feedback">
+              Please fill this field
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row mt-3 ">
+          <div class="col-md-4">
+            <button class="btn btn-lg btn-primary" type="submit">Submit</button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- <input type="date" class="form-control">
+&nbsp;
+<div class="form-group">
+    <label for="exampleFormControlTextarea1">Comment</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+  </div>
+
+
+&nbsp;
+&nbsp;
+<button type="button" class="btn btn-lg btn-primary" >Submit</button>
+&nbsp; -->

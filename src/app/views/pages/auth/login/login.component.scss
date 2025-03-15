@@ -1,0 +1,240 @@
+:host {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-side-wrapper {
+  background-color: rgb(2, 6, 65);
+
+}
+
+:host {
+  overflow: hidden;
+  // background-color: rgb(2, 6, 65);
+  // border-color: #ff3366;
+  // background: rgb(238,174,202);
+  // background: radial-gradient(circle, rgb(83, 73, 149) 0%, rgb(35, 75, 119) 100%);
+  background-color: rgb(68, 0, 255); /* For browsers that do not support gradients */
+background-image: linear-gradient(to top, rgb(173, 216, 230), rgb(6, 143, 167));
+
+  // background-image: linear-gradient(to top,rgb(235, 210, 70), rgb(6, 143, 167));
+  // padding-right: calc(1.5em + 0.938rem  + 30px) !important;
+  // background-image: url("../../../../../assets/images/bg12.jpeg,../../blue-white.jpg");
+  background-repeat: no-repeat;
+
+  // background-position: right calc(0.375em + 0.2345rem + 30px) center;
+  background-size: cover
+}
+
+input.sh-control {
+  padding-right: calc(1.5em + 0.938rem) !important;
+
+  &.is-invalid {
+    border-color: #ff3366;
+    padding-right: calc(1.5em + 0.938rem + 30px) !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23ff3366'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23ff3366' stroke='none'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.2345rem + 30px) center;
+    background-size: calc(0.75em + 0.469rem) calc(0.75em + 0.469rem);
+
+  }
+}
+
+
+
+.logo-img {
+  width: 100px;
+  height: auto;
+  max-width: 100%;
+  align-items: center;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;   
+}
+
+* {
+  box-sizing: border-box
+}
+
+body {
+  font-family: Verdana, sans-serif;
+  margin: 0
+}
+
+.mySlides {
+  display: none
+}
+
+img {
+  vertical-align: middle;
+}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active,
+.dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {
+    opacity: .4
+  }
+
+  to {
+    opacity: 1
+  }
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+
+  .prev,
+  .next,
+  .text {
+    font-size: 11px
+  }
+}
+
+.picsum-img-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px; /* Add space below the image */
+  width: 256px;
+  
+}
+  /* Apply continuous animation to both blocks */
+  .image-container.continuous {
+    position: relative;
+    z-index: 1;
+    /* Lower z-index to appear behind */
+    animation: slideRightToLeft 10s linear infinite;
+    /* Adjust duration for speed */
+  }
+
+  /* Styling for the "Login" div */
+  .auth-form-wrapper {
+    position: relative;
+    z-index: 10;
+    /* Higher z-index to appear above */
+    background-color: white;
+    padding: 80px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    /* border: 1px solid red; */
+    width: 100%;
+    margin-left: -120px;
+    margin-top: -5vh;
+    height: 80vh;
+  }
+
+  /* Optional: Hover effect for scaling */
+  .image-container img {
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .image-container img:hover {
+    transform: scale(1.1);
+  }
+
+  .paynite-container {
+    /* width: 20%; */
+    width: auto;
+    display: flex;
+    align-items: center;
+    /* Align items vertically */
+    justify-content: center;
+    /* Center items horizontally */
+    gap: 1rem;
+    /* Space between the text and the image */
+    z-index: 20;
+    /* Ensure this appears above other elements */
+    position: relative;
+  }
+
+  .paynite-container img {
+    width: 30px;
+    /* Adjust image size */
+    height: 100px;
+    object-fit: contain;
+    /* Ensure image maintains its aspect ratio */
+  }
+  

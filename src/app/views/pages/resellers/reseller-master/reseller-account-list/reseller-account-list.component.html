@@ -1,0 +1,338 @@
+<div class="row">
+  <div class="card">
+    <div class="card-body bg-white">
+      <form (ngSubmit)="onSubmit(accountform.value)" [formGroup]="accountform">
+
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label class="form-label">Reseller ID <span aria-hidden="true" class="symbol required"
+                                                          style="color:red;">*</span></label>
+
+              <ng-select (click)="loadDatabyMid()" (keyup.enter)="loadDatabyMid()" formControlName="resellerId"
+                         placeholder="Reseller ID">
+                <ng-option *ngFor="let reseller of Resdata" [value]="reseller.ResellerId" id="selectedOption">
+                  {{reseller.reseller_name}} ({{reseller.ResellerId}})
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+
+        </div><!-- Row -->
+
+        <div class="row">
+
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label class="form-label">Account Number <span aria-hidden="true" class="symbol required"
+                                                             style="color:red;">*</span></label>
+              <input (keypress)="OnlyNumbersAllowedWithoutDecimal($event)" (paste)="false"
+                     [ngClass]="{'is-invalid': isForm1Submitted && form1.accountNumber.errors}" autocomplete="new-password" class="form-control" formControlName="accountNumber"
+                     maxlength="18" minlength="11" placeholder="Account Number"
+                     type="password">
+              <!-- <div *ngIf="Ress">
+               <i class="feather text-primary icon-check-circle icon-lg" style="color: green;"></i>
+              </div> -->
+
+
+              <div *ngIf="isForm1Submitted && form1.accountNumber.errors?.required" class="invalid-feedback">
+                Required
+              </div>
+              <div *ngIf="isForm1Submitted && form1.accountNumber.errors?.minlength" class="invalid-feedback">
+                Account No should not be less than 11 digits
+              </div>
+              <div *ngIf="form1.accountNumber.errors?.twoSpaces" class="invalid-feedback">
+                More than two consecutive spaces are not allowed
+              </div>
+            </div>
+
+
+          </div><!-- Col -->
+
+
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label class="form-label">Retype Account Number <span aria-hidden="true" class="symbol required"
+                                                                    style="color:red;">*</span></label>
+              <input (keypress)="OnlyNumbersAllowedWithoutDecimal($event)" (paste)="false"
+                     [ngClass]="{'is-invalid': isForm1Submitted && form1.retypeaccountNumber.errors}" autocomplete="new-password" class="form-control"
+                     formControlName="retypeaccountNumber" maxlength="18" placeholder="Retype Account Number"
+                     type="text">
+              <!-- <div *ngIf="Ress">
+                <i class="feather text-primary icon-check-circle icon-lg" style="color: green;"></i>
+               </div> -->
+
+              <div *ngIf="isForm1Submitted && form1.retypeaccountNumber.errors?.required" class="invalid-feedback">
+                Required
+              </div>
+
+              <div *ngIf="isForm1Submitted && form1.retypeaccountNumber.errors?.confirmPasswordValidator"
+                class="invalid-feedback">
+                Account Number Should Match With Retype Account Number!
+              </div>
+
+              <div *ngIf="isForm1Submitted && form1.retypeaccountNumber.errors?.minlength" class="invalid-feedback">
+                Please Enter minimum length of Retype Account Number!
+              </div>
+
+              <div *ngIf="form1.retypeaccountNumber.errors?.twoSpaces" class="invalid-feedback">
+                More than two consecutive spaces are not allowed
+              </div>
+            </div>
+
+
+          </div><!-- Col -->
+
+
+        </div><!-- Row -->
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label class="form-label">IFSC Code <span aria-hidden="true" class="symbol required"
+                                                        style="color:red;">*</span> &nbsp;<i *ngIf="IFSCcheck"
+                                                                                             class="feather icon-check-circle icon-lg"
+                                                                                             id="IFSCcheck"
+                                                                                             style="color: green;"></i>
+              </label>
+              <input
+                (keypress)="OnlyCharacterNumberAllowed($event)"
+                (keyup)="ValidateIFSC($event,accountform.controls['serviceprovider'].value, accountform.controls['ifscCode'],'IFSCcheck')" (keyup)="upperCase($event)"
+                [(ngModel)]="IFSCValue" [ngClass]="{'is-invalid': isForm1Submitted && form1.ifscCode.errors}" autocomplete="new-password" class="form-control"
+                formControlName="ifscCode"
+                maxlength="11" pattern="^[A-Z]{4}0[A-Z0-9]{6}$" placeholder="SBIN00001111"
+                type="text">
+              <label *ngIf="IFSCData" class="text-muted p-1 small" style="text-align: left;">
+                {{IFSCData | titlecase}}
+              </label>
+              <!-- <div *ngIf="Ress">
+                <i class="feather text-primary icon-check-circle icon-lg" style="color: green;"></i>
+               </div> -->
+
+              <div *ngIf="isForm1Submitted && form1.ifscCode.errors?.required" class="invalid-feedback">
+                Required
+              </div>
+              <div *ngIf="isForm1Submitted && form1.ifscCode.errors?.pattern" class="invalid-feedback">
+                Please enter correct IFSC Code
+              </div>
+              <div *ngIf="form1.ifscCode.errors?.twoSpaces" class="invalid-feedback">
+                More than two consecutive spaces are not allowed
+              </div>
+
+            </div>
+          </div><!-- Col -->
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label class="form-label">Bank Name <span aria-hidden="true" class="symbol required"
+                                                        style="color:red;">*</span></label>
+              <!-- <input class="form-control" formControlName="bankName" placeholder="Bank Name" type="text" autocomplete="new-password" [ngClass]="{'is-invalid': isForm1Submitted && form1.bankName.errors}" pattern="[a-zA-Z ]*$"> -->
+              <!-- <ng-select formControlName="bankName" placeholder="bankName" required>
+                <ng-option selected="true" disabled>Bank Name</ng-option>
+                <ng-option *ngFor="let banklist of Resdatas" [value]="banklist.FieldValue">
+                  {{banklist.FieldValue}} </ng-option>
+              </ng-select> -->
+              <ng-select (keypress)="OnlyCharacterAllowed($event)" [(ngModel)]="selectedAttributes" [items]="Resdatas" [ngClass]="{'is-invalid': isForm1Submitted && form1.bankName.errors}"
+                         bindLabel="FieldValue" bindValue="FieldValue"
+                         formControlName="bankName"
+                         placeholder="Bank Name" required>
+                <ng-template let-item="item" ng-option-tmp>
+                  <div title="{{item.FieldValue}}">{{item.FieldValue}}</div>
+                </ng-template>
+              </ng-select>
+
+
+              <div *ngIf="isForm1Submitted && form1.bankName.errors?.required" class="invalid-feedback">
+                Required
+              </div>
+              <!-- <div *ngIf="isForm1Submitted && form1.bankName.errors?.pattern" class="invalid-feedback">
+                Please enter alphabets only
+              </div> -->
+            </div>
+          </div><!-- Col -->
+        </div><!-- Row -->
+
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label class="form-label">Account Holder's Name <span aria-hidden="true" class="symbol required"
+                                                                    style="color:red;">*</span></label>
+              <input (keypress)="OnlyCharacterAllowed($event)" [ngClass]="{'is-invalid': isForm1Submitted && form1.account_holder.errors}" autocomplete="new-password" class="form-control"
+                     formControlName="account_holder"
+                     maxlength="200"
+                     placeholder="ex. Jone Day" type="text">
+              <div *ngIf="isForm1Submitted && form1.account_holder.errors?.required" class="invalid-feedback">
+                Required
+              </div>
+              <div *ngIf="form1.account_holder.errors?.twoSpaces" class="invalid-feedback">
+                More than two consecutive spaces are not allowed
+              </div>
+              <!-- <div *ngIf="isForm1Submitted && form1.ifscCode.errors?.pattern" class="invalid-feedback">
+                Please enter correct IFSC Code
+              </div> -->
+            </div>
+          </div><!-- Col -->
+
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label class="form-label">Mobile Number <span aria-hidden="true" class="symbol required"
+                                                            style="color:red;">*</span></label>
+              <input (keypress)="OnlyNumbersAllowed($event)" [ngClass]="{'is-invalid': isForm1Submitted && form1.mobile_number.errors}" autocomplete="new-password" class="form-control"
+                     formControlName="mobile_number"
+                     maxlength="10"
+                     placeholder="9988776655" type="text">
+              <div *ngIf="isForm1Submitted && form1.mobile_number.errors?.required" class="invalid-feedback">
+                Required
+              </div>
+              <!-- <div *ngIf="isForm1Submitted && form1.ifscCode.errors?.pattern" class="invalid-feedback">
+                Please enter correct IFSC Code
+              </div> -->
+            </div>
+          </div><!-- Col -->
+
+
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label class="form-label">Email Address <span aria-hidden="true" class="symbol required"
+                                                            style="color:red;">*</span></label>
+              <input [ngClass]="{'is-invalid': isForm1Submitted && form1.email_address.errors}" autocomplete="new-password" class="form-control"
+                     formControlName="email_address" placeholder="ex. sample@Payments.com"
+                     type="email">
+              <div *ngIf="isForm1Submitted && form1.email_address.errors?.required" class="invalid-feedback">
+                Required
+              </div>
+              <div *ngIf="isForm1Submitted && form1.email_address.errors?.email" class="invalid-feedback">
+                Please Provide valid email
+              </div>
+            </div>
+          </div><!-- Col -->
+          <div class="col-sm-6 mt-5">
+            <div class="mb-3 row">
+              <div class="form-check form-check-inline col-md-4">
+                <input class="form-check-input" formControlName="serviceprovider" id="Decentro" name="serviceprovider" type="radio"
+                       value="DECENTRO">
+                <label class="form-check-label">
+                  Decentro
+                </label>
+              </div>
+              <div class="form-check form-check-inline col-md-4">
+                <input class="form-check-input" formControlName="serviceprovider" id="Karza" name="serviceprovider" type="radio"
+                       value="KARZA">
+                <label class="form-check-label">
+                  Karza
+                </label>
+              </div>
+              <div *ngIf="isverify=='Y'" class="col-md-4">
+                <i class="feather text-primary icon-check-circle icon-lg" style="color: green;"></i>
+              </div>
+
+              <!-- <div class="row mb-2">
+                <div class="col-xs-12">
+                  <div class="text-end">
+
+                  </div>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <div class="col-xs-12">
+            <div class="text-end">
+              <button (click)="DECENTRO(accountform.value)" [disabled]="!(this.permissions.includes('Add New') || this.permissions.includes('Edit')) || this.isverify =='Y'" class="btn btn-primary pull-right"
+                      type="button">
+                Validate
+              </button>
+              <button [disabled]="!(this.permissions.includes('Add New') || this.permissions.includes('Edit')) ||  this.ValidAccount==true" class="btn btn-primary pull-right"
+                      type="submit">
+                Add Account
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<div class="row mb-md-2 mt-2">
+  <div class="col-xl-10 main-content">
+    <button (click)="onExportCSV()" class="btn btn-light" type="button">Export CSV<i class="feather text-primary icon-download"></i>
+    </button>
+    <div class="btn-group ">
+      <!--      <button type="button" class="btn btn-primary">Columns</button>-->
+      <div class="btn-group" ngbDropdown role="group">
+        <button class="btn btn-primary" ngbDropdownToggle>Columns</button>
+        <div class="ng-dropdown-panel-items p-1" ngbDropdownMenu
+             style="height: 250px;width: 250px; overflow: scroll; scroll-behavior: smooth">
+          <div class="form-group">
+            <!--            <label for="columns" class="form-label"> All Columns</label>-->
+            <div *ngIf="columnDefs" class="list-group ng-option">
+              <span *ngFor="let column of columnDefs; let i = index" class="checkbox">
+                <label class="list-group-item p-2">
+                  <input (change)="updateSelectedColumn($event)" [checked]="(tableSelectedColumn && (-1 !==tableSelectedColumn.indexOf(column)) ? 'checked': '')" [disabled]="column.hide" [ngClass]="{'disabled': column.hide}"
+                         class="form-check-input me-1 disabled" name="{{column.headerName}}"
+                         type="checkbox"
+                         value="{{i}}"/>
+                  {{column?.field?.replace('_', ' ')?.replace('_', ' ')?.replace('_', ' ') | uppercase }}
+                </label>
+              </span>
+            </div>
+
+          </div>
+          <!--          <ng-select-->
+          <!--            [(ngModel)]="tableSelectedColumn"-->
+          <!--            [closeOnSelect]="false"-->
+          <!--            [items]="columnDefs"-->
+          <!--            [multiple]=true-->
+          <!--            bindLabel="field">-->
+          <!--            <ng-template let-index="index" let-item="item" let-item$="item$" ng-option-tmp>-->
+          <!--              <input [ngModel]="item$.selected" id="item-{{index}}" type="checkbox"/> {{item.field.toUpperCase()}}-->
+          <!--            </ng-template>-->
+          <!--          </ng-select>-->
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="col-xl-2">
+    <input [(ngModel)]="globalSearch" [ngbTypeahead]="search" class="form-control" id="typeahead-basic"
+      placeholder="Search" type="text" autocomplete="new-password" />
+  </div> -->
+</div>
+
+<div class="row" style="min-height: 300px">
+  <div class="col-12 col-xl-12 stretch-card ag-theme-alpine">
+    <ag-grid-angular (filterChanged)="onFilterChange($event)" (filterModified)="onFilterModified($event)"
+                     (filterOpened)="onFilterOpened($event)"
+                     (gridReady)="onGridReady($event)" (rowClicked)="onRowClicked($event)"
+                     (rowDoubleClicked)="onRowDoubleClicked($event)"
+                     [columnDefs]="tableSelectedColumn" [defaultColDef]="defaultColDef"
+                     [enableCellTextSelection]=true
+                     [paginationPageSize]="pageSize" [pagination]="true" [rowData]="rowData" [rowModelType]=""
+                     [rowSelection]="'single'" [suppressPaginationPanel]="true" class="ag-theme-alpine"
+                     style="width: 100%; height: auto;"></ag-grid-angular>
+  </div>
+</div>
+
+<div class="row bg-white mt-2">
+  <div class="col-md-4">
+    <select (change)="onPageSizeChanges($event)" [(ngModel)]="pageSize"
+            class="form-select d-flex justify-content-end col-4" name="pageSize" style="width: auto">
+      <option [ngValue]="10">10</option>
+      <option [ngValue]="20">20</option>
+      <option [ngValue]="30">30</option>
+    </select>
+  </div>
+
+  <div class="col-md-8">
+    <ngb-pagination (pageChange)="onPaginationChange($event)" [(page)]="currentPage" [boundaryLinks]="true"
+                    [collectionSize]="collectionSize" [maxSize]="5" [pageSize]="pageSize" [rotate]="true"
+                    class="d-flex justify-content-end col-8 align-right">
+    </ngb-pagination>
+  </div>
+
+</div>

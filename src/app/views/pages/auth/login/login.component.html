@@ -1,0 +1,109 @@
+<div class="row w-100 mx-0 auth-page">
+  <div class="col-md-8 col-xl-6 mx-auto">
+    <div class="card"
+      style="margin-left: -132px; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); border-radius: 20px; overflow: hidden;width: 120%;height: 80vh;">
+      <div class="row">
+        <div class="col-md-2 pe-md-0">
+          <div style="visibility: hidden;" class="auth-side-wrapper"></div>
+        </div>
+        
+
+        <!-- Main Container --> 
+        <div class="container-fluid"
+          style="display: flex; flex-direction: row; align-items: flex-start; justify-content: space-between; background-color: aliceblue; padding: 60px; border-radius: 15px;">
+
+          <div style=" margin-top: -50px; width: 150%;">
+            
+            <!-- Paynite Container Above Animation Div -->
+            <div class="paynite-container flex items-center justify-center gap-2  animated fadeIn">
+              <img 
+              style="width: 150px; border-radius: 1vh;margin-left: -373px;" 
+              src="assets/images/logo1.png" 
+              alt="New Image" 
+              class="w-24 h-24 object-contain" 
+            />
+                          <!-- <h1 class="text-xl font-bold">PayFi</h1> -->
+            </div>
+
+            <!-- Content Container for Images -->
+            <div class="animate-slide" style="display: flex; flex-direction: column; align-items: center; gap: 20px;width: 525px;margin-left: -52px;" class="content-container">
+<!-- First Block -->
+              <ngb-carousel [showNavigationArrows]="false" [interval]="3000" [wrap]="true" (slide)="onSlideChange($event)" style="width: 50%;">
+                <ng-template ngbSlide *ngFor="let image of images; track img; let i = index" id="{{i}}">
+                  <div class="picsum-img-wrapper">
+                    <img [src]="image" alt="Random first slide" style="width: 252px;height: 252px;" />
+                  </div>
+                </ng-template>
+              </ngb-carousel>
+
+              <div>
+                  <ng-container *ngIf="dataArray[activeSlide]" >
+                    <h1 style="font-size:  28px;gap: 40px;align-items: center;;font-weight:  600;color: #6744F3;display: flex;justify-content: center;">{{dataSliderTextArray[activeSlide]}}</h1>
+                    <p style="gap:12px;margin-top: 6px;line-height: 22px; color: #455A64;display: flex;justify-content: center;text-align: center;" [innerHTML]="dataArray[activeSlide]"></p>
+                  </ng-container>
+              </div>
+            </div>
+          </div>
+
+          <div class="auth-form-wrapper w-106 sm:w-128 lg:w-1/3" 
+          style="margin-top: -60px;margin-right: -50px;background-color: white; padding: 50px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); border-radius: 15px; margin-left: 0px;">  
+       <h5 class="py-4 font-extrabold text-2xl text-center text-gray-800 dark:text-white">Login</h5>
+     
+       <form #f="ngForm" *ngIf="!isLoggedIn" name="form" novalidate>
+         <div class="mb-3">
+           <label class="form-label" for="username">Username</label>
+           <input [(ngModel)]="form.username"
+                  [ngClass]="{'is-invalid': f?.form?.controls?.username?.errors && f.submitted}" 
+                  class="form-control"
+                  id="username" name="username" placeholder="Username" required type="text">
+           <div *ngIf="f?.form?.controls?.username?.errors && f.submitted" 
+                class="invalid-feedback" role="alert">
+             Please Enter Username
+           </div>
+         </div>
+     
+         <div class="mb-3">
+           <label class="form-label" for="password">Password</label>
+           <app-show-hide-password>
+             <input #password="ngModel" inputRef [(ngModel)]="form.password" 
+                    class="form-control"
+                    [ngClass]="{'is-invalid': f?.form?.controls?.password?.errors && f.submitted}" 
+                    id="password"
+                    minlength="6" maxlength="16" name="password" placeholder="Password" 
+                    required type="password" autocomplete="off">
+           </app-show-hide-password>
+           <div *ngIf="f?.form?.controls?.password?.errors && f.submitted" 
+                class="invalid-feedback" role="alert">
+             Please Enter Valid Password
+           </div>
+         </div>
+     
+         <div class="form-check mb-3">
+           <input (change)="toggle($event)" class="form-check-input" id="authCheck" type="checkbox">
+           <label class="form-check-label" for="authCheck">Remember Me</label>
+         </div>
+     
+         <div>
+           <button (click)="onLoggedin($event, f)" class="btn btn-primary w-100 mb-2" type="submit">Login</button>
+         </div>
+     
+         <div class="form-group">
+           <div *ngIf="f.submitted && isLoginFailed" 
+                class="alert alert-danger" role="alert">
+             Login failed: {{ errorMessage }}
+           </div>
+         </div>
+
+         <hr />
+         <div style="display: flex; align-items: center;">Don't have an account?
+          <a  to="/signup" style="color: dodgerblue;">&nbsp; Sign Up</a>
+        </div>
+        
+        <a href="#">Forget password?</a>
+       </form>
+     </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

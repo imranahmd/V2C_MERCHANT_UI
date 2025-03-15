@@ -1,0 +1,17 @@
+
+
+.ag-theme-alpine {
+    /* disable all borders */
+    --ag-borders: none !important;
+    --ag-borders-row: none !important;
+    /* then add back a border between rows */
+    //--ag-borders-row: dashed 1px !important;
+    --ag-row-border-color: rgb(150, 150, 200) !important;
+
+    --ag-background-color: #dbdffc;
+    --ag-border-color: #6571ff;
+
+    .ag-header-cell-label {
+      font-style: italic !important;;
+    }
+  }

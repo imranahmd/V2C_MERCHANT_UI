@@ -1,0 +1,16 @@
+<div style="display: inline-block">
+  <div style="text-align: center; background: lightgray; width: 100%; display: block; border-bottom: 1px solid grey">
+    <b>Custom Skills Filter</b>
+  </div>
+  <div *ngFor="let skill of skills" style="margin-top: 3px; float: left">
+    <label style="border: 1px solid lightgrey; margin: 4px; padding: 4px; display: inline-block">
+                    <span>
+                        <div style="text-align:center">{{skill.name}}</div>
+                        <div>
+                            <input type="checkbox" (click)="onSkillChanged($event, skill)"/>
+                            <img src="images/skills/{{skill.filename}}" width="30"/>
+                        </div>
+                    </span>
+    </label>
+  </div>
+</div>

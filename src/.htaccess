@@ -1,0 +1,25 @@
+RewriteEngine On
+
+# If an existing asset or directory is requested, serve it directly
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
+RewriteRule ^ - [L]
+
+# Set security headers
+
+<IfModule mod_headers.c>
+  # X-Frame-Options to prevent clickjacking
+  Header always set X-Frame-Options "DENY"
+
+  # Content-Security-Policy to control resource loading and framing
+  Header always set Content-Security-Policy "frame-ancestors 'none'; default-src https://pg.payfi.co.in/"
+
+  # X-XSS-Protection to enable cross-site scripting (XSS) protection
+  Header always set X-XSS-Protection "1; mode=block"
+
+  # HTTP Strict Transport Security (HSTS) to enforce secure connections
+  Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+</IfModule>
+
+# If the requested resource doesn't exist, serve index.html
+RewriteRule ^(.*)$ index.html [L]
