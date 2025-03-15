@@ -5,8 +5,10 @@
 export const environment = {
   production: false,
   // API_URL: 'https://pg.payfi.co.in/Api',
-  API_URL: 'https://pg.payfi.co.in/Api',
-  PAY_URL: 'https://pg.payfi.co.in/pay',
+  #API_URL: 'https://pg.payfi.co.in/Api',
+  #PAY_URL: 'https://pg.payfi.co.in/pay',
+  API_URL: 'http://13.235.248.165:8080/Api',  
+  PAY_URL: 'http://13.235.248.165:8080/pay', 
   USER_KEY: 'logged-user',
   appSystem: 'af9d1620e1bd350400ca30a793782d21', //'MERCHANT_PORTAL',
   level3_exclude: ['Merchant Master', 'Reseller Onboarding', 'Self Onboarding'],
